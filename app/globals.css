@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --Background: #F9F9F6;
+  --Main-Primary-Color: #0E0E0E;
+  --primary-text-products-name: #2C2C2C;
+  --ct-as-buttons-highlights: #D6AF66;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-quattrocento: var(--font-quattrocento);
+  --font-poppins: var(--font-poppins);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,7 +22,129 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--Background, #F9F9F6);
+  color: var(--primary-text-products-name, #2C2C2C);
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+}
+
+/* Custom Navbar Styles */
+.glass-bg {
+  background: rgba(237, 230, 218, 0.12);
+}
+.backdrop-blur-navbar {
+  backdrop-filter: blur(12.9px);
+  -webkit-backdrop-filter: blur(12.9px);
+}
+.mobile-menu {
+  transition: all 0.3s ease-in-out;
+}
+.mobile-menu.hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+.mobile-menu:not(.hidden) {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.nav-link {
+  position: relative;
+  overflow: hidden;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #D6AF66;
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+.cta-button {
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  transition: all 0.2s ease;
+}
+.cta-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(214, 175, 102, 0.3);
+}
+.cta-button:active {
+  transform: translateY(0);
+}
+@media (max-width: 1023px) {
+  .desktop-nav {
+    display: none;
+  }
+}
+@media (min-width: 1024px) {
+  .mobile-menu-container {
+    display: none;
+  }
+}
+
+h1 {
+  color: var(--Main-Primary-Color, #0E0E0E);
+  font-family: Quattrocento, serif;
+  font-size: 68px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+h2 {
+  color: var(--Main-Primary-Color, #0E0E0E);
+  text-align: center;
+  font-family: Quattrocento, serif;
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+p, span, li, a, div, input, textarea, button {
+  color: var(--primary-text-products-name, #2C2C2C);
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.navbar-link {
+  color: var(--ct-as-buttons-highlights, #000000);
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  transition: color 0.2s;
+}
+.navbar-link.active {
+  color: var(--ct-as-buttons-highlights, #D6AF66);
+}
+.navbar-link:hover {
+  color: var(--ct-as-buttons-highlights, #D6AF66);
+}
+
+.font-quattrocento {
+  font-family: 'Quattrocento', serif;
+}
+.text-primary {
+  color: var(--Main-Primary-Color, #0E0E0E);
+}
+.text-secondary {
+  color: var(--primary-text-products-name, #2C2C2C);
+}
+.bg-highlight {
+  background-color: var(--ct-as-buttons-highlights, #D6AF66);
+}
+.hero-gradient {
+  background: linear-gradient(135deg, rgba(249, 249, 246, 0.95) 0%, rgba(249, 249, 246, 0.8) 100%);
 }
