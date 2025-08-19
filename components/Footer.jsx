@@ -1,0 +1,95 @@
+import Image from 'next/image';
+import Link from 'next/link';
+
+const Footer = () => {
+  return (
+    <footer className="bg-footer py-12 md:py-16 lg:py-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-9">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
+          {/* Logo Section */}
+          <div className="lg:col-span-1">
+            <div className="mb-8">
+              <Link href="/" className="flex items-center">
+                <div className="w-16 h-16 flex items-center justify-center">
+                  <Image src="/footer-logo.svg" alt="Stag Horn Logo" width={143} height={58} />
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="footer-heading font-medium text-lg mb-6">Quick Links</h3>
+            <ul className="space-y-4">
+              <li><Link href="/" className="footer-link text-base">Home</Link></li>
+              <li><Link href="/categories" className="footer-link text-base">Categories</Link></li>
+              <li><Link href="/about" className="footer-link text-base">About Us</Link></li>
+              <li><Link href="/blogs" className="footer-link text-base">Blog</Link></li>
+              <li><Link href="/contact" className="footer-link text-base">Contact Us</Link></li>
+            </ul>
+          </div>
+
+          {/* Categories */}
+          <div>
+            <h3 className="footer-heading font-medium text-lg mb-6">Categories</h3>
+            <ul className="space-y-4">
+              <li><Link href="#" className="footer-link text-base">Kitchen Cutlery</Link></li>
+              <li><Link href="#" className="footer-link text-base">Professional Tools</Link></li>
+              <li><Link href="#" className="footer-link text-base">Collector's Blades</Link></li>
+              <li><Link href="#" className="footer-link text-base">Luxury Flatware</Link></li>
+              <li><Link href="#" className="footer-link text-base">Camping & Outdoor</Link></li>
+              <li><Link href="#" className="footer-link text-base">Custom Orders</Link></li>
+            </ul>
+          </div>
+
+          {/* Contact & Special */}
+          <div>
+              <h3 className="footer-heading font-medium text-lg mb-6">Contact</h3>
+              <div className="space-y-4">
+                <div>
+                  <p className="footer-link text-base">M. Shabir:</p>
+                  <p className="footer-link text-base">0345 6517014</p>
+                </div>
+                <div>
+                  <p className="footer-link text-base">Bilal Ahmed:</p>
+                  <p className="footer-link text-base">0300-9611418</p>
+                </div>
+                <div>
+                  <p className="footer-link text-base">Usman Ali:</p>
+                  <p className="footer-link text-base">0340-0466400</p>
+                </div>
+              </div>
+          </div>
+            {/* Special Section */}
+            <div>
+                <h3 className="footer-heading font-medium text-lg mb-6">Special</h3>
+                <ul className="space-y-4">
+                    <li><Link href="#" className="footer-link text-base">B2B Contract</Link></li>
+                    <li><Link href="#" className="footer-link text-base">Customize Order</Link></li>
+                </ul>
+            </div>
+        </div>
+
+        {/* Address Section */}
+        <div className="pt-8 mb-8">
+          <div className="flex items-center gap-3">
+            <svg className="w-5 h-5 footer-text mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+            <p className="footer-text text-base">Near, High Class Bakers G.T. Road, Wazirabad, Punjab, Pakistan</p>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="border-t border-[#C0C0C0] pt-8">
+          <p className="footer-text text-sm text-end md:text-left">
+            © 2025 Stag Horn Cutlery works. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

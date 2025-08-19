@@ -148,3 +148,25 @@ p, span, li, a, div, input, textarea, button {
 .hero-gradient {
   background: linear-gradient(135deg, rgba(249, 249, 246, 0.95) 0%, rgba(249, 249, 246, 0.8) 100%);
 }
+
+/* Footer Styles */
+.bg-footer {
+  background: var(--Main-Primary-Color, #0E0E0E);
+}
+
+.footer-heading {
+  color: #FFFFFF;
+}
+
+.footer-text {
+  color: #6B7280; /* text-gray-500 */
+}
+
+.footer-link {
+  color: #9CA3AF; /* text-gray-400 */
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: var(--ct-as-buttons-highlights, #D6AF66);
+}
