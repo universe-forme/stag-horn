@@ -17,7 +17,7 @@ const quattrocento = Quattrocento({
 });
 
 export const metadata = {
-  title: "Stag Horn",
+  title: "Wazir Cutlery",
   description: "Developed by Datadaur",
 };
 

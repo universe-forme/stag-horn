@@ -29,11 +29,11 @@ body {
 
 /* Custom Navbar Styles */
 .glass-bg {
-  background: rgba(237, 230, 218, 0.12);
+    background: rgba(237, 230, 218, 0.25);
 }
 .backdrop-blur-navbar {
-  backdrop-filter: blur(12.9px);
-  -webkit-backdrop-filter: blur(12.9px);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
 }
 .mobile-menu {
   transition: all 0.3s ease-in-out;
@@ -109,7 +109,7 @@ h2 {
 }
 
 p, span, li, a, div, input, textarea, button {
-  color: var(--primary-text-products-name, #2C2C2C);
+  /*color: var(--primary-text-products-name, #2C2C2C);*/
   font-family: Poppins, Arial, Helvetica, sans-serif;
   font-size: 18px;
   font-style: normal;
@@ -149,6 +149,15 @@ p, span, li, a, div, input, textarea, button {
   background: linear-gradient(135deg, rgba(249, 249, 246, 0.95) 0%, rgba(249, 249, 246, 0.8) 100%);
 }
 
+.customer-rating {
+    font-family: Poppins, Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 100%;
+    letter-spacing: 0;
+}
+
+
 /* Footer Styles */
 .bg-footer {
   background: var(--Main-Primary-Color, #0E0E0E);
@@ -169,4 +178,222 @@ p, span, li, a, div, input, textarea, button {
 
 .footer-link:hover {
   color: var(--ct-as-buttons-highlights, #D6AF66);
+}
+
+/* New Product Slider Styles */
+.new-product-slider h3 {
+    font-family: 'Quattrocento', serif;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 100%;
+    letter-spacing: 0;
+    color: var(--Main-Primary-Color);
+}
+
+.product-name-new {
+    font-family: 'Quattrocento', serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0;
+    color: var(--primary-text-products-name);
+}
+
+.product-price-new {
+    color: var(--ct-as-buttons-highlights);
+    font-weight: bold;
+}
+
+.cta-button-new {
+    background-color: var(--ct-as-buttons-highlights);
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.cta-button-new:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(214, 175, 102, 0.3);
+}
+
+.cta-button-new:active {
+    transform: translateY(0);
+}
+
+.product-slider-container {
+    scroll-behavior: smooth;
+    transition: transform 0.5s ease-in-out;
+}
+
+.badge-new {
+    background-color: var(--ct-as-buttons-highlights);
+    color: white;
+}
+
+.hero-overlay {
+    background: linear-gradient(to bottom, rgba(249, 249, 246, 0.7) 0%, rgba(249, 249, 246, 0.9) 100%);
+}
+
+.product-slider-top {
+    margin-top: -350px;
+}
+
+.product-slider-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.product-card-new {
+    flex: 0 0 calc(25% - 48px);
+    margin: 0 24px;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 1024px) {
+    .product-card-new {
+        flex: 0 0 calc(50% - 48px);
+    }
+}
+
+
+@media (max-width: 1280px) {
+    .product-card-new {
+        flex: 0 0 calc(50% - 48px);
+    }
+}
+
+
+@media (max-width: 640px) {
+    .product-card-new {
+        flex: 0 0 calc(100% - 48px);
+    }
+}
+
+
+@media (max-width: 768px) {
+    .product-slider-wrapper {
+        overflow: visible !important;
+    }
+
+    .product-slider-container {
+        flex-direction: column !important;
+        transform: none !important;
+    }
+
+    .product-slider-top {
+        margin-top: 0 !important;
+    }
+
+    .product-card-new {
+        flex: 1 1 100% !important;
+        margin: 12px 0 !important;
+    }
+
+    .new-product-slider #prevBtn,
+    .new-product-slider #nextBtn {
+        display: none !important;
+    }
+}
+
+.other-heading {
+    font-family: Quattrocento, serif;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 48px;
+    letter-spacing: 0;
+}
+
+/* Testimonials Section Styles */
+.testimonial-card {
+    background: #A89B6D;
+    border-radius: 24px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    margin-bottom: 16px;
+    break-inside: avoid;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(214, 175, 102, 0.2);
+}
+
+.testimonial-text {
+    color: #F9F9F6;
+    font-family: Poppins, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.customer-name {
+    color: var(--Main-Primary-Color, #0E0E0E);
+    font-family: Poppins, Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.customer-date {
+    color: var(--primary-text-products-name, #2C2C2C);
+    font-family: Poppins, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+.profile-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+}
+
+.masonry-grid {
+    columns: 4;
+    column-gap: 24px;
+}
+
+@media (max-width: 1280px) {
+    .masonry-grid {
+        columns: 3;
+    }
+}
+
+@media (max-width: 1024px) {
+    .masonry-grid {
+        columns: 3;
+    }
+}
+
+@media (max-width: 640px) {
+    .masonry-grid {
+        columns: 2;
+    }
+}
+
+.testimonial-item {
+    break-inside: avoid;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 28px;
+    }
+
+    .testimonial-text {
+        font-size: 15px;
+    }
+
+    .customer-name {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 640px) {
+    h2 {
+        font-size: 24px;
+    }
 }

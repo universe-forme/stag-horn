@@ -75,7 +75,7 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link href="/order" className="bg-[#D6AF66] text-[#0E0E0E] px-6 py-3 rounded-xl font-medium text-sm hover:bg-[#D6AF66]/90 transition-colors duration-200">Order Now</Link>
+            <Link href="/order" className="bg-[#D6AF66] text-[#F9F9F6] px-6 py-3 rounded-xl font-medium text-sm hover:bg-[#D6AF66]/90 transition-colors duration-200">Order Now</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -115,7 +115,7 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link href="/order" className="bg-[#D6AF66] text-[#0E0E0E] px-6 py-3 rounded-xl font-medium text-sm hover:bg-[#D6AF66]/90 transition-colors duration-200 text-center mt-4" onClick={() => setIsMenuOpen(false)}>Order Now</Link>
+            <Link href="/order" className="bg-[#D6AF66] text-[#F9F9F6] px-6 py-3 rounded-xl font-medium text-sm hover:bg-[#D6AF66]/90 transition-colors duration-200 text-center mt-4" onClick={() => setIsMenuOpen(false)}>Order Now</Link>
           </div>
         </div>
       </nav>
