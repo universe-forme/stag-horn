@@ -545,6 +545,89 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* Order Form Section */}
+            <div className="container mx-auto px-4 py-16">
+                <div className="form-container">
+                    <h2 className="form-title">Order Now</h2>
+                    <form>
+                        {/* Row 1: Full Name & Email */}
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="fullName" className="form-label">Full Name</label>
+                                <input type="text" id="fullName" name="fullName" className="form-input" placeholder="Full Name" />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="email" className="form-label">Email</label>
+                                <input type="email" id="email" name="email" className="form-input" placeholder="Email" />
+                            </div>
+                        </div>
+                        {/* Row 2: Phone Number & WhatsApp Number */}
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="phoneNumber" className="form-label">Phone Number</label>
+                                <input type="tel" id="phoneNumber" name="phoneNumber" className="form-input" placeholder="+92  Phone Number" />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="whatsappNumber" className="form-label">Whatsapp Number</label>
+                                <input type="tel" id="whatsappNumber" name="whatsappNumber" className="form-input" placeholder="+92  Phone Number" />
+                            </div>
+                        </div>
+                        {/* Row 3: Company Name & Company Email */}
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="companyName" className="form-label">Company Name (Optional)</label>
+                                <input type="text" id="companyName" name="companyName" className="form-input" placeholder="Company Name (Optional)" />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="companyEmail" className="form-label">Company Email (Optional)</label>
+                                <input type="email" id="companyEmail" name="companyEmail" className="form-input" placeholder="Company Email (Optional)" />
+                            </div>
+                        </div>
+                        {/* Row 4: Country & Location */}
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="country" className="form-label">Country</label>
+                                <input type="text" id="country" name="country" className="form-input" placeholder="Country" />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="location" className="form-label">Location</label>
+                                <input type="text" id="location" name="location" className="form-input" placeholder="Location" />
+                            </div>
+                        </div>
+                        {/* Row 5: City & Product Quantity */}
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="city" className="form-label">City</label>
+                                <input type="text" id="city" name="city" className="form-input" placeholder="City" />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="productQuantity" className="form-label">Product Quantity</label>
+                                <input type="number" id="productQuantity" name="productQuantity" className="form-input" placeholder="Product Quantity" />
+                            </div>
+                        </div>
+                        {/* Row 6: Shipment Address & Emergency Contact */}
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="shipmentAddress" className="form-label">Shipment Address</label>
+                                <input type="text" id="shipmentAddress" name="shipmentAddress" className="form-input" placeholder="Enter full shipment address..." />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="emergencyContact" className="form-label">Emergency Contact Number</label>
+                                <input type="tel" id="emergencyContact" name="emergencyContact" className="form-input" placeholder="Enter emergency contact number" />
+                            </div>
+                        </div>
+                        {/* Message */}
+                        <div className="form-group">
+                            <label htmlFor="message" className="form-label">Message</label>
+                            <textarea id="message" name="message" className="form-textarea" placeholder="Write Message..."></textarea>
+                        </div>
+                        {/* Submit Button */}
+                        <div className="form-actions">
+                            <button type="submit" className="submit-button">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </>
     );
 }
