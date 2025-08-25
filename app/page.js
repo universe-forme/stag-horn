@@ -190,43 +190,43 @@ export default function Home() {
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-12">
                         {/* Luxury Flatware & Dining Sets */}
-                        <div className="group relative overflow-hidden rounded-2xl aspect-square cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
+                        <div className="group relative overflow-hidden rounded-2xl h-[350px] cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
                             <Image src="/dinner-set-img.jpg" width={256} height={256}
                                  alt="Luxury Flatware & Dining Sets"
                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70"></div>
-                            <div className="absolute bottom-6 left-6">
-                                <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight">Luxury Flatware & Dining Sets</h3>
+                            <div className="absolute inset-0 p-6 flex items-center justify-center">
+                                <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Luxury Flatware & Dining Sets</h3>
                             </div>
                         </div>
                         {/* Hand-Forged or Custom-Made Tools */}
-                        <div className="group relative overflow-hidden rounded-2xl aspect-square cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
+                        <div className="group relative overflow-hidden rounded-2xl h-[350px] cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
                             <Image src="/tools-img.jpg" width={256} height={256}
                                  alt="Hand-Forged Tools"
                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70"></div>
-                            <div className="absolute bottom-6 left-6">
-                                <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight">Hand-Forged or Custom-Made Tools</h3>
+                            <div className="absolute inset-0 p-6 flex items-center justify-center">
+                                <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Hand-Forged or Custom-Made Tools</h3>
                             </div>
                         </div>
                         {/* Collectible & Decorative Swords */}
-                        <div className="group relative overflow-hidden rounded-2xl aspect-square cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
+                        <div className="group relative overflow-hidden rounded-2xl h-[350px] cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
                             <Image src="/sword-img.jpg" width={256} height={256}
                                  alt="Collectible & Decorative Swords"
                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70"></div>
-                            <div className="absolute bottom-6 left-6">
-                                <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight">Collectible & Decorative Swords</h3>
+                            <div className="absolute inset-0 p-6 flex items-center justify-center">
+                                <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Collectible & Decorative Swords</h3>
                             </div>
                         </div>
                         {/* Premium Kitchen Knives */}
-                        <div className="group relative overflow-hidden rounded-2xl aspect-square cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
+                        <div className="group relative overflow-hidden rounded-2xl h-[350px] cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
                             <Image src="/knife-img.jpg" width={256} height={256}
                                  alt="Premium Kitchen Knives"
                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70"></div>
-                            <div className="absolute bottom-6 left-6">
-                                <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight">Premium Kitchen Knives</h3>
+                            <div className="absolute inset-0 p-6 flex items-center justify-center">
+                                <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Premium Kitchen Knives</h3>
                             </div>
                         </div>
                     </div>
