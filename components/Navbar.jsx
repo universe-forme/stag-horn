@@ -46,7 +46,7 @@ export default function Navbar() {
     { href: "/categories", label: "Categories" },
     { href: "/about", label: "About Us" },
     // { href: "/blogs", label: "Blogs" },
-    { href: "/contact", label: "Contact Us" },
+    // { href: "/contact", label: "Contact Us" },
   ];
 
   return (
@@ -59,7 +59,7 @@ export default function Navbar() {
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
               <div className="w-12 h-12 flex items-center justify-center">
-                <Image src="/Logo.svg" alt="Logo" width={96} height={96} />
+                <Image src="/logo.svg" alt="Logo" width={96} height={96} />
               </div>
             </Link>
           </div>
@@ -75,7 +75,7 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link href="/order" className="bg-[#D6AF66] text-[#F9F9F6] px-6 py-3 rounded-xl font-medium text-sm hover:bg-[#D6AF66]/90 transition-colors duration-200">Order Now</Link>
+            <Link href="/contact" className="bg-[#D6AF66] text-[#F9F9F6] px-6 py-3 rounded-xl font-medium text-sm hover:bg-[#D6AF66]/90 transition-colors duration-200">Contact Us</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -115,7 +115,7 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link href="/order" className="bg-[#D6AF66] text-[#F9F9F6] px-6 py-3 rounded-xl font-medium text-sm hover:bg-[#D6AF66]/90 transition-colors duration-200 text-center mt-4" onClick={() => setIsMenuOpen(false)}>Order Now</Link>
+            <Link href="/contact" className="bg-[#D6AF66] text-[#F9F9F6] px-6 py-3 rounded-xl font-medium text-sm hover:bg-[#D6AF66]/90 transition-colors duration-200 text-center mt-4" onClick={() => setIsMenuOpen(false)}>Contact Us</Link>
           </div>
         </div>
       </nav>

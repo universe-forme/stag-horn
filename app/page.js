@@ -1,12 +1,20 @@
 'use client';
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef } from 'react';
+import TestimonialScroller from "../components/TestimonialScroller";
 
 export default function Home() {
 
     const sliderRef = useRef(null);
     const prevBtnRef = useRef(null);
     const nextBtnRef = useRef(null);
+
+    // Refs for the new category slider
+    const categorySliderRef = useRef(null);
+    const categoryPrevBtnRef = useRef(null);
+    const categoryNextBtnRef = useRef(null);
+
 
     useEffect(() => {
         const slider = sliderRef.current;
@@ -38,8 +46,21 @@ export default function Home() {
                 return 1;
             }
 
+            function updateButtonStates() {
+                const visibleCards = getVisibleCards();
+                if (prevBtn) {
+                    prevBtn.disabled = currentPosition === 0;
+                    prevBtn.classList.toggle('slider-btn-disabled', currentPosition === 0);
+                }
+                if (nextBtn) {
+                    nextBtn.disabled = currentPosition >= totalCards - visibleCards;
+                    nextBtn.classList.toggle('slider-btn-disabled', currentPosition >= totalCards - visibleCards);
+                }
+            }
+
             function updateSlider() {
                 if(slider) slider.style.transform = `translateX(-${currentPosition * cardWidth}px)`;
+                updateButtonStates();
             }
 
             if(nextBtn) nextBtn.style.display = 'block';
@@ -73,7 +94,9 @@ export default function Home() {
                     if(nextBtn) nextBtn.style.display = 'block';
                     if(prevBtn) prevBtn.style.display = 'block';
                 }
+                updateButtonStates();
             }
+            updateButtonStates();
 
             window.addEventListener('resize', resizeHandler);
 
@@ -83,6 +106,93 @@ export default function Home() {
         }
 
         initSlider();
+
+        // --- Category Slider Logic ---
+        const catSlider = categorySliderRef.current;
+        const catPrevBtn = categoryPrevBtnRef.current;
+        const catNextBtn = categoryNextBtnRef.current;
+        const categoryCard = document.querySelector('.category-card-item');
+
+        if (!categoryCard || !catSlider) return;
+
+        function initCategorySlider() {
+            if (window.innerWidth <= 768) {
+                if(catSlider) catSlider.style.transform = 'none';
+                if(catPrevBtn) catPrevBtn.style.display = 'none';
+                if(catNextBtn) catNextBtn.style.display = 'none';
+                return;
+            }
+
+            let cardWidth = categoryCard.offsetWidth;
+
+            let currentPosition = 0;
+            const totalCards = document.querySelectorAll('.category-card-item').length;
+
+            function getVisibleCards() {
+                if (window.innerWidth >= 1024) return 4;
+                if (window.innerWidth >= 768) return 2;
+                return 1;
+            }
+
+            function updateCatButtonStates() {
+                const visibleCards = getVisibleCards();
+                if (catPrevBtn) {
+                    catPrevBtn.disabled = currentPosition === 0;
+                    catPrevBtn.classList.toggle('slider-btn-disabled', currentPosition === 0);
+                }
+                if (catNextBtn) {
+                    catNextBtn.disabled = currentPosition >= totalCards - visibleCards;
+                    catNextBtn.classList.toggle('slider-btn-disabled', currentPosition >= totalCards - visibleCards);
+                }
+            }
+
+            function updateCatSlider() {
+                if(catSlider) catSlider.style.transform = `translateX(-${currentPosition * cardWidth}px)`;
+                updateCatButtonStates();
+            }
+
+            if(catNextBtn) catNextBtn.style.display = 'block';
+            if(catPrevBtn) catPrevBtn.style.display = 'block';
+
+            if(catNextBtn) catNextBtn.onclick = () => {
+                const visibleCards = getVisibleCards();
+                if (currentPosition < totalCards - visibleCards) {
+                    currentPosition += 1;
+                    updateCatSlider();
+                }
+            };
+
+            if(catPrevBtn) catPrevBtn.onclick = () => {
+                if (currentPosition > 0) {
+                    currentPosition -= 1;
+                    updateCatSlider();
+                }
+            };
+
+            const catResizeHandler = () => {
+                cardWidth = categoryCard.offsetWidth;
+                if (window.innerWidth <= 768) {
+                    if(catSlider) catSlider.style.transform = 'none';
+                    if(catPrevBtn) catPrevBtn.style.display = 'none';
+                    if(catNextBtn) catNextBtn.style.display = 'none';
+                } else {
+                    updateCatSlider();
+                    if(catNextBtn) catNextBtn.style.display = 'block';
+                    if(catPrevBtn) catPrevBtn.style.display = 'block';
+                }
+                updateCatButtonStates();
+            }
+
+            updateCatButtonStates();
+
+            window.addEventListener('resize', catResizeHandler);
+
+            return () => {
+                window.removeEventListener('resize', catResizeHandler);
+            }
+        }
+
+        initCategorySlider();
     }, []);
 
     return (
@@ -110,20 +220,22 @@ export default function Home() {
                                 <p className="text-secondary text-lg lg:text-xl max-w-lg leading-relaxed">
                                     Explore fine craftsmanship — from chef knives to timeless swords and elegant dining tools.
                                 </p>
-                                <button className="bg-highlight text-white px-8 py-4 rounded-lg font-medium text-lg hover:opacity-90 transition-opacity shadow-lg">
-                                    Explore Collection
-                                </button>
+                                <Link href="/categories">
+                                    <button className="bg-highlight text-white px-10 py-4 rounded-lg font-medium text-lg hover:opacity-90 transition-opacity shadow-lg">
+                                        Explore Collection
+                                    </button>
+                                </Link>
                                 {/* Stats */}
                                 <div className="flex flex-wrap gap-8 pt-8 justify-center lg:justify-start">
-                                    <div className="text-center">
+                                    <div className="">
                                         <div className="text-primary font-bold text-2xl lg:text-3xl font-quattrocento customer-rating">100k+</div>
                                         <div className="text-secondary text-sm lg:text-base">Total Customers</div>
                                     </div>
-                                    <div className="text-center">
+                                    <div className="">
                                         <div className="text-primary font-bold text-2xl lg:text-3xl font-quattrocento customer-rating">90k+</div>
                                         <div className="text-secondary text-sm lg:text-base">Happy Customers</div>
                                     </div>
-                                    <div className="text-center">
+                                    <div className="">
                                         <div className="text-primary font-bold text-2xl lg:text-3xl font-quattrocento customer-rating">70k+</div>
                                         <div className="text-secondary text-sm lg:text-base">Total Reviews</div>
                                     </div>
@@ -157,24 +269,24 @@ export default function Home() {
                     <h2 className="font-quattrocento text-primary text-center text-3xl lg:text-4xl font-bold mb-16">
                         Our Store Available on
                     </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-center justify-items-center">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 items-center justify-items-center">
                         {/* Noon */}
-                        <div className="flex items-center justify-center w-full sm:w-64 h-28 bg-white rounded-2xl shadow-md p-8 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                        <div className="flex items-center justify-center w-full h-24 md:h-28 bg-white rounded-2xl shadow-md p-6 md:p-8 transition-all duration-300 hover:scale-105 hover:shadow-xl">
                             <Image src="/noon-logo.svg" width={256} height={256}
                                    alt="Noon" className="max-w-full max-h-full object-contain" />
                         </div>
                         {/* Amazon */}
-                        <div className="flex items-center justify-center w-full sm:w-64 h-28 bg-white rounded-2xl shadow-md p-8 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                        <div className="flex items-center justify-center w-full h-24 md:h-28 bg-white rounded-2xl shadow-md p-6 md:p-8 transition-all duration-300 hover:scale-105 hover:shadow-xl">
                             <Image src="/amazon-logo.svg"  width={256} height={256}
                                    alt="Amazon" className="max-w-full max-h-full object-contain" />
                         </div>
                         {/* Etsy */}
-                        <div className="flex items-center justify-center w-full sm:w-64 h-28 bg-white rounded-2xl shadow-md p-8 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                        <div className="flex items-center justify-center w-full h-24 md:h-28 bg-white rounded-2xl shadow-md p-6 md:p-8 transition-all duration-300 hover:scale-105 hover:shadow-xl">
                             <Image src="/etsy-logo.svg" width={256} height={256}
                                    alt="Etsy" className="max-w-full max-h-full object-contain" />
                         </div>
                         {/* Daraz */}
-                        <div className="flex items-center justify-center w-full sm:w-64 h-28 bg-white rounded-2xl shadow-md p-8 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                        <div className="flex items-center justify-center w-full h-24 md:h-28 bg-white rounded-2xl shadow-md p-6 md:p-8 transition-all duration-300 hover:scale-105 hover:shadow-xl">
                             <Image src="daraz-logo.svg" width={256} height={256}
                                    alt="Daraz" className="max-w-full max-h-full object-contain" />
                         </div>
@@ -183,66 +295,86 @@ export default function Home() {
             </section>
 
             {/* Categories Section */}
-            <section className="py-16 lg:py-24">
+            <section className="py-12 lg:py-10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h2 className="font-quattrocento text-primary text-center text-3xl lg:text-4xl font-bold mb-16">
                         Categories
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-12">
-                        {/* Luxury Flatware & Dining Sets */}
-                        <div className="group relative overflow-hidden rounded-2xl h-[350px] cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
-                            <Image src="/dinner-set-img.jpg" width={256} height={256}
-                                 alt="Luxury Flatware & Dining Sets"
-                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70"></div>
-                            <div className="absolute inset-0 p-6 flex items-center justify-center">
-                                <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Luxury Flatware & Dining Sets</h3>
+                    <div className="relative px-8">
+                        <div className="overflow-hidden">
+                            <div className="flex transition-transform duration-500 ease-in-out -mx-3" ref={categorySliderRef}>
+                                {/* Card 1 */}
+                                <div className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
+                                    <div className="category-card h-[350px]" style={{backgroundImage: "url('/knife-img.jpg')"}}>
+                                        <div className="category-overlay w-full h-full flex items-center justify-center p-6">
+                                            <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Knives</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* Card 2 */}
+                                <div className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
+                                    <div className="category-card h-[350px]" style={{backgroundImage: "url('/spear.jpg')"}}>
+                                        <div className="category-overlay w-full h-full flex items-center justify-center p-6">
+                                            <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Spears</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* Card 3 */}
+                                <div className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
+                                    <div className="category-card h-[350px]" style={{backgroundImage: "url('/axe.jpg')"}}>
+                                        <div className="category-overlay w-full h-full flex items-center justify-center p-6">
+                                            <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Axes</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* Card 4 */}
+                                <div className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
+                                    <div className="category-card h-[350px]" style={{backgroundImage: "url('/sword-img.jpg')"}}>
+                                        <div className="category-overlay w-full h-full flex items-center justify-center p-6">
+                                            <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Swords</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* Card 5 */}
+                                <div className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
+                                    <div className="category-card h-[350px]" style={{backgroundImage: "url('/dagger.jpg')"}}>
+                                        <div className="category-overlay w-full h-full flex items-center justify-center p-6">
+                                            <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Daggers</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* Card 6 */}
+                                <div className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
+                                    <div className="category-card h-[350px]" style={{backgroundImage: "url('/hammer.jpg')"}}>
+                                        <div className="category-overlay w-full h-full flex items-center justify-center p-6">
+                                            <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Hammers</h3>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        {/* Hand-Forged or Custom-Made Tools */}
-                        <div className="group relative overflow-hidden rounded-2xl h-[350px] cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
-                            <Image src="/tools-img.jpg" width={256} height={256}
-                                 alt="Hand-Forged Tools"
-                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70"></div>
-                            <div className="absolute inset-0 p-6 flex items-center justify-center">
-                                <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Hand-Forged or Custom-Made Tools</h3>
-                            </div>
-                        </div>
-                        {/* Collectible & Decorative Swords */}
-                        <div className="group relative overflow-hidden rounded-2xl h-[350px] cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
-                            <Image src="/sword-img.jpg" width={256} height={256}
-                                 alt="Collectible & Decorative Swords"
-                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70"></div>
-                            <div className="absolute inset-0 p-6 flex items-center justify-center">
-                                <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Collectible & Decorative Swords</h3>
-                            </div>
-                        </div>
-                        {/* Premium Kitchen Knives */}
-                        <div className="group relative overflow-hidden rounded-2xl h-[350px] cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
-                            <Image src="/knife-img.jpg" width={256} height={256}
-                                 alt="Premium Kitchen Knives"
-                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70"></div>
-                            <div className="absolute inset-0 p-6 flex items-center justify-center">
-                                <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Premium Kitchen Knives</h3>
-                            </div>
-                        </div>
+                        <button ref={categoryPrevBtnRef} className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-[#D6AF66] rounded-md p-3 shadow-md hidden md:block">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                        </button>
+                        <button ref={categoryNextBtnRef} className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-[#D6AF66] rounded-md p-3 shadow-md hidden md:block">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                        </button>
                     </div>
                     {/* Explore Collection Button */}
-                    <div className="text-center">
-                        <button className="bg-highlight text-white px-10 py-4 rounded-lg font-medium text-lg hover:opacity-90 transition-opacity shadow-lg">
-                            Explore Collection
-                        </button>
+                    <div className="text-center mt-12">
+                        <Link href="/categories">
+                            <button className="bg-highlight text-white px-10 py-4 rounded-lg font-medium text-lg hover:opacity-90 transition-opacity shadow-lg">
+                                Explore Collection
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </section>
 
 
             {/* New Product Slider Section */}
-            <section className="min-h-96 flex flex-col justify-center py-16 new-product-slider">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+            <section className="min-h-96 flex flex-col justify-center py-12 lg:py-12 new-product-slider">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 relative z-10">
 
                     <h2 className="text-center mb-12 font-quattrocento text-4xl md:text-5xl font-bold text-primary">Products</h2>
                     <div className="max-w-7xl mx-auto max-h-[650px] hidden md:block">
@@ -413,137 +545,7 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="py-16 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-7xl mx-auto">
-                    <h2 className="mb-16 text-center">Testimonials</h2>
-
-                    <div className="masonry-grid">
-                        <div className="testimonial-item">
-                            <div className="testimonial-card">
-                                <p className="testimonial-text">
-                                    Top-notch quality. My cooking feels professional now!
-                                </p>
-                            </div>
-                            <div className="flex items-center mt-4">
-                                <Image src="/testimonial-profile-img.jpg"
-                                     width={96} height={96} alt="Emma Collins" className="profile-image" />
-                                <div>
-                                    <div className="customer-name">Emma Collins</div>
-                                    <div className="customer-date">01 - 08 - 2025</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="testimonial-item">
-                            <div className="testimonial-card">
-                                <p className="testimonial-text">
-                                    I ordered a custom-forged sword and was blown away by the detail. It is not just a weapon — it is art. Stag Horn has revived old-world quality in a modern world.
-                                </p>
-                            </div>
-                            <div className="flex items-center mt-4">
-                                <Image src="/testimonial-profile-img.jpg"
-                                     width={96} height={96} alt="Mariam Zafar" className="profile-image" />
-                                <div>
-                                    <div className="customer-name">Mariam Zafar</div>
-                                    <div className="customer-date">01 - 08 - 2025</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="testimonial-item">
-                            <div className="testimonial-card">
-                                <p className="testimonial-text">
-                                    I bought a 3-piece knife set from Stag Horn, and I now actually enjoy cooking. The grip, the sharpness, the design — love everything!
-                                </p>
-                            </div>
-                            <div className="flex items-center mt-4">
-                                <Image src="/testimonial-profile-img.jpg"
-                                     width={96} height={96} alt="Naveed Ahmed" className="profile-image" />
-                                <div>
-                                    <div className="customer-name">Naveed Ahmed</div>
-                                    <div className="customer-date">01 - 08 - 2025</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="testimonial-item">
-                            <div className="testimonial-card">
-                                <p className="testimonial-text">
-                                    I bought a 3-piece knife set from Stag Horn, and I now actually enjoy cooking. The grip, the sharpness, the design — love everything!
-                                </p>
-                            </div>
-                            <div className="flex items-center mt-4">
-                                <Image src="/testimonial-profile-img.jpg"
-                                     width={96} height={96} alt="Sarah Lee" className="profile-image" />
-                                <div>
-                                    <div className="customer-name">Sarah Lee</div>
-                                    <div className="customer-date">01 - 08 - 2025</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="testimonial-item">
-                            <div className="testimonial-card">
-                                <p className="testimonial-text">
-                                    We have been sourcing from Stag Horn Cutlery Work for over two years. Their consistency, packaging, and client service are exceptional. Every piece feels like a premium product — because it is.
-                                </p>
-                            </div>
-                            <div className="flex items-center mt-4">
-                                <Image src="/testimonial-profile-img.jpg" width={96} height={96} alt="Jimmy" className="profile-image" />
-                                <div>
-                                    <div className="customer-name">Jimmy</div>
-                                    <div className="customer-date">01 - 08 - 2025</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="testimonial-item">
-                            <div className="testimonial-card">
-                                <p className="testimonial-text">
-                                    Blades that do not just cut — they glide. Excellent craftsmanship. Proud to support a Pakistani brand making waves globally.
-                                </p>
-                            </div>
-                            <div className="flex items-center mt-4">
-                                <Image src="/testimonial-profile-img.jpg" width={96} height={96} alt="John Doe" className="profile-image" />
-                                <div>
-                                    <div className="customer-name">John Doe</div>
-                                    <div className="customer-date">01 - 08 - 2025</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="testimonial-item">
-                            <div className="testimonial-card">
-                                <p className="testimonial-text">
-                                    The custom sword I ordered was beyond my expectations. Intricate hand-etching, perfectly balanced, and incredibly well packaged. This is world-class metalwork.
-                                </p>
-                            </div>
-                            <div className="flex items-center mt-4">
-                                <Image src="/testimonial-profile-img.jpg" width={96} height={96} alt="Customer" className="profile-image" />
-                                <div>
-                                    <div className="customer-name">Alex Turner</div>
-                                    <div className="customer-date">01 - 08 - 2025</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="testimonial-item">
-                            <div className="testimonial-card">
-                                <p className="testimonial-text">
-                                    We have been sourcing from Stag Horn Cutlery Work for over two years. Their consistency, packaging, and client service are exceptional. Every piece feels like a premium product — because it is.
-                                </p>
-                            </div>
-                            <div className="flex items-center mt-4">
-                                <Image src="/testimonial-profile-img.jpg" width={96} height={96} alt="Customer" className="profile-image" />
-                                <div>
-                                    <div className="customer-name">Mike Johnson</div>
-                                    <div className="customer-date">01 - 08 - 2025</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <TestimonialScroller />
 
             <section className="py-8">
                 <div className="container mx-auto px-4">

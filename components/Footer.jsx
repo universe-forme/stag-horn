@@ -10,7 +10,7 @@ const Footer = () => {
           {/* Logo Section */}
           <div className="flex-shrink-0 lg:w-1/4">
             <div className="mb-8">
-              <Link href="/" className="flex items-center">
+              <Link href="/" className="flex items-center justify-center">
                 <div className="w-16 h-16 flex items-center justify-center">
                   <Image src="/footer-logo.svg" alt="Stag Horn Logo" width={143} height={58} />
                 </div>
@@ -36,12 +36,16 @@ const Footer = () => {
             <div>
               <h3 className="footer-heading font-medium text-lg mb-6">Categories</h3>
               <ul className="space-y-4">
-                <li><Link href="#" className="footer-link text-base">Kitchen Cutlery</Link></li>
-                <li><Link href="#" className="footer-link text-base">Professional Tools</Link></li>
-                <li><Link href="#" className="footer-link text-base">Collector's Blades</Link></li>
-                <li><Link href="#" className="footer-link text-base">Luxury Flatware</Link></li>
-                <li><Link href="#" className="footer-link text-base">Camping & Outdoor</Link></li>
-                <li><Link href="#" className="footer-link text-base">Custom Orders</Link></li>
+                <li><Link href="#" className="footer-link text-base">Knife</Link></li>
+                <li><Link href="#" className="footer-link text-base">Axe</Link></li>
+                <li><Link href="#" className="footer-link text-base">Swords</Link></li>
+                <li><Link href="#" className="footer-link text-base">Spear</Link></li>
+                <li><Link href="#" className="footer-link text-base">Ball</Link></li>
+                <li><Link href="#" className="footer-link text-base">Mace Ball</Link></li>
+                <li><Link href="#" className="footer-link text-base">Dagger</Link></li>
+                <li><Link href="#" className="footer-link text-base">Hammer</Link></li>
+                <li><Link href="#" className="footer-link text-base">Razer</Link></li>
+                <li><Link href="#" className="footer-link text-base">Knuckle Brass</Link></li>
               </ul>
             </div>
 
@@ -80,7 +84,7 @@ const Footer = () => {
             <svg className="w-5 h-5 footer-text mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
             </svg>
-            <p className="footer-text text-base">Near, High Class Bakers G.T. Road, Wazirabad, Punjab, Pakistan</p>
+            <p className="text-[#C0C0C0] text-base">Near, High Class Bakers G.T. Road, Wazirabad, Punjab, Pakistan</p>
           </div>
         </div>
 

@@ -45,8 +45,8 @@ const CategoriesPage = () => {
             <div className="max-w-7xl mx-auto relative z-10 py-16 px-4">
                 <div className="text-center mt-24 mb-12">
                     <h2 className="mb-8">Categories</h2>
-                    <div className="flex justify-end relative">
-                        <button ref={buttonRef} className="filter-button bg-[#F9F9F6] rounded-lg shadow-xl" onClick={toggleMenu}>
+                    <div className="relative flex justify-center md:justify-end">
+                        <button ref={buttonRef} className="filter-button bg-[#F9F9F6] rounded-lg shadow-xl w-full md:w-auto" onClick={toggleMenu}>
                             <div className="flex items-center gap-2">
                                 <Image src="/filter-icon.svg" alt={"Filter Icon"} width={16} height={16} />
                                 <span>Filter</span>
@@ -65,82 +65,73 @@ const CategoriesPage = () => {
                 </div>
 
                 <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                        <div className="category-card h-96 flex items-center justify-center" style={{backgroundImage: "url('/dinner-set-img.jpg')"}}>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+                        <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: "url('/knife-img.jpg')"}}>
                             <div className="category-overlay w-full h-full flex items-center justify-center">
-                                <h3 className="category-title px-4">Luxury Flatware & Dining Sets</h3>
+                                <h3 className="category-title px-4">Knife</h3>
                             </div>
                         </div>
 
-                        <div className="category-card h-96 flex items-center justify-center" style={{backgroundImage: "url('/tools-img.jpg')"}}>
+                        <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: "url('/spear.jpg')"}}>
                             <div className="category-overlay w-full h-full flex items-center justify-center">
-                                <h3 className="category-title px-4">Hand-Forged or Custom-Made Tools</h3>
+                                <h3 className="category-title px-4">Spear</h3>
                             </div>
                         </div>
 
-                        <div className="category-card h-96 flex items-center justify-center" style={{backgroundImage: "url('/sword-img.jpg')"}}>
+                        <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: "url('/axe.jpg')"}}>
                             <div className="category-overlay w-full h-full flex items-center justify-center">
-                                <h3 className="category-title px-4">Collectible & Decorative Swords</h3>
+                                <h3 className="category-title px-4">Axe</h3>
                             </div>
                         </div>
 
-                        <div className="category-card h-96 flex items-center justify-center" style={{backgroundImage: "url('/knife-img.jpg')"}}>
+                        <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: "url('/sword-img.jpg')"}}>
                             <div className="category-overlay w-full h-full flex items-center justify-center">
-                                <h3 className="category-title px-4">Premium Kitchen Knives</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                        <div className="category-card h-96 flex items-center justify-center" style={{backgroundImage: "url('/chef-knife.jpg')"}}>
-                            <div className="category-overlay w-full h-full flex items-center justify-center">
-                                <h3 className="category-title px-4">Chef Knives</h3>
+                                <h3 className="category-title px-4">Sword</h3>
                             </div>
                         </div>
 
-                        <div className="category-card h-96 flex items-center justify-center" style={{backgroundImage: "url('/butcher-tool.jpg')"}}>
+                        <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: "url('/ball.jpg')"}}>
                             <div className="category-overlay w-full h-full flex items-center justify-center">
-                                <h3 className="category-title px-4">Butcher Tools</h3>
+                                <h3 className="category-title px-4">Ball</h3>
                             </div>
                         </div>
 
-                        <div className="category-card h-96 flex items-center justify-center" style={{backgroundImage: "url('/flatware-set.jpg')"}}>
+                        <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: "url('/spike.png')"}}>
                             <div className="category-overlay w-full h-full flex items-center justify-center">
-                                <h3 className="category-title px-4">Luxury Flatware Sets</h3>
+                                <h3 className="category-title px-4">Spike</h3>
                             </div>
                         </div>
 
-                        <div className="category-card h-96 flex items-center justify-center" style={{backgroundImage: "url('/katakana.jpg')"}}>
+                        <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: "url('/mace-ball.png')"}}>
                             <div className="category-overlay w-full h-full flex items-center justify-center">
-                                <h3 className="category-title px-4">Swords & Katakana</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div className="category-card h-96 flex items-center justify-center" style={{backgroundImage: "url('/survival-knives.jpg')"}}>
-                            <div className="category-overlay w-full h-full flex items-center justify-center">
-                                <h3 className="category-title px-4">Camping & Survival Knives</h3>
+                                <h3 className="category-title px-4">Mace Ball</h3>
                             </div>
                         </div>
 
-                        <div className="category-card h-96 flex items-center justify-center" style={{backgroundImage: "url('/custom-knives.jpg')"}}>
+                        <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: "url('/dagger.jpg')"}}>
                             <div className="category-overlay w-full h-full flex items-center justify-center">
-                                <h3 className="category-title px-4">Hand-Forged Custom Knives</h3>
+                                <h3 className="category-title px-4">Dagger</h3>
                             </div>
                         </div>
 
-                        <div className="category-card h-96 flex items-center justify-center" style={{backgroundImage: "url('/flatware.jpg')"}}>
+                        <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: "url('/hammer.jpg')"}}>
                             <div className="category-overlay w-full h-full flex items-center justify-center">
-                                <h3 className="category-title px-4">Flatware</h3>
+                                <h3 className="category-title px-4">Hammer</h3>
                             </div>
                         </div>
 
-                        <div className="category-card h-96 flex items-center justify-center" style={{backgroundImage: "url('/serving-cutlery.jpg')"}}>
+                        <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: "url('/razor.png')"}}>
                             <div className="category-overlay w-full h-full flex items-center justify-center">
-                                <h3 className="category-title px-4">Serving Cutlery</h3>
+                                <h3 className="category-title px-4">Razor</h3>
                             </div>
                         </div>
+
+                        <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: "url('/knuckle-brass.jpg')"}}>
+                            <div className="category-overlay w-full h-full flex items-center justify-center">
+                                <h3 className="category-title px-4">Knuckle Brass</h3>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

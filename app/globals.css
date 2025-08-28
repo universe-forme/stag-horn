@@ -88,6 +88,11 @@ body {
 .cta-button:active {
   transform: translateY(0);
 }
+.slider-btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
 @media (max-width: 1023px) {
   .desktop-nav {
     display: none;
@@ -174,6 +179,7 @@ p, span, li, a, div, input, textarea, button {
     font-size: 28px;
     line-height: 100%;
     letter-spacing: 0;
+    margin-bottom: 5px;
 }
 
 
@@ -183,15 +189,21 @@ p, span, li, a, div, input, textarea, button {
 }
 
 .footer-heading {
-  color: #FFFFFF;
+  color: #F9F9F6;
+    font-family: Poppins, Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0;
+
 }
 
 .footer-text {
-  color: #6B7280; /* text-gray-500 */
+  color: #7C7C7C;
 }
 
 .footer-link {
-  color: #9CA3AF; /* text-gray-400 */
+  color: #7C7C7C;
   transition: color 0.2s ease;
 }
 
@@ -369,6 +381,36 @@ p, span, li, a, div, input, textarea, button {
     margin-right: 12px;
 }
 
+.testimonial-scroller {
+    max-height: 80vh;
+    overflow: hidden;
+    position: relative;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+.scroller-inner {
+    animation: scroll-up 20s linear infinite;
+}
+
+.testimonial-scroller:hover .scroller-inner {
+    animation-play-state: paused;
+}
+
+@keyframes scroll-up {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-50%);
+    }
+}
+
+.testimonial-item {
+    break-inside: avoid;
+    margin-bottom: 24px;
+}
+
 .masonry-grid {
     columns: 4;
     column-gap: 24px;
@@ -382,19 +424,14 @@ p, span, li, a, div, input, textarea, button {
 
 @media (max-width: 1024px) {
     .masonry-grid {
-        columns: 3;
+        columns: 2;
     }
 }
 
 @media (max-width: 640px) {
     .masonry-grid {
-        columns: 2;
+        columns: 1;
     }
-}
-
-.testimonial-item {
-    break-inside: avoid;
-    margin-bottom: 24px;
 }
 
 @media (max-width: 768px) {
@@ -543,11 +580,35 @@ p, span, li, a, div, input, textarea, button {
     }
 }
 @media (max-width: 480px) {
-    .form-container {
-        padding: 24px 16px;
+    h1 {
+        font-family: Quattrocento, serif;
+        font-weight: bold;
+        font-size: 48px;
+        line-height: normal;
+        letter-spacing: 0;
     }
-    .form-title {
+    h2 {
+        font-family: Quattrocento, serif;
+        font-weight: bold;
         font-size: 24px;
+        line-height: normal;
+        letter-spacing: 0;
+        text-align: center;
+    }
+    p, span, li, a, div, input, textarea, button {
+        font-family: Poppins, Arial, Helvetica, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: normal;
+    }
+    .submit-button, .cta-button, .cta-button-new {
+        font-family: Poppins, Arial, Helvetica, sans-serif;
+        font-weight: 500;
+        font-style: normal;
+        font-size: 16px;
+        line-height: 100%;
+        letter-spacing: 0;
+        text-align: center;
     }
 }
 
@@ -666,6 +727,12 @@ p, span, li, a, div, input, textarea, button {
 
 .filter-dropdown-item:hover {
     color: var(--ct-as-buttons-highlights, #D6AF66);
+}
+@media (max-width: 768px) {
+    .filter-dropdown-menu {
+        left: 0;
+        width: 100%;
+    }
 }
 
 @media (max-width: 768px) {
