@@ -1,7 +1,7 @@
 import { Poppins, Quattrocento, Open_Sans } from "next/font/google";
 import "./globals.css";
 import ConvexClientProvider from "../components/ConvexClientProvider";
-import { ClerkProvider } from "@clerk/nextjs";
+import ClerkProviderWrapper from "../components/ClerkProviderWrapper";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -30,7 +30,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <ClerkProviderWrapper>
       <html lang="en">
         <body className={`${poppins.variable} ${quattrocento.variable} ${openSans.variable} antialiased`}>
           <ConvexClientProvider>
@@ -39,6 +39,6 @@ export default function RootLayout({ children }) {
           </ConvexClientProvider>
         </body>
       </html>
-    </ClerkProvider>
+    </ClerkProviderWrapper>
   );
 }

@@ -5,13 +5,14 @@ import { useAuth } from "@clerk/nextjs";
 
 const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
 
-if (!convexUrl) {
-  throw new Error("NEXT_PUBLIC_CONVEX_URL is not set");
-}
-
-const convex = new ConvexReactClient(convexUrl);
-
 export default function ConvexClientProvider({ children }) {
+  // Check if Convex environment variables are available
+  if (!convexUrl) {
+    console.warn("NEXT_PUBLIC_CONVEX_URL is not set. Database features will be disabled.");
+    return children;
+  }
+
+  const convex = new ConvexReactClient(convexUrl);
   const { getToken } = useAuth();
   
   return (

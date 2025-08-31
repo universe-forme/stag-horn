@@ -1,5 +1,23 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Environment Variables
+
+This project requires the following environment variables to be set:
+
+### Clerk Authentication
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` - Your Clerk publishable key
+- `CLERK_SECRET_KEY` - Your Clerk secret key
+
+### Convex
+- `NEXT_PUBLIC_CONVEX_URL` - Your Convex deployment URL
+- `CLERK_JWT_ISSUER_DOMAIN` - Your Clerk JWT issuer domain
+
+### For Vercel Deployment
+Add these environment variables in your Vercel project settings:
+1. Go to your Vercel project dashboard
+2. Navigate to Settings > Environment Variables
+3. Add each variable with the appropriate value
+
 ## Getting Started
 
 First, run the development server:

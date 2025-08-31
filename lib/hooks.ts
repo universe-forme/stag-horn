@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
+import { Id } from "../convex/_generated/dataModel";
 
 // Admin authentication hooks
 export const useVerifyAdminLogin = () => {
@@ -36,11 +37,11 @@ export const useFeaturedProducts = () => {
   return useQuery(api.products.getFeaturedProducts);
 };
 
-export const useProductById = (productId: string | null) => {
+export const useProductById = (productId: Id<"products"> | null) => {
   return useQuery(api.products.getProductById, productId ? { productId } : "skip");
 };
 
-export const useProductsByCategory = (categoryId: string | null) => {
+export const useProductsByCategory = (categoryId: Id<"categories"> | null) => {
   return useQuery(api.products.getProductsByCategory, categoryId ? { categoryId } : "skip");
 };
 
@@ -65,7 +66,7 @@ export const useAllCategories = () => {
   return useQuery(api.categories.getAllCategories);
 };
 
-export const useCategoryById = (categoryId: string | null) => {
+export const useCategoryById = (categoryId: Id<"categories"> | null) => {
   return useQuery(api.categories.getCategoryById, categoryId ? { categoryId } : "skip");
 };
 
