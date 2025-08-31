@@ -1,12 +1,18 @@
 'use client';
 import Image from 'next/image';
 import React from "react";
+import ConditionalLayout from "../../components/ConditionalLayout";
 
 const AboutPage = () => {
-
-
     return (
+        <ConditionalLayout>
+            <AboutContent />
+        </ConditionalLayout>
+    );
+};
 
+const AboutContent = () => {
+    return (
         <div className="diagonal-bg min-h-screen relative overflow-hidden">
             {/* Background Overlay Image */}
             <div className="absolute top-0 left-0 w-1/3 h-2/3 hidden lg:block z-0 pointer-events-none">
@@ -123,7 +129,7 @@ const AboutPage = () => {
 
                         <div className="legacy-section">
                             <p className="legacy-text">
-                                At Stag Horn Cutlery, we don't just make knives — we preserve a legacy. A legacy you can hold.
+                                At Stag Horn Cutlery, we don&apos;t just make knives — we preserve a legacy. A legacy you can hold.
                             </p>
                             <a href="#" className="cta-button">Shop The Collection</a>
                         </div>

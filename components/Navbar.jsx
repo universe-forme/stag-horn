@@ -2,13 +2,14 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-export default function Navbar() {
+export default function Navbar({ isAdminLoggedIn = false }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const pathname = usePathname();
+  const router = useRouter();
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -41,10 +42,21 @@ export default function Navbar() {
     };
   }, []);
 
+  // Handle login click
+  const handleLoginClick = (e) => {
+    e.preventDefault();
+    if (isAdminLoggedIn) {
+      router.push('/admin');
+    } else {
+      router.push('/login');
+    }
+  };
+
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/categories", label: "Categories" },
     { href: "/about", label: "About Us" },
+    { href: "#", label: "Login", onClick: handleLoginClick },
     // { href: "/blogs", label: "Blogs" },
     // { href: "/contact", label: "Contact Us" },
   ];
@@ -67,13 +79,23 @@ export default function Navbar() {
           {/* Desktop Navigation & CTA */}
           <div className="hidden lg:flex items-center space-x-8">
             {navLinks.map(link => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`navbar-link${pathname === link.href ? " active" : ""}`}
-              >
-                {link.label}
-              </Link>
+              link.onClick ? (
+                <button
+                  key={link.href}
+                  onClick={link.onClick}
+                  className="navbar-link"
+                >
+                  {link.label}
+                </button>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`navbar-link${pathname === link.href ? " active" : ""}`}
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
             <Link href="/contact" className="bg-[#D6AF66] text-[#F9F9F6] px-6 py-3 rounded-xl font-medium text-sm hover:bg-[#D6AF66]/90 transition-colors duration-200">Contact Us</Link>
           </div>
@@ -106,14 +128,27 @@ export default function Navbar() {
         >
           <div className="flex flex-col space-y-4">
             {navLinks.map(link => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`navbar-link${pathname === link.href ? " active" : ""}`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
+              link.onClick ? (
+                <button
+                  key={link.href}
+                  onClick={(e) => {
+                    link.onClick(e);
+                    setIsMenuOpen(false);
+                  }}
+                  className="navbar-link text-left"
+                >
+                  {link.label}
+                </button>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`navbar-link${pathname === link.href ? " active" : ""}`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
             <Link href="/contact" className="bg-[#D6AF66] text-[#F9F9F6] px-6 py-3 rounded-xl font-medium text-sm hover:bg-[#D6AF66]/90 transition-colors duration-200 text-center mt-4" onClick={() => setIsMenuOpen(false)}>Contact Us</Link>
           </div>

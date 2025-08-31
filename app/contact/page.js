@@ -1,11 +1,18 @@
 'use client';
 import Image from 'next/image';
 import React from "react";
+import ConditionalLayout from "../../components/ConditionalLayout";
 
 const ContactPage = () => {
+    return (
+        <ConditionalLayout>
+            <ContactContent />
+        </ConditionalLayout>
+    );
+};
 
-
-return (
+const ContactContent = () => {
+    return (
         <div className="diagonal-bg min-h-screen relative overflow-hidden">
             {/* Background Overlay Image */}
             <div className="absolute top-0 left-0 w-1/3 h-2/3 hidden lg:block z-0 pointer-events-none">

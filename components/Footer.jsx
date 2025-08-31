@@ -54,16 +54,12 @@ const Footer = () => {
                 <h3 className="footer-heading font-medium text-lg mb-6">Contact</h3>
                 <div className="space-y-4">
                   <div>
-                    <p className="footer-link text-base">M. Shabir:</p>
-                    <p className="footer-link text-base">0345 6517014</p>
+                    <p className="footer-link text-base">Hassan Mughal:</p>
+                    <Link href="https://wa.me/+923080601995" target="_blank" className="footer-link text-base">+923080601995</Link>
                   </div>
                   <div>
-                    <p className="footer-link text-base">Bilal Ahmed:</p>
-                    <p className="footer-link text-base">0300-9611418</p>
-                  </div>
-                  <div>
-                    <p className="footer-link text-base">Usman Ali:</p>
-                    <p className="footer-link text-base">0340-0466400</p>
+                    <p className="footer-link text-base">Qamar Shahzad:</p>
+                    <Link href="https://wa.me/+923126209302" target="_blank" className="footer-link text-base">+923126209302</Link>
                   </div>
                 </div>
             </div>

@@ -1,0 +1,95 @@
+import { useQuery, useMutation } from "convex/react";
+import { api } from "../convex/_generated/api";
+
+// Admin authentication hooks
+export const useVerifyAdminLogin = () => {
+  return useMutation(api.users.verifyAdminLogin);
+};
+
+export const useGetAdminLoginHistory = (limit?: number) => {
+  return useQuery(api.users.getAdminLoginHistory, { limit });
+};
+
+export const useGetAdminLoginHistoryByUsername = (username: string, limit?: number) => {
+  return useQuery(api.users.getAdminLoginHistoryByUsername, { username, limit });
+};
+
+// User hooks
+export const useUserByClerkId = (clerkId: string | null) => {
+  return useQuery(api.users.getUserByClerkId, clerkId ? { clerkId } : "skip");
+};
+
+export const useCreateUser = () => {
+  return useMutation(api.users.createUser);
+};
+
+export const useUpdateUser = () => {
+  return useMutation(api.users.updateUser);
+};
+
+// Product hooks
+export const useActiveProducts = () => {
+  return useQuery(api.products.getActiveProducts);
+};
+
+export const useFeaturedProducts = () => {
+  return useQuery(api.products.getFeaturedProducts);
+};
+
+export const useProductById = (productId: string | null) => {
+  return useQuery(api.products.getProductById, productId ? { productId } : "skip");
+};
+
+export const useProductsByCategory = (categoryId: string | null) => {
+  return useQuery(api.products.getProductsByCategory, categoryId ? { categoryId } : "skip");
+};
+
+export const useSearchProducts = (searchTerm: string) => {
+  return useQuery(api.products.searchProducts, { searchTerm });
+};
+
+export const useTopRatedProducts = (limit?: number) => {
+  return useQuery(api.products.getTopRatedProducts, { limit });
+};
+
+export const useBestSellingProducts = (limit?: number) => {
+  return useQuery(api.products.getBestSellingProducts, { limit });
+};
+
+// Category hooks
+export const useActiveCategories = () => {
+  return useQuery(api.categories.getActiveCategories);
+};
+
+export const useAllCategories = () => {
+  return useQuery(api.categories.getAllCategories);
+};
+
+export const useCategoryById = (categoryId: string | null) => {
+  return useQuery(api.categories.getCategoryById, categoryId ? { categoryId } : "skip");
+};
+
+export const useCategoryBySlug = (slug: string | null) => {
+  return useQuery(api.categories.getCategoryBySlug, slug ? { slug } : "skip");
+};
+
+export const useCategoriesWithProductCounts = () => {
+  return useQuery(api.categories.getCategoriesWithProductCounts);
+};
+
+// Contact form hooks
+export const useSubmitContactForm = () => {
+  return useMutation(api.contact.submitContactForm);
+};
+
+export const useAllContactSubmissions = () => {
+  return useQuery(api.contact.getAllContactSubmissions);
+};
+
+export const useContactSubmissionsByStatus = (status: "new" | "in_progress" | "completed" | "cancelled") => {
+  return useQuery(api.contact.getContactSubmissionsByStatus, { status });
+};
+
+export const useUpdateContactSubmissionStatus = () => {
+  return useMutation(api.contact.updateContactSubmissionStatus);
+};

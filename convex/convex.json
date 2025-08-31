@@ -1,0 +1,16 @@
+{
+  "project": "stag-horn",
+  "team": "universe-forme",
+  "prodUrl": "https://stag-horn.convex.cloud",
+  "functions": {
+    "enabled": true,
+    "codegen": {
+      "enabled": true,
+      "path": "./_generated"
+    }
+  },
+  "auth": {
+    "enabled": true,
+    "providers": ["clerk"]
+  }
+}

@@ -1,8 +1,17 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import ConditionalLayout from "../../components/ConditionalLayout";
 
 const CategoriesPage = () => {
+    return (
+        <ConditionalLayout>
+            <CategoriesContent />
+        </ConditionalLayout>
+    );
+};
+
+const CategoriesContent = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(null);
     const buttonRef = useRef(null);
