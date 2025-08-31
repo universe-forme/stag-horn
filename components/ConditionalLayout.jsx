@@ -26,7 +26,7 @@ export default function ConditionalLayout({ children }) {
   const shouldShowNavbarFooter = !isAdminPage;
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   return (
