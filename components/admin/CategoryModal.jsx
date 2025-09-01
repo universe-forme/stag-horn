@@ -1,0 +1,449 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { Textarea } from "../ui/textarea";
+import { Switch } from "../ui/switch";
+import { X, Upload, Image as ImageIcon, Trash2 } from "lucide-react";
+
+export default function CategoryModal({ isOpen, onClose, category }) {
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    slug: "",
+    isActive: true,
+    sortOrder: 0,
+    imageUrl: ""
+  });
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const fileInputRef = useRef(null);
+
+  const createCategory = useMutation(api.categories.createCategory);
+  const updateCategory = useMutation(api.categories.updateCategory);
+
+  useEffect(() => {
+    if (category) {
+      setFormData({
+        name: category.name || "",
+        description: category.description || "",
+        slug: category.slug || "",
+        isActive: category.isActive ?? true,
+        sortOrder: category.sortOrder || 0,
+        imageUrl: category.imageUrl || ""
+      });
+      setImagePreview(category.imageUrl || "");
+    } else {
+      setFormData({
+        name: "",
+        description: "",
+        slug: "",
+        isActive: true,
+        sortOrder: 0,
+        imageUrl: ""
+      });
+      setImagePreview("");
+    }
+    setImageFile(null);
+    setErrors({});
+  }, [category, isOpen]);
+
+  const generateSlug = (name) => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9 -]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .trim("-");
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    
+    if (field === "name") {
+      const slug = generateSlug(value);
+      setFormData(prev => ({ ...prev, slug }));
+    }
+    
+    // Clear error for this field
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
+    }
+  };
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      if (handleImageValidation(file)) {
+        setImageFile(file);
+        setErrors(prev => ({ ...prev, image: "" }));
+        
+        // Create preview
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImagePreview(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  };
+
+  const handleImageValidation = (file) => {
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      setErrors(prev => ({ ...prev, image: "Please select a valid image file" }));
+      return false;
+    }
+
+    // Validate file size (5MB limit)
+    if (file.size > 5 * 1024 * 1024) {
+      setErrors(prev => ({ ...prev, image: "Image size must be less than 5MB" }));
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleImageDrop = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove('border-blue-500', 'bg-blue-50');
+    
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      const file = files[0];
+      handleImageValidation(file);
+    }
+  };
+
+  const handleImageDragOver = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.add('border-blue-500', 'bg-blue-50');
+  };
+
+  const handleImageDragLeave = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove('border-blue-500', 'bg-blue-50');
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.add('border-blue-500', 'bg-blue-50');
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove('border-blue-500', 'bg-blue-50');
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove('border-blue-500', 'bg-blue-50');
+    
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      const file = files[0];
+      if (file.type.startsWith('image/')) {
+        if (file.size <= 5 * 1024 * 1024) {
+          setImageFile(file);
+          setErrors(prev => ({ ...prev, image: "" }));
+          
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            setImagePreview(e.target.result);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          setErrors(prev => ({ ...prev, image: "Image size must be less than 5MB" }));
+        }
+      } else {
+        setErrors(prev => ({ ...prev, image: "Please select a valid image file" }));
+      }
+    }
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setImagePreview("");
+    setFormData(prev => ({ ...prev, imageUrl: "" }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Category name is required";
+    }
+
+    if (!formData.slug.trim()) {
+      newErrors.slug = "Slug is required";
+    }
+
+    if (formData.sortOrder < 0) {
+      newErrors.sortOrder = "Sort order must be 0 or greater";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // TODO: Implement actual image upload to cloud storage
+      // For now, we'll use the preview URL as a placeholder
+      const imageUrl = imagePreview || formData.imageUrl;
+
+      if (category) {
+        // Update existing category
+        await updateCategory({
+          categoryId: category._id,
+          name: formData.name,
+          description: formData.description,
+          slug: formData.slug,
+          imageUrl,
+          isActive: formData.isActive,
+          sortOrder: formData.sortOrder,
+        });
+      } else {
+        // Create new category
+        await createCategory({
+          name: formData.name,
+          description: formData.description,
+          slug: formData.slug,
+          imageUrl,
+          isActive: formData.isActive,
+          sortOrder: formData.sortOrder,
+        });
+      }
+
+      onClose();
+    } catch (error) {
+      console.error("Error saving category:", error);
+      setErrors(prev => ({ ...prev, submit: "Failed to save category. Please try again." }));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div 
+      className="fixed inset-0 bg-gray-100 bg-opacity-80 backdrop-blur-md flex items-center justify-center z-50 p-4"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+          <h2 className="text-2xl font-bold text-[#2C2C2C]">
+            {category ? "Edit Category" : "Add New Category"}
+          </h2>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onClose}
+            className="text-[#2C2C2C] hover:bg-gray-100"
+          >
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Category Name */}
+          <div>
+            <Label htmlFor="name" className="text-sm font-medium text-[#2C2C2C]">
+              Category Name *
+            </Label>
+            <Input
+              id="name"
+              type="text"
+              value={formData.name}
+              onChange={(e) => handleInputChange("name", e.target.value)}
+              placeholder="Enter category name"
+              className={`mt-1 ${errors.name ? 'border-red-500' : ''}`}
+            />
+            {errors.name && (
+              <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+            )}
+          </div>
+
+          {/* Description */}
+          <div>
+            <Label htmlFor="description" className="text-sm font-medium text-[#2C2C2C]">
+              Description
+            </Label>
+            <Textarea
+              id="description"
+              value={formData.description}
+              onChange={(e) => handleInputChange("description", e.target.value)}
+              placeholder="Enter category description"
+              rows={3}
+              className="mt-1"
+            />
+          </div>
+
+          {/* Slug */}
+          <div>
+            <Label htmlFor="slug" className="text-sm font-medium text-[#2C2C2C]">
+              Slug *
+            </Label>
+            <Input
+              id="slug"
+              type="text"
+              value={formData.slug}
+              onChange={(e) => handleInputChange("slug", e.target.value)}
+              placeholder="category-slug"
+              className={`mt-1 ${errors.slug ? 'border-red-500' : ''}`}
+            />
+            {errors.slug && (
+              <p className="mt-1 text-sm text-red-600">{errors.slug}</p>
+            )}
+          </div>
+
+          {/* Image Upload */}
+          <div>
+            <Label className="text-sm font-medium text-[#2C2C2C]">
+              Category Image
+            </Label>
+            <div className="mt-1">
+              {imagePreview ? (
+                <div className="relative">
+                  <img
+                    src={imagePreview}
+                    alt="Category preview"
+                    className="w-full h-48 object-cover rounded-lg border border-[#C0C0C0]"
+                  />
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="sm"
+                    onClick={removeImage}
+                    className="absolute top-2 right-2"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              ) : (
+                <div
+                  className="border-2 border-dashed border-[#C0C0C0] rounded-lg p-6 text-center hover:border-[#D6AF66] transition-colors cursor-pointer"
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <Upload className="mx-auto h-12 w-12 text-[#2C2C2C] opacity-40" />
+                  <div className="mt-4">
+                    <p className="text-sm font-medium text-[#2C2C2C]">
+                      Click to upload or drag and drop
+                    </p>
+                    <p className="text-xs text-[#2C2C2C] opacity-60 mt-1">
+                      PNG, JPG, GIF up to 5MB
+                    </p>
+                  </div>
+                </div>
+              )}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+              {errors.image && (
+                <p className="mt-1 text-sm text-red-600">{errors.image}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Sort Order */}
+          <div>
+            <Label htmlFor="sortOrder" className="text-sm font-medium text-[#2C2C2C]">
+              Sort Order
+            </Label>
+            <Input
+              id="sortOrder"
+              type="number"
+              value={formData.sortOrder}
+              onChange={(e) => handleInputChange("sortOrder", parseInt(e.target.value) || 0)}
+              placeholder="0"
+              min="0"
+              className={`mt-1 ${errors.sortOrder ? 'border-red-500' : ''}`}
+            />
+            {errors.sortOrder && (
+              <p className="mt-1 text-sm text-red-600">{errors.sortOrder}</p>
+            )}
+          </div>
+
+          {/* Active Status */}
+          <div className="flex items-center justify-between">
+            <div>
+              <Label htmlFor="isActive" className="text-sm font-medium text-[#2C2C2C]">
+                Active Status
+              </Label>
+              <p className="text-xs text-[#2C2C2C] opacity-60 mt-1">
+                Enable or disable this category
+              </p>
+            </div>
+            <Switch
+              id="isActive"
+              checked={formData.isActive}
+              onCheckedChange={(checked) => handleInputChange("isActive", checked)}
+            />
+          </div>
+
+          {/* Submit Error */}
+          {errors.submit && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+              <p className="text-sm text-red-600">{errors.submit}</p>
+            </div>
+          )}
+
+          {/* Action Buttons */}
+          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              disabled={isLoading}
+              className="bg-white text-[#2C2C2C] border border-[#C0C0C0] hover:bg-gray-50"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="bg-[#D6AF66] hover:bg-[#C49F5A] text-white border border-[#D6AF66]"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  Saving...
+                </>
+              ) : (
+                category ? "Update Category" : "Create Category"
+              )}
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}

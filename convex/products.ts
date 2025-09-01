@@ -18,7 +18,13 @@ export const createProduct = mutation({
     isBestSelling: v.boolean(),
     stockQuantity: v.number(),
     sku: v.string(),
-    weight: v.optional(v.number()),
+    weight: v.optional(v.string()),
+    weightInGrams: v.optional(v.number()),
+    productSize: v.optional(v.string()),
+    askingPrice: v.optional(v.number()),
+    manufacturingCost: v.optional(v.string()),
+    estimateShippingCost: v.optional(v.string()),
+    readyToShip: v.optional(v.boolean()),
     dimensions: v.optional(v.object({
       length: v.number(),
       width: v.number(),
@@ -47,6 +53,16 @@ export const getActiveProducts = query({
     return await ctx.db
       .query("products")
       .withIndex("by_active", (q) => q.eq("isActive", true))
+      .collect();
+  },
+});
+
+// Get all products (including inactive)
+export const getAllProducts = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db
+      .query("products")
       .collect();
   },
 });
@@ -110,7 +126,13 @@ export const updateProduct = mutation({
     isTopRated: v.optional(v.boolean()),
     isBestSelling: v.optional(v.boolean()),
     stockQuantity: v.optional(v.number()),
-    weight: v.optional(v.number()),
+    weight: v.optional(v.string()),
+    weightInGrams: v.optional(v.number()),
+    productSize: v.optional(v.string()),
+    askingPrice: v.optional(v.number()),
+    manufacturingCost: v.optional(v.string()),
+    estimateShippingCost: v.optional(v.string()),
+    readyToShip: v.optional(v.boolean()),
     dimensions: v.optional(v.object({
       length: v.number(),
       width: v.number(),
@@ -187,3 +209,5 @@ export const getBestSellingProducts = query({
       .slice(0, args.limit || 10);
   },
 });
+
+

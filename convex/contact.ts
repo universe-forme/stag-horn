@@ -19,14 +19,30 @@ export const submitContactForm = mutation({
     message: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
-    const submissionId = await ctx.db.insert("contactSubmissions", {
+    // Create contact submission record
+    const contactId = await ctx.db.insert("contactSubmissions", {
       ...args,
       status: "new",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
 
-    return submissionId;
+    // Send email notification
+    // try {
+    //   await ctx.scheduler.runAfter(0, "emails:sendContactNotification", {
+    //     contactId,
+    //     to: "hassainshahid123@gmail.com",
+    //     subject: "New Contact Form Submission - Wazir Cutlery",
+    //     data: args
+    //   });
+    // } catch (error) {
+    //   console.error("Failed to schedule email:", error);
+    // }
+     // Send email notification - temporarily disabled due to scheduler configuration
+    // TODO: Implement email service integration
+    console.log("Contact form submitted:", args);
+
+    return contactId;
   },
 });
 

@@ -11,16 +11,19 @@ import {
   BarChart3,
   FileText,
   Home,
-  History
+  History,
+  FolderOpen,
+  Upload
 } from "lucide-react";
 
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+  { name: 'Categories', href: '/admin/categories', icon: FolderOpen },
   { name: 'Products', href: '/admin/products', icon: Package },
   { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
-  { name: 'Customers', href: '/admin/customers', icon: Users },
-  { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
-  { name: 'Reports', href: '/admin/reports', icon: FileText },
+  // { name: 'Customers', href: '/admin/customers', icon: Users },
+  // { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
+  // { name: 'Reports', href: '/admin/reports', icon: FileText },
   { name: 'Login History', href: '/admin/login-history', icon: History },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ];

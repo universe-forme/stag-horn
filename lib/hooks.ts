@@ -4,20 +4,28 @@ import { Id } from "../convex/_generated/dataModel";
 
 // Admin authentication hooks
 export const useVerifyAdminLogin = () => {
-  return useMutation(api.users.verifyAdminLogin);
+  return useMutation(api.admin.verifyAdminLogin);
 };
 
 export const useGetAdminLoginHistory = (limit?: number) => {
-  return useQuery(api.users.getAdminLoginHistory, { limit });
+  return useQuery(api.admin.getAdminLoginHistory, { limit });
 };
 
 export const useGetAdminLoginHistoryByUsername = (username: string, limit?: number) => {
-  return useQuery(api.users.getAdminLoginHistoryByUsername, { username, limit });
+  return useQuery(api.admin.getAdminLoginHistoryByUsername, { username, limit });
 };
 
 // User hooks
 export const useUserByClerkId = (clerkId: string | null) => {
   return useQuery(api.users.getUserByClerkId, clerkId ? { clerkId } : "skip");
+};
+
+export const useAllUsers = () => {
+  return useQuery(api.users.getAllUsers);
+};
+
+export const useUserById = (userId: Id<"users"> | null) => {
+  return useQuery(api.users.getUserById, userId ? { userId } : "skip");
 };
 
 export const useCreateUser = () => {
@@ -26,6 +34,10 @@ export const useCreateUser = () => {
 
 export const useUpdateUser = () => {
   return useMutation(api.users.updateUser);
+};
+
+export const useDeleteUser = () => {
+  return useMutation(api.users.deleteUser);
 };
 
 // Product hooks
@@ -93,4 +105,29 @@ export const useContactSubmissionsByStatus = (status: "new" | "in_progress" | "c
 
 export const useUpdateContactSubmissionStatus = () => {
   return useMutation(api.contact.updateContactSubmissionStatus);
+};
+
+// Order hooks
+export const useAllOrders = () => {
+  return useQuery(api.orders.getAllOrders);
+};
+
+export const useOrdersByUser = (userId: Id<"users"> | null) => {
+  return useQuery(api.orders.getOrdersByUser, userId ? { userId } : "skip");
+};
+
+export const useOrderById = (orderId: Id<"orders"> | null) => {
+  return useQuery(api.orders.getOrderById, orderId ? { orderId } : "skip");
+};
+
+export const useCreateOrder = () => {
+  return useMutation(api.orders.createOrder);
+};
+
+export const useUpdateOrderStatus = () => {
+  return useMutation(api.orders.updateOrderStatus);
+};
+
+export const useUpdatePaymentStatus = () => {
+  return useMutation(api.orders.updatePaymentStatus);
 };

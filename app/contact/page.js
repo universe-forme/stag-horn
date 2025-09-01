@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import React from "react";
 import ConditionalLayout from "../../components/ConditionalLayout";
+import ContactForm from "../../components/ContactForm";
 
 const ContactPage = () => {
     return (
@@ -32,85 +33,7 @@ const ContactContent = () => {
                 <div className="max-w-7xl mx-auto">
                     <section className="py-8">
                         <div className="container mx-auto px-4">
-                            <div className="form-container">
-                                <h3 className="font-poppins mb-12 font-semibold text-center text-xl lg:text-2xl ">Order Now</h3>
-                                <form>
-                                    <div className="form-row">
-                                        <div className="form-group">
-                                            <label htmlFor="fullName" className="form-label">Full Name</label>
-                                            <input type="text" id="fullName" name="fullName" className="form-input" placeholder="Full Name" />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="email" className="form-label">Email</label>
-                                            <input type="email" id="email" name="email" className="form-input" placeholder="Email" />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-row">
-                                        <div className="form-group">
-                                            <label htmlFor="phoneNumber" className="form-label">Phone Number</label>
-                                            <input type="tel" id="phoneNumber" name="phoneNumber" className="form-input" placeholder="+92  Phone Number" />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="whatsappNumber" className="form-label">Whatsapp Number</label>
-                                            <input type="tel" id="whatsappNumber" name="whatsappNumber" className="form-input" placeholder="+92  Phone Number" />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-row">
-                                        <div className="form-group">
-                                            <label htmlFor="companyName" className="form-label">Company Name (Optional)</label>
-                                            <input type="text" id="companyName" name="companyName" className="form-input" placeholder="Company Name (Optional)" />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="companyEmail" className="form-label">Company Email (Optional)</label>
-                                            <input type="email" id="companyEmail" name="companyEmail" className="form-input" placeholder="Company Email (Optional)" />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-row">
-                                        <div className="form-group">
-                                            <label htmlFor="country" className="form-label">Country</label>
-                                            <input type="text" id="country" name="country" className="form-input" placeholder="Country" />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="location" className="form-label">Location</label>
-                                            <input type="text" id="location" name="location" className="form-input" placeholder="Location" />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-row">
-                                        <div className="form-group">
-                                            <label htmlFor="city" className="form-label">City</label>
-                                            <input type="text" id="city" name="city" className="form-input" placeholder="City" />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="productQuantity" className="form-label">Product Quantity</label>
-                                            <input type="number" id="productQuantity" name="productQuantity" className="form-input" placeholder="Product Quantity" />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-row">
-                                        <div className="form-group">
-                                            <label htmlFor="shipmentAddress" className="form-label">Shipment Address</label>
-                                            <input type="text" id="shipmentAddress" name="shipmentAddress" className="form-input" placeholder="Enter full shipment address..." />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="emergencyContact" className="form-label">Emergency Contact Number</label>
-                                            <input type="tel" id="emergencyContact" name="emergencyContact" className="form-input" placeholder="Enter emergency contact number" />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="message" className="form-label">Message</label>
-                                        <textarea id="message" name="message" className="form-textarea" placeholder="Write Message..."></textarea>
-                                    </div>
-
-                                    <div className="form-actions">
-                                        <button type="submit" className="submit-button">Submit</button>
-                                    </div>
-                                </form>
-                            </div>
+                            <ContactForm />
                         </div>
                     </section>
                 </div>

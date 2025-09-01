@@ -12,9 +12,11 @@ export default function AdminHeader() {
   const router = useRouter();
 
   const handleLogout = () => {
-    logout();
-    toast.success('Admin logged out successfully');
-    router.push('/');
+    if (confirm('Are you sure you want to log out?')) {
+      logout();
+      toast.success('Admin logged out successfully');
+      router.push('/');
+    }
   };
 
   return (

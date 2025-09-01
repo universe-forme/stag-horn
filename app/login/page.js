@@ -47,12 +47,16 @@ function LoginContent() {
                 const ipAddress = await getClientIP();
                 const userAgent = getUserAgent();
                 
+                console.log('Attempting admin login with:', { username: formData.email, password: formData.password });
+                
                 const result = await verifyAdminLogin({
                     username: formData.email,
                     password: formData.password,
                     ipAddress,
                     userAgent
                 });
+
+                console.log('Admin login result:', result);
 
                 if (result.success) {
                     // Set admin session
@@ -91,7 +95,11 @@ function LoginContent() {
             }
         } catch (error) {
             console.error('Login error:', error);
-            toast.error('Login failed. Please check your credentials.');
+            if (isAdminLogin) {
+                toast.error('Admin login failed. Please check your credentials.');
+            } else {
+                toast.error('Login failed. Please check your credentials.');
+            }
         } finally {
             setIsLoading(false);
         }

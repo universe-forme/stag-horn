@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Button } from "../../../components/ui/button";
@@ -8,85 +8,75 @@ import { Input } from "../../../components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../../components/ui/table";
 import { Badge } from "../../../components/ui/badge";
-import { Plus, Search, Edit, Trash2, Eye, EyeOff } from "lucide-react";
-import ProductModal from "../../../components/admin/ProductModal";
+import { Plus, Search, Edit, Trash2, Eye, EyeOff, FolderOpen } from "lucide-react";
+import CategoryModal from "../../../components/admin/CategoryModal";
 
-export default function ProductsPage() {
+export default function CategoriesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingProduct, setEditingProduct] = useState(null);
+  const [editingCategory, setEditingCategory] = useState(null);
   const [filterStatus, setFilterStatus] = useState("all");
-  const [filterCategory, setFilterCategory] = useState("all");
 
-  const products = useQuery(api.products.getAllProducts);
   const categories = useQuery(api.categories.getAllCategories);
-  const deleteProduct = useMutation(api.products.deleteProduct);
+  const deleteCategory = useMutation(api.categories.deleteCategory);
 
-  const filteredProducts = products?.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.sku.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredCategories = categories?.filter(category => {
+    const matchesSearch = category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         category.description?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === "all" || 
-                         (filterStatus === "active" && product.isActive) ||
-                         (filterStatus === "inactive" && !product.isActive);
-    const matchesCategory = filterCategory === "all" || 
-                           product.categoryId === filterCategory;
-    return matchesSearch && matchesStatus && matchesCategory;
+                         (filterStatus === "active" && category.isActive) ||
+                         (filterStatus === "inactive" && !category.isActive);
+    return matchesSearch && matchesStatus;
   }) || [];
 
-  const handleAddProduct = () => {
-    setEditingProduct(null);
+  const handleAddCategory = () => {
+    setEditingCategory(null);
     setIsModalOpen(true);
   };
 
-  const handleEditProduct = (product) => {
-    setEditingProduct(product);
+  const handleEditCategory = (category) => {
+    setEditingCategory(category);
     setIsModalOpen(true);
   };
 
-  const handleDeleteProduct = async (productId) => {
-    if (confirm("Are you sure you want to delete this product?")) {
+  const handleDeleteCategory = async (categoryId) => {
+    if (confirm("Are you sure you want to delete this category?")) {
       try {
-        await deleteProduct({ productId });
+        await deleteCategory({ categoryId });
       } catch (error) {
-        console.error("Error deleting product:", error);
+        console.error("Error deleting category:", error);
       }
     }
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-    setEditingProduct(null);
-  };
-
-  const getCategoryName = (categoryId) => {
-    const category = categories?.find(cat => cat._id === categoryId);
-    return category?.name || "Unknown Category";
+    setEditingCategory(null);
   };
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-[#2C2C2C] mb-4">Products</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-[#2C2C2C] mb-4">Categories</h2>
           <p className="text-[#2C2C2C] opacity-80">
-            Manage your product catalog and inventory.
+            Manage your product categories and organize your catalog.
           </p>
         </div>
         <Button 
           className="bg-[#D6AF66] hover:bg-[#C49F5A] text-white"
-          onClick={handleAddProduct}
+          onClick={handleAddCategory}
         >
           <Plus className="mr-2 h-4 w-4" />
-          Add Product
+          Add Category
         </Button>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-[#2C2C2C]">Product Search & Filter</CardTitle>
+          <CardTitle className="text-[#2C2C2C]">Category Search & Filter</CardTitle>
           <CardDescription className="text-[#2C2C2C] opacity-80">
-            Search and filter your products
+            Search and filter your categories
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -94,7 +84,7 @@ export default function ProductsPage() {
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search products..."
+                placeholder="Search categories..."
                 className="pl-10"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -109,63 +99,64 @@ export default function ProductsPage() {
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </select>
-            <select
-              value={filterCategory}
-              onChange={(e) => setFilterCategory(e.target.value)}
-              className="px-3 py-2 border border-[#C0C0C0] rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-[#D6AF66] bg-white text-[#2C2C2C]"
-            >
-              <option value="all">All Categories</option>
-              {categories?.map(category => (
-                <option key={category._id} value={category._id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-[#2C2C2C]">All Products</CardTitle>
+          <CardTitle className="text-[#2C2C2C]">All Categories</CardTitle>
           <CardDescription className="text-[#2C2C2C] opacity-80">
-            A list of all your products with their details.
+            A list of all your categories with their details.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Product</TableHead>
                 <TableHead>Category</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Stock</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead>Slug</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>Sort Order</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredProducts.map((product) => (
-                <TableRow key={product._id}>
+              {filteredCategories.map((category) => (
+                <TableRow key={category._id}>
                   <TableCell>
                     <div className="flex items-center gap-3">
-                      <img
-                        src={product.mainImage}
-                        alt={product.name}
-                        className="w-12 h-12 rounded-lg object-cover"
-                      />
+                      {category.imageUrl ? (
+                        <img
+                          src={category.imageUrl}
+                          alt={category.name}
+                          className="w-12 h-12 rounded-lg object-cover"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-lg bg-gray-200 flex items-center justify-center">
+                          <FolderOpen className="h-6 w-6 text-gray-400" />
+                        </div>
+                      )}
                       <div>
-                        <div className="font-medium">{product.name}</div>
-                        <div className="text-sm text-muted-foreground">SKU: {product.sku}</div>
+                        <div className="font-medium">{category.name}</div>
+                        <div className="text-sm text-muted-foreground">ID: {category._id}</div>
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell>{getCategoryName(product.categoryId)}</TableCell>
-                  <TableCell>${product.price}</TableCell>
-                  <TableCell>{product.stockQuantity}</TableCell>
                   <TableCell>
-                    <Badge variant={product.isActive ? 'default' : 'secondary'}>
-                      {product.isActive ? (
+                    <div className="max-w-xs truncate">
+                      {category.description || "No description"}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <code className="text-sm bg-gray-100 px-2 py-1 rounded">
+                      {category.slug}
+                    </code>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant={category.isActive ? 'default' : 'secondary'}>
+                      {category.isActive ? (
                         <>
                           <Eye className="mr-1 h-3 w-3" />
                           Active
@@ -178,21 +169,21 @@ export default function ProductsPage() {
                       )}
                     </Badge>
                   </TableCell>
+                  <TableCell>{category.sortOrder}</TableCell>
                   <TableCell>
                     <div className="flex gap-2">
                       <Button 
                         variant="outline" 
                         size="sm"
-                        onClick={() => handleEditProduct(product)}
-                        className="bg-white text-[#2C2C2C] border border-[#C0C0C0] hover:bg-gray-50"
+                        onClick={() => handleEditCategory(category)}
                       >
                         <Edit className="h-4 w-4" />
                       </Button>
                       <Button 
                         variant="outline" 
                         size="sm" 
-                        className="bg-white text-red-600 hover:text-red-700 border border-[#C0C0C0] hover:bg-gray-50"
-                        onClick={() => handleDeleteProduct(product._id)}
+                        className="text-red-600 hover:text-red-700"
+                        onClick={() => handleDeleteCategory(category._id)}
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -205,10 +196,10 @@ export default function ProductsPage() {
         </CardContent>
       </Card>
 
-      <ProductModal
+      <CategoryModal
         isOpen={isModalOpen}
         onClose={handleModalClose}
-        product={editingProduct}
+        category={editingCategory}
       />
     </div>
   );
