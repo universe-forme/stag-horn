@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from "next/link";
+import OrderForm from './OrderForm';
 
 
 export default function ProductDetails({ product }) {
@@ -11,6 +12,7 @@ export default function ProductDetails({ product }) {
         : (Array.isArray(product.images) ? product.images : []);
     const [mainImage, setMainImage] = useState(previewImages[0]);
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [showOrderForm, setShowOrderForm] = useState(false);
 
     const sliderRef = useRef(null);
     const prevBtnRef = useRef(null);
@@ -155,102 +157,37 @@ export default function ProductDetails({ product }) {
                 </div>
 
                 <div className="text-center">
-                    <Link href={"/contact"} >
-                    <button className="cta-button">Order Now</button>
-                    </Link>
+                    <button 
+                        onClick={() => setShowOrderForm(true)}
+                        className="cta-button"
+                    >
+                        Order Now
+                    </button>
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto">
-                <div className="text-center mt-24 mb-24">
-                    <h2 className="mb-8">Related Products</h2>
+            {/* Order Form Modal */}
+            {showOrderForm && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                    <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                        <div className="p-6">
+                            <div className="flex justify-between items-center mb-6">
+                                <h2 className="text-2xl font-bold">Place Your Order</h2>
+                                <button
+                                    onClick={() => setShowOrderForm(false)}
+                                    className="text-gray-500 hover:text-gray-700 text-2xl"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                            <OrderForm 
+                                product={product} 
+                                onOrderSuccess={() => setShowOrderForm(false)}
+                            />
+                        </div>
+                    </div>
                 </div>
-
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mb-8">
-
-                    <div className="product-card-new">
-                        <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-                            <div className="relative">
-                                <img src="/spoon-product.jpg" width={256} height={256}
-                                     alt="Stainless Steel Dinner Spoon" className="w-full h-60 object-cover"/>
-                                <div className="absolute top-2 right-2 flex flex-col space-y-1">
-                                    <span className="badge-new text-xs px-2 py-1 rounded">Top Rated</span>
-                                </div>
-                            </div>
-                            <div className="p-5">
-                                <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Spoon – Satin Finish</p>
-                                <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Sleek stainless spoon, durable, elegant, dishwasher safe.</p>
-                                <div className="flex justify-between items-center mb-4">
-                                    <span className="text-xl font-bold product-price-new">$5.99</span>
-                                </div>
-                                <p className="text-sm text-[#0E0E0E] mb-2">Estimate delivery in 2-3 working days</p>
-                                <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="product-card-new">
-                        <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-                            <div className="relative">
-                                <img src="/spoon-product.jpg"  width={256} height={256}
-                                     alt="Stainless Steel Dinner Fork" className="w-full h-60 object-cover"/>
-                                <div className="absolute top-2 right-2 flex flex-col space-y-1">
-                                    <span className="badge-new text-xs px-2 py-1 rounded">Best Selling</span>
-                                </div>
-                            </div>
-                            <div className="p-5">
-                                <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Fork – Satin Finish</p>
-                                <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Elegant design, perfect balance, rust-resistant.</p>
-                                <div className="flex justify-between items-center mb-4">
-                                    <span className="text-xl font-bold product-price-new">$5.99</span>
-                                </div>
-                                <p className="text-sm text-[#0E0E0E] mb-2">Estimate delivery in 2-3 working days</p>
-                                <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="product-card-new">
-                        <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-                            <div className="relative">
-                                <img src="/spoon-product.jpg" width={256} height={256}
-                                     alt="Stainless Steel Dinner Spoon" className="w-full h-60 object-cover"/>
-                            </div>
-                            <div className="p-5">
-                                <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Spoon – Satin Finish</p>
-                                <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Sleek stainless spoon, durable, elegant, dishwasher safe.</p>
-                                <div className="flex justify-between items-center mb-4">
-                                    <span className="text-xl font-bold product-price-new">$5.99</span>
-                                </div>
-                                <p className="text-sm text-[#0E0E0E] mb-2">Estimate delivery in 2-3 working days</p>
-                                <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="product-card-new">
-                        <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-                            <div className="relative">
-                                <img src="/spoon-product.jpg"  width={256} height={256}
-                                     alt="Stainless Steel Dinner Fork" className="w-full h-60 object-cover"/>
-                            </div>
-                            <div className="p-5">
-                                <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Fork – Satin Finish</p>
-                                <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Elegant design, perfect balance, rust-resistant.</p>
-                                <div className="flex justify-between items-center mb-4">
-                                    <span className="text-xl font-bold product-price-new">$5.99</span>
-                                </div>
-                                <p className="text-sm text-[#0E0E0E] mb-2">Estimate delivery in 2-3 working days</p>
-                                <Link href="/contact">
-                                <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
+            )}
         </div>
     );
 }

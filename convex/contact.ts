@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { api } from "./_generated/api";
 
 // Submit contact form
 export const submitContactForm = mutation({
@@ -27,20 +28,13 @@ export const submitContactForm = mutation({
       updatedAt: Date.now(),
     });
 
-    // Send email notification
-    // try {
-    //   await ctx.scheduler.runAfter(0, "emails:sendContactNotification", {
-    //     contactId,
-    //     to: "hassainshahid123@gmail.com",
-    //     subject: "New Contact Form Submission - Wazir Cutlery",
-    //     data: args
-    //   });
-    // } catch (error) {
-    //   console.error("Failed to schedule email:", error);
-    // }
-     // Send email notification - temporarily disabled due to scheduler configuration
-    // TODO: Implement email service integration
-    console.log("Contact form submitted:", args);
+    // Schedule email notification
+    await ctx.scheduler.runAfter(0, api.emails.sendContactNotification, {
+      contactId: contactId,
+      to: "huseyinatwork@gmail.com",
+      subject: "New Contact Form Submission",
+      data: args,
+    });
 
     return contactId;
   },

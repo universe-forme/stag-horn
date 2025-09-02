@@ -92,7 +92,7 @@ export default function SignupPage() {
                         <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full shadow-lg mb-4">
                             <Image 
                                 src="/logo.svg" 
-                                alt="Stag Horn Cutlery" 
+                                alt="Wazir Cutlery" 
                                 width={48} 
                                 height={48}
                                 className="w-12 h-12"

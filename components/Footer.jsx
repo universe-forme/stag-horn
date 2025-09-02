@@ -1,7 +1,13 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useQuery } from "convex/react";
+import { api } from "../convex/_generated/api";
 
 const Footer = () => {
+  const categories = useQuery(api.categories.getActiveCategories);
+  const topCategories = categories?.slice(0, 5);
+
   return (
     <footer className="bg-footer py-12 md:py-16 lg:py-20">
       <div className="max-w-8xl mx-auto px-6 lg:px-9">
@@ -12,7 +18,7 @@ const Footer = () => {
             <div className="mb-8">
               <Link href="/" className="flex items-center justify-center">
                 <div className="w-16 h-16 flex items-center justify-center">
-                  <Image src="/footer-logo.svg" alt="Stag Horn Logo" width={143} height={58} />
+                  <Image src="/footer-logo.svg" alt="Wazir Logo" width={143} height={58} />
                 </div>
               </Link>
             </div>
@@ -26,8 +32,8 @@ const Footer = () => {
               <ul className="space-y-4">
                 <li><Link href="/" className="footer-link text-base">Home</Link></li>
                 <li><Link href="/categories" className="footer-link text-base">Categories</Link></li>
+                  <li><Link href="/product" className="footer-link text-base">Products</Link></li>
                 <li><Link href="/about" className="footer-link text-base">About Us</Link></li>
-                <li><Link href="/blogs" className="footer-link text-base">Blog</Link></li>
                 <li><Link href="/contact" className="footer-link text-base">Contact Us</Link></li>
               </ul>
             </div>
@@ -36,16 +42,13 @@ const Footer = () => {
             <div>
               <h3 className="footer-heading font-medium text-lg mb-6">Categories</h3>
               <ul className="space-y-4">
-                <li><Link href="#" className="footer-link text-base">Knife</Link></li>
-                <li><Link href="#" className="footer-link text-base">Axe</Link></li>
-                <li><Link href="#" className="footer-link text-base">Swords</Link></li>
-                <li><Link href="#" className="footer-link text-base">Spear</Link></li>
-                <li><Link href="#" className="footer-link text-base">Ball</Link></li>
-                <li><Link href="#" className="footer-link text-base">Mace Ball</Link></li>
-                <li><Link href="#" className="footer-link text-base">Dagger</Link></li>
-                <li><Link href="#" className="footer-link text-base">Hammer</Link></li>
-                <li><Link href="#" className="footer-link text-base">Razer</Link></li>
-                <li><Link href="#" className="footer-link text-base">Knuckle Brass</Link></li>
+                {topCategories?.map((category) => (
+                  <li key={category._id}>
+                    <Link href={`/categories/${category.slug}`} className="footer-link text-base">
+                      {category.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -67,8 +70,8 @@ const Footer = () => {
             <div>
                 <h3 className="footer-heading font-medium text-lg mb-6">Special</h3>
                 <ul className="space-y-4">
-                    <li><Link href="#" className="footer-link text-base">B2B Contract</Link></li>
-                    <li><Link href="#" className="footer-link text-base">Customize Order</Link></li>
+                    <li><Link href="" className="footer-link text-base">B2B Contract</Link></li>
+                    <li><Link href="" className="footer-link text-base">Customize Order</Link></li>
                 </ul>
             </div>
           </div>
@@ -87,7 +90,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-[#C0C0C0] pt-8 text-end">
           <p className="footer-text text-sm">
-            © 2025 Stag Horn Cutlery works. All rights reserved.
+            © 2025 Wazir Cutlery works. All rights reserved.
           </p>
         </div>
       </div>

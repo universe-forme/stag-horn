@@ -289,7 +289,7 @@ function AdminProducts() {
 
 ## 🎉 You're All Set!
 
-Your Stag Horn Cutlery website now has a powerful, real-time database backend with:
+Your Wazir Cutlery website now has a powerful, real-time database backend with:
 - ✅ Complete database schema
 - ✅ CRUD operations for all entities
 - ✅ Real-time data synchronization

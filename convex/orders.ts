@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { api } from "./_generated/api";
 
 // Get all orders
 export const getAllOrders = query({
@@ -35,7 +36,7 @@ export const getOrderById = query({
 // Create new order
 export const createOrder = mutation({
   args: {
-    userId: v.id("users"),
+    userId: v.union(v.id("users"), v.string()),
     orderNumber: v.string(),
     status: v.union(
       v.literal("pending"),
@@ -78,6 +79,19 @@ export const createOrder = mutation({
       ...args,
       createdAt: Date.now(),
       updatedAt: Date.now(),
+    });
+
+    // Schedule email notification
+    await ctx.scheduler.runAfter(0, api.emails.sendOrderNotification, {
+      orderId: orderId,
+      to: "huseyinatwork@gmail.com",
+      subject: "New Order Received",
+      data: {
+        orderNumber: args.orderNumber,
+        total: args.total,
+        shippingAddress: args.shippingAddress,
+        items: args.items,
+      },
     });
 
     return orderId;

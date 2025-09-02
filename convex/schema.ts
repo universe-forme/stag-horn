@@ -92,7 +92,7 @@ export default defineSchema({
 
   // Orders table
   orders: defineTable({
-    userId: v.id("users"),
+    userId: v.union(v.id("users"), v.string()),
     orderNumber: v.string(),
     status: v.union(
       v.literal("pending"),

@@ -31,19 +31,19 @@ const AboutContent = () => {
                 </div>
                 <div className="text-center max-w-7xl px-6 mx-auto">
                     <h3 className="other-heading font-medium text-heading-lg mb-6">
-                        Stag Horn Cutlery – Forged in Tradition, Sharpened for the Future
+                        Wazir Cutlery – Forged in Tradition, Sharpened for the Future
                     </h3>
                     <p className="font-body font-normal text-base lg:text-lg  leading-relaxed">
-                        Stag Horn Cutlery – Forged in Tradition, Sharpened for the Future Nestled in the heart of Wazirabad,
-                        the historic city known as the “City of Cutlery”, Stag Horn Cutlery has been crafting excellence for
+                        Wazir Cutlery – Forged in Tradition, Sharpened for the Future Nestled in the heart of Wazirabad,
+                        the historic city known as the “City of Cutlery”, Wazir Cutlery has been crafting excellence for
                         over 5 years. Our journey began with a simple mission — to bring Pakistan’s rich cutlery heritage to
                         the global stage through uncompromising quality, timeless design, and passionate craftsmanship.
-                        At Stag Horn Cutlery, every blade tells a story. From professional chef knives and elegant dining sets
+                        At Wazir Cutlery, every blade tells a story. From professional chef knives and elegant dining sets
                         to exquisite collector swords, we fuse traditional forging techniques with modern aesthetics.
                         Our artisans, trained in generations-old craftsmanship, forge each product with precision,
                         strength, and a commitment to beauty. What started in a small workshop in Wazirabad is now a name
                         recognized by chefs, collectors, and cutlery connoisseurs across borders. Whether you’re slicing in the kitchen,
-                        gifting elegance, or adding to your collection, Stag Horn Cutlery delivers a cut above the rest.
+                        gifting elegance, or adding to your collection, Wazir Cutlery delivers a cut above the rest.
                     </p>
                     <strong className="text-base lg:text-lg leading-relaxed">Because here, it’s not just metal — it’s mastery in your hands.</strong>
                 </div>
@@ -129,7 +129,7 @@ const AboutContent = () => {
 
                         <div className="legacy-section">
                             <p className="legacy-text">
-                                At Stag Horn Cutlery, we don&apos;t just make knives — we preserve a legacy. A legacy you can hold.
+                                At Wazir Cutlery, we don&apos;t just make knives — we preserve a legacy. A legacy you can hold.
                             </p>
                             <a href="#" className="cta-button">Shop The Collection</a>
                         </div>
