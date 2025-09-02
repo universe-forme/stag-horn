@@ -2,19 +2,24 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import Link from "next/link";
+
 
 export default function ProductDetails({ product }) {
-    const [mainImage, setMainImage] = useState(product.images[0]);
+    const previewImages = Array.isArray(product.previewImages) && product.previewImages.length > 0
+        ? product.previewImages
+        : (Array.isArray(product.images) ? product.images : []);
+    const [mainImage, setMainImage] = useState(previewImages[0]);
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const sliderRef = useRef(null);
     const prevBtnRef = useRef(null);
     const nextBtnRef = useRef(null);
 
-    const totalImages = product.images.length;
+    const totalImages = previewImages.length;
 
     const changeMainImage = (index) => {
-        setMainImage(product.images[index]);
+        setMainImage(previewImages[index]);
     };
 
     // This effect handles the visual sliding and button state updates
@@ -110,7 +115,7 @@ export default function ProductDetails({ product }) {
                 <div className="relative max-w-7xl mx-auto">
                     <div className="product-slider-wrapper">
                         <div className="flex transition-transform duration-500 ease-in-out preview-slider-container" ref={sliderRef}>
-                            {product.previewImages.map((imgSrc, index) => (
+                            {previewImages.map((imgSrc, index) => (
                                 <div className="preview-card px-2" key={index}>
                                     <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden cursor-pointer" onClick={() => changeMainImage(index)}>
                                         <div className="relative">
@@ -150,7 +155,9 @@ export default function ProductDetails({ product }) {
                 </div>
 
                 <div className="text-center">
+                    <Link href={"/contact"} >
                     <button className="cta-button">Order Now</button>
+                    </Link>
                 </div>
             </div>
 
@@ -234,7 +241,9 @@ export default function ProductDetails({ product }) {
                                     <span className="text-xl font-bold product-price-new">$5.99</span>
                                 </div>
                                 <p className="text-sm text-[#0E0E0E] mb-2">Estimate delivery in 2-3 working days</p>
+                                <Link href="/contact">
                                 <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
+                                </Link>
                             </div>
                         </div>
                     </div>

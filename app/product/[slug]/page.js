@@ -1,46 +1,55 @@
+"use client";
+import { useParams } from "next/navigation";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 import ProductDetails from "../../../components/ProductDetails";
 import ConditionalLayout from "../../../components/ConditionalLayout";
 
-// Mock data - in a real app, you would fetch this from your database (e.g., Convex or Supabase)
-const mockProduct = {
-    slug: 'stainless-steel-dinner-spoon-satin-finish',
-    name: 'Stainless Steel Dinner Spoon – Satin Finish',
-    price: 5.99,
-    description: 'Lorem ipsum turpis id proin et euismod imperdiet pellentesque risus id nibh sed mi amet libero nec commodo sit et nulla et proin erat facilisi nullam et volutpat turpis tincidunt velit mollit lorem orci tincidunt odor amet lorem proin habitant quam congue adipiscing quam rhoncus ut viverra elit tortor arcu magna duis nulla ut sit consectetur orci semper sed amet nulla integer neque morbi et libero habitant amet nulla imperdiet duis ac nisl iaculis ac neque orci faucibus lacinia est sed tellus consectetur est aliquet aliquet nec et faucibus mauris ultricies facilibus tempus id diam libero sed pharetra consequat vestibulum donec sit id congue at nullam platea varius egestas cursus eget sagittis nisl proin ullamcorper neque vestibulum eu vel non sit nec justo nunc ac fringilla porttitor nulla viverra porta consectetur nulla est et at fusce nunc natoque volutpat fusce volutpat turpis urna ultrices diam id commodo pharetra tincidunt faucibus sed volutputate venenatis erat non a ut viverra velit dolor gravida venenatis laoreet etiam quam duis id tortor orci neque lorem sit gravida donec elit magna semper ac odio mauris tempor etiam tincidunt vulputate vel mi mauris adipiscing id vestibulum tincidunt malesuada interdum semper ullamcorper eu amet sit amet nisl elit erat convallis tincidunt ipsum amet odio vestibulum consequat et habitasse porttitor augue vestibulum in cras vel tortor leo augue magna semper consequat egestas mauris auctor laoreet sagittis facilisis pellentesque ut sed massa sodales hac dolor urna urna cras semper fringilla metus amet tincidunt venenatis aliquet in suspendisse duis non nibh mi proin maecenas tellus ac vulputate ut nunc faucibus arcu ut amet quis eget et diam est arcu facilisi dolor nunc a faucibus quisque sit magna auctor lacus aliquet felis tellus venenatis pharetra ac quis eget justo felis viverra bibendum ornare urna risus dolor varius dignissim vitae eu sed justo amet nec sed nulla tincidunt viverra tristique sed velit nulla.',
-    images: [
-        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&crop=center",
-        "https://images.unsplash.com/photo-1609099159388-a8a8e50d2e3e?w=800&h=600&fit=crop&crop=center",
-        "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&h=600&fit=crop&crop=center",
-        "https://images.unsplash.com/photo-1585936728642-12c7dd10b90d?w=800&h=600&fit=crop&crop=center"
-    ],
-    previewImages: [
-        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop&crop=center",
-        "https://images.unsplash.com/photo-1609099159388-a8a8e50d2e3e?w=400&h=300&fit=crop&crop=center",
-        "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&h=300&fit=crop&crop=center",
-        "https://images.unsplash.com/photo-1585936728642-12c7dd10b90d?w=400&h=300&fit=crop&crop=center"
-    ]
-};
-
-async function getProductBySlug(slug) {
-    // This is where you'd fetch data from your backend.
-    // For now, it returns the mock product if the slug matches.
-    if (slug === mockProduct.slug) {
-        return mockProduct;
-    }
-    return null;
-}
-
-export default async function ProductPage({ params }) {
-    const { slug } = params;
-    const product = await getProductBySlug(slug);
-
-    if (!product) {
-        return <div>Product not found.</div>;
-    }
+export default function ProductPage() {
+    const params = useParams();
+    const sku = Array.isArray(params?.slug) ? params.slug[0] : params?.slug;
+    const product = useQuery(api.products.getProductBySku, sku ? { sku } : "skip");
+    const related = useQuery(api.products.getProductsByCategory, product?._id ? { categoryId: product.categoryId } : 'skip');
 
     return (
         <ConditionalLayout>
-            <ProductDetails product={product} />
+            {!sku && <div className="container mx-auto px-8 py-16 mt-24">Invalid product.</div>}
+            {sku && product === undefined && <div className="container mx-auto px-8 py-16 mt-24">Loading...</div>}
+            {sku && product === null && <div className="container mx-auto px-8 py-16 mt-24">Product not found.</div>}
+            {sku && product && (
+                <ProductDetails product={{
+                    ...product,
+                    images: Array.isArray(product.images) ? product.images : (product.mainImage ? [product.mainImage] : []),
+                }} />
+            )}
+            {sku && product && Array.isArray(related) && related.length > 0 && (
+                <div className="max-w-7xl mx-auto px-8 py-12">
+                    <div className="text-center mt-24 mb-24">
+                        <h2 className="mb-8">Related Products</h2>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mb-8">
+                        {related.filter(r => r._id !== product._id).slice(0, 8).map((p) => (
+                            <div key={p._id} className="product-card-new">
+                                <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
+                                    <div className="relative">
+                                        <a href={`/product/${encodeURIComponent(p.sku)}`}>
+                                            <img src={p.mainImage || "/spoon-product.jpg"} width={256} height={256} alt={p.name} className="w-full h-60 object-cover"/>
+                                        </a>
+                                    </div>
+                                    <div className="p-5">
+                                        <a href={`/product/${encodeURIComponent(p.sku)}`} className="block">
+                                            <p className="product-name-new mb-3 h-9 line-clamp-2">{p.name}</p>
+                                        </a>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <span className="text-xl font-bold product-price-new">${p.price}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </ConditionalLayout>
     );
 }

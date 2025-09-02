@@ -1,7 +1,11 @@
 'use client';
 import Image from 'next/image';
 import React from "react";
+import Link from 'next/link';
 import ConditionalLayout from "../../components/ConditionalLayout";
+import { useQuery } from 'convex/react';
+import { api } from "../../convex/_generated/api";
+import { useSearchParams, useRouter } from 'next/navigation';
 
 const ProductPage = () => {
     return (
@@ -12,6 +16,29 @@ const ProductPage = () => {
 };
 
 const ProductContent = () => {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const categoryId = searchParams.get('categoryId');
+    const pageParam = parseInt(searchParams.get('page') || '1', 10);
+    const page = Number.isNaN(pageParam) || pageParam < 1 ? 1 : pageParam;
+    const pageSize = 12;
+
+    const allProducts = useQuery(api.products.getActiveProducts);
+    const productsByCategory = useQuery(api.products.getProductsByCategory, categoryId ? { categoryId } : 'skip');
+    const dataset = categoryId ? productsByCategory : allProducts;
+    const total = Array.isArray(dataset) ? dataset.length : 0;
+    const totalPages = Math.max(1, Math.ceil(total / pageSize));
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+    const pageItems = Array.isArray(dataset) ? dataset.slice(start, end) : [];
+
+    const goToPage = (p) => {
+        const next = Math.min(Math.max(1, p), totalPages);
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('page', String(next));
+        router.push(`/product?${params.toString()}`);
+    };
+
     return (
         <div className="diagonal-bg min-h-screen relative overflow-hidden">
             {/* Background Overlay Image */}
@@ -31,98 +58,51 @@ const ProductContent = () => {
                 </div>
 
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mb-8">
-
-                        <div className="product-card-new">
-                            <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-                                <div className="relative">
-                                    <img src="/spoon-product.jpg" width={256} height={256}
-                                         alt="Stainless Steel Dinner Spoon" className="w-full h-60 object-cover"/>
-                                    <div className="absolute top-2 right-2 flex flex-col space-y-1">
-                                        <span className="badge-new text-xs px-2 py-1 rounded">Top Rated</span>
+                        {dataset === undefined && (
+                            <div className="col-span-full text-center">Loading...</div>
+                        )}
+                        {Array.isArray(pageItems) && pageItems.map((p) => (
+                            <div key={p._id} className="product-card-new">
+                                <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
+                                    <div className="relative">
+                                        <Link href={`/product/${encodeURIComponent(p.sku)}`}>
+                                            <img src={p.mainImage || "/spoon-product.jpg"} width={256} height={256} alt={p.name} className="w-full h-60 object-cover"/>
+                                        </Link>
                                     </div>
-                                </div>
-                                <div className="p-5">
-                                    <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Spoon – Satin Finish</p>
-                                    <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Sleek stainless spoon, durable, elegant, dishwasher safe.</p>
-                                    <div className="flex justify-between items-center mb-4">
-                                        <span className="text-xl font-bold product-price-new">$5.99</span>
+                                    <div className="p-5">
+                                        <Link href={`/product/${encodeURIComponent(p.sku)}`} className="block">
+                                            <p className="product-name-new mb-3 h-9 line-clamp-2">{p.name}</p>
+                                        </Link>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <span className="text-xl font-bold product-price-new">${p.price}</span>
+                                        </div>
+                                        <p className="text-sm text-[#0E0E0E] mb-2">{p.estimatedDelivery || "Estimate delivery in 2-3 working days"}</p>
+                                        <Link href={`/product/${encodeURIComponent(p.sku)}`}>
+                                            <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
+                                        </Link>
                                     </div>
-                                    <p className="text-sm text-[#0E0E0E] mb-2">Estimate delivery in 2-3 working days</p>
-                                    <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="product-card-new">
-                            <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-                                <div className="relative">
-                                    <img src="/spoon-product.jpg"  width={256} height={256}
-                                         alt="Stainless Steel Dinner Fork" className="w-full h-60 object-cover"/>
-                                    <div className="absolute top-2 right-2 flex flex-col space-y-1">
-                                        <span className="badge-new text-xs px-2 py-1 rounded">Best Selling</span>
-                                    </div>
-                                </div>
-                                <div className="p-5">
-                                    <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Fork – Satin Finish</p>
-                                    <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Elegant design, perfect balance, rust-resistant.</p>
-                                    <div className="flex justify-between items-center mb-4">
-                                        <span className="text-xl font-bold product-price-new">$5.99</span>
-                                    </div>
-                                    <p className="text-sm text-[#0E0E0E] mb-2">Estimate delivery in 2-3 working days</p>
-                                    <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="product-card-new">
-                            <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-                                <div className="relative">
-                                    <img src="/spoon-product.jpg" width={256} height={256}
-                                         alt="Stainless Steel Dinner Spoon" className="w-full h-60 object-cover"/>
-                                </div>
-                                <div className="p-5">
-                                    <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Spoon – Satin Finish</p>
-                                    <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Sleek stainless spoon, durable, elegant, dishwasher safe.</p>
-                                    <div className="flex justify-between items-center mb-4">
-                                        <span className="text-xl font-bold product-price-new">$5.99</span>
-                                    </div>
-                                    <p className="text-sm text-[#0E0E0E] mb-2">Estimate delivery in 2-3 working days</p>
-                                    <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="product-card-new">
-                            <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-                                <div className="relative">
-                                    <img src="/spoon-product.jpg"  width={256} height={256}
-                                         alt="Stainless Steel Dinner Fork" className="w-full h-60 object-cover"/>
-                                </div>
-                                <div className="p-5">
-                                    <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Fork – Satin Finish</p>
-                                    <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Elegant design, perfect balance, rust-resistant.</p>
-                                    <div className="flex justify-between items-center mb-4">
-                                        <span className="text-xl font-bold product-price-new">$5.99</span>
-                                    </div>
-                                    <p className="text-sm text-[#0E0E0E] mb-2">Estimate delivery in 2-3 working days</p>
-                                    <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
-                                </div>
-                            </div>
-                        </div>
-
+                        ))}
                     </div>
 
                 <div className="flex justify-center mt-12 space-x-2">
-                    <button className="w-10 h-10 rounded-lg border border-gray-300 flex items-center justify-center text-gray-400 hover:border-yellow-600 hover:text-yellow-600 transition-colors">
+                    <button onClick={() => goToPage(page - 1)} disabled={page <= 1} className="w-10 h-10 rounded-lg border border-gray-300 flex items-center justify-center text-gray-400 hover:border-yellow-600 hover:text-yellow-600 transition-colors disabled:opacity-50">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                             <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </button>
-                    <button className="w-10 h-10 flex items-center justify-center text-gray-600 hover:border-yellow-600 hover:text-yellow-600 transition-colors">1</button>
-                    <button className="w-10 h-10 flex items-center justify-center text-gray-600 hover:border-yellow-600 hover:text-yellow-600 transition-colors">2</button>
-                    <button className="w-10 h-10 flex items-center justify-center text-gray-600 hover:border-yellow-600 hover:text-yellow-600 transition-colors">3</button>
-                    <span className="w-10 h-10 flex items-center justify-center text-gray-400">...</span>
-                    <button className="w-10 h-10 rounded-lg bg-yellow-600 text-white flex items-center justify-center">
+                    {[...Array(Math.max(1, Math.min(totalPages, 3))).keys()].map((i) => {
+                        const num = i + 1;
+                        const isActive = num === page;
+                        return (
+                            <button key={num} onClick={() => goToPage(num)} className={`w-10 h-10 flex items-center justify-center ${isActive ? 'text-yellow-600' : 'text-gray-600'} hover:border-yellow-600 hover:text-yellow-600 transition-colors`}>
+                                {num}
+                            </button>
+                        );
+                    })}
+                    {totalPages > 3 && <span className="w-10 h-10 flex items-center justify-center text-gray-400">...</span>}
+                    <button onClick={() => goToPage(page + 1)} disabled={page >= totalPages} className="w-10 h-10 rounded-lg bg-yellow-600 text-white flex items-center justify-center disabled:opacity-50">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                             <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>

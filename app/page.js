@@ -2,6 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from 'react';
+import { useQuery } from "convex/react";
+import { api } from "../convex/_generated/api";
 import TestimonialScroller from "../components/TestimonialScroller";
 import ContactForm from "../components/ContactForm";
 import ConditionalLayout from "../components/ConditionalLayout";
@@ -23,6 +25,9 @@ function HomeContent() {
     const categorySliderRef = useRef(null);
     const categoryPrevBtnRef = useRef(null);
     const categoryNextBtnRef = useRef(null);
+
+    const categories = useQuery(api.categories.getActiveCategories);
+    const products = useQuery(api.products.getActiveProducts);
 
 
     useEffect(() => {
@@ -312,54 +317,21 @@ function HomeContent() {
                     <div className="relative px-8">
                         <div className="overflow-hidden">
                             <div className="flex transition-transform duration-500 ease-in-out -mx-3" ref={categorySliderRef}>
-                                {/* Card 1 */}
-                                <div className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
-                                    <div className="category-card h-[350px]" style={{backgroundImage: "url('/knife-img.jpg')"}}>
-                                        <div className="category-overlay w-full h-full flex items-center justify-center p-6">
-                                            <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Knives</h3>
+                                {categories === undefined && (
+                                    <div className="px-3 text-center w-full">Loading...</div>
+                                )}
+                                {categories && categories.length === 0 && (
+                                    <div className="px-3 text-center w-full">No categories found.</div>
+                                )}
+                                {Array.isArray(categories) && categories.map((cat) => (
+                                    <div key={cat._id} className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
+                                        <div className="category-card h-[350px]" style={{backgroundImage: `url('${cat.imageUrl || "/knife-img.jpg"}')`}}>
+                                            <div className="category-overlay w-full h-full flex items-center justify-center p-6">
+                                                <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">{cat.name}</h3>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                {/* Card 2 */}
-                                <div className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
-                                    <div className="category-card h-[350px]" style={{backgroundImage: "url('/spear.jpg')"}}>
-                                        <div className="category-overlay w-full h-full flex items-center justify-center p-6">
-                                            <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Spears</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Card 3 */}
-                                <div className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
-                                    <div className="category-card h-[350px]" style={{backgroundImage: "url('/axe.jpg')"}}>
-                                        <div className="category-overlay w-full h-full flex items-center justify-center p-6">
-                                            <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Axes</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Card 4 */}
-                                <div className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
-                                    <div className="category-card h-[350px]" style={{backgroundImage: "url('/sword-img.jpg')"}}>
-                                        <div className="category-overlay w-full h-full flex items-center justify-center p-6">
-                                            <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Swords</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Card 5 */}
-                                <div className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
-                                    <div className="category-card h-[350px]" style={{backgroundImage: "url('/dagger.jpg')"}}>
-                                        <div className="category-overlay w-full h-full flex items-center justify-center p-6">
-                                            <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Daggers</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Card 6 */}
-                                <div className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
-                                    <div className="category-card h-[350px]" style={{backgroundImage: "url('/hammer.jpg')"}}>
-                                        <div className="category-overlay w-full h-full flex items-center justify-center p-6">
-                                            <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">Hammers</h3>
-                                        </div>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                         </div>
                         <button ref={categoryPrevBtnRef} className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-[#D6AF66] rounded-md p-3 shadow-md hidden md:block">
@@ -398,83 +370,35 @@ function HomeContent() {
                     <div className="product-slider-top relative">
                         <div className="product-slider-wrapper">
                             <div className="flex transition-transform duration-500 ease-in-out product-slider-container p-4" ref={sliderRef}>
-                                <div className="product-card-new">
-                                    <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-                                        <div className="relative">
-                                            <img src="/spoon-product.jpg" width={256} height={256}
-                                                alt="Stainless Steel Dinner Spoon" className="w-full h-60 object-cover"/>
-                                            <div className="absolute top-2 right-2 flex flex-col space-y-1">
-                                                <span className="badge-new text-xs px-2 py-1 rounded">Top Rated</span>
+                                {products === undefined && (
+                                    <div className="p-4 text-center w-full">Loading...</div>
+                                )}
+                                {products && products.length === 0 && (
+                                    <div className="p-4 text-center w-full">No products found.</div>
+                                )}
+                                {Array.isArray(products) && products.map((p) => (
+                                    <div key={p._id} className="product-card-new">
+                                        <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
+                                            <div className="relative">
+                                                <Link href={`/product/${encodeURIComponent(p.sku)}`}>
+                                                    <img src={p.mainImage || "/spoon-product.jpg"} width={256} height={256} alt={p.name} className="w-full h-60 object-cover"/>
+                                                </Link>
                                             </div>
-                                        </div>
-                                        <div className="p-5">
-                                            <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Spoon – Satin Finish</p>
-                                            <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Sleek stainless spoon, durable, elegant, dishwasher safe.</p>
-                                            <div className="flex justify-between items-center mb-4">
-                                                <span className="text-xl font-bold product-price-new">$5.99</span>
+                                            <div className="p-5">
+                                                <Link href={`/product/${encodeURIComponent(p.sku)}`} className="block">
+                                                    <p className="product-name-new mb-3 h-9 line-clamp-2">{p.name}</p>
+                                                </Link>
+                                                <div className="flex justify-between items-center mb-4">
+                                                    <span className="text-xl font-bold product-price-new">${p.price}</span>
+                                                </div>
+                                                <p className="text-sm text-[#0E0E0E] mb-2">{p.estimatedDelivery || "Estimate delivery in 2-3 working days"}</p>
+                                                <Link href={`/product/${encodeURIComponent(p.sku)}`}>
+                                                    <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
+                                                </Link>
                                             </div>
-                                            <p className="text-sm text-[#0E0E0E] mb-2">Estimate delivery in 2-3 working days</p>
-                                            <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div className="product-card-new">
-                                    <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-                                        <div className="relative">
-                                            <img src="/spoon-product.jpg"  width={256} height={256}
-                                                alt="Stainless Steel Dinner Fork" className="w-full h-60 object-cover"/>
-                                            <div className="absolute top-2 right-2 flex flex-col space-y-1">
-                                                <span className="badge-new text-xs px-2 py-1 rounded">Best Selling</span>
-                                            </div>
-                                        </div>
-                                        <div className="p-5">
-                                            <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Fork – Satin Finish</p>
-                                            <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Elegant design, perfect balance, rust-resistant.</p>
-                                            <div className="flex justify-between items-center mb-4">
-                                                <span className="text-xl font-bold product-price-new">$5.99</span>
-                                            </div>
-                                            <p className="text-sm text-[#0E0E0E] mb-2">Estimate delivery in 2-3 working days</p>
-                                            <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="product-card-new">
-                                    <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-                                        <div className="relative">
-                                            <img src="/spoon-product.jpg"  width={256} height={256}
-                                                 alt="Stainless Steel Dinner Knife" className="w-full h-60 object-cover"/>
-                                        </div>
-                                        <div className="p-5">
-                                            <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Knife – Satin Finish</p>
-                                            <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Sharp edge, comfortable grip, long-lasting.</p>
-                                            <div className="flex justify-between items-center mb-4">
-                                                <span className="text-xl font-bold product-price-new">$5.99</span>
-                                            </div>
-                                            <p className="text-sm text-[#0E0E0E] mb-2">Estimate delivery in 2-3 working days</p>
-                                            <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="product-card-new">
-                                    <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
-                                        <div className="relative">
-                                            <img src="/spoon-product.jpg"  width={256} height={256}
-                                                 alt="Stainless Steel Soup Spoon" className="w-full h-60 object-cover"/>
-                                        </div>
-                                        <div className="p-5">
-                                            <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Soup Spoon – Satin Finish</p>
-                                            <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Deep bowl, perfect for soups, elegant design.</p>
-                                            <div className="flex justify-between items-center mb-4">
-                                                <span className="text-xl font-bold product-price-new">$5.99</span>
-                                            </div>
-                                            <p className="text-sm text-[#0E0E0E] mb-2">Estimate delivery in 2-3 working days</p>
-                                            <button className="cta-button-new w-full py-2 rounded-md font-medium">Order Now</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                         </div>
 
