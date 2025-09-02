@@ -2,7 +2,7 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { api } from "./_generated/api";
 
-// Submit contact form
+// Submit contact form && blah blah blah
 export const submitContactForm = mutation({
   args: {
     fullName: v.string(),
