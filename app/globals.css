@@ -332,6 +332,18 @@ p, span, li, a, div, input, textarea, button {
     line-height: 48px;
     letter-spacing: 0;
 }
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
 
 /* Testimonials Section Styles */
 .testimonial-card {
@@ -868,4 +880,27 @@ p, span, li, a, div, input, textarea, button {
 @media (max-width: 640px) {
     .legacy-text { font-size: 22px; }
     .master-image { height: 200px; margin-bottom: 20px; }
+}
+
+/* Product Details Page Styles */
+.price-color {
+    color: var(--ct-as-buttons-highlights);
+}
+
+.preview-slider-container {
+    scroll-behavior: smooth;
+    transition: transform 0.5s ease-in-out;
+}
+
+.preview-card {
+    flex: 0 0 calc(50% - 24px); /* 2 cards on desktop */
+    margin: 0 12px;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .preview-card {
+        flex: 0 0 100%; /* 1 card on mobile */
+        margin: 0;
+    }
 }

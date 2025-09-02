@@ -408,10 +408,8 @@ function HomeContent() {
                                             </div>
                                         </div>
                                         <div className="p-5">
-                                            <p className="product-name-new mb-3">Stainless Steel Dinner Spoon – Satin Finish</p>
-                                            <p className="mb-4 text-[#0E0E0E] text-sm">Sleek stainless spoon, durable, elegant,
-                                                dishwasher
-                                                safe.</p>
+                                            <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Spoon – Satin Finish</p>
+                                            <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Sleek stainless spoon, durable, elegant, dishwasher safe.</p>
                                             <div className="flex justify-between items-center mb-4">
                                                 <span className="text-xl font-bold product-price-new">$5.99</span>
                                             </div>
@@ -431,9 +429,8 @@ function HomeContent() {
                                             </div>
                                         </div>
                                         <div className="p-5">
-                                            <p className="product-name-new mb-3">Stainless Steel Dinner Fork – Satin Finish</p>
-                                            <p className="mb-4 text-[#0E0E0E] text-sm">Elegant design, perfect balance,
-                                                rust-resistant.</p>
+                                            <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Fork – Satin Finish</p>
+                                            <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Elegant design, perfect balance, rust-resistant.</p>
                                             <div className="flex justify-between items-center mb-4">
                                                 <span className="text-xl font-bold product-price-new">$5.99</span>
                                             </div>
@@ -450,9 +447,8 @@ function HomeContent() {
                                                  alt="Stainless Steel Dinner Knife" className="w-full h-60 object-cover"/>
                                         </div>
                                         <div className="p-5">
-                                            <p className="product-name-new mb-3">Stainless Steel Dinner Knife – Satin Finish</p>
-                                            <p className="mb-4 text-[#0E0E0E] text-sm">Sharp edge, comfortable grip, long-lasting.
-                                            </p>
+                                            <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Dinner Knife – Satin Finish</p>
+                                            <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Sharp edge, comfortable grip, long-lasting.</p>
                                             <div className="flex justify-between items-center mb-4">
                                                 <span className="text-xl font-bold product-price-new">$5.99</span>
                                             </div>
@@ -469,9 +465,8 @@ function HomeContent() {
                                                  alt="Stainless Steel Soup Spoon" className="w-full h-60 object-cover"/>
                                         </div>
                                         <div className="p-5">
-                                            <p className="product-name-new mb-3">Stainless Steel Soup Spoon – Satin Finish</p>
-                                            <p className="mb-4 text-[#0E0E0E] text-sm">Deep bowl, perfect for soups, elegant design.
-                                            </p>
+                                            <p className="product-name-new mb-3 h-9 line-clamp-2">Stainless Steel Soup Spoon – Satin Finish</p>
+                                            <p className="mb-4 text-[#0E0E0E] text-sm h-15 line-clamp-3">Deep bowl, perfect for soups, elegant design.</p>
                                             <div className="flex justify-between items-center mb-4">
                                                 <span className="text-xl font-bold product-price-new">$5.99</span>
                                             </div>

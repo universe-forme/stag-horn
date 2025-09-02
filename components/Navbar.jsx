@@ -55,9 +55,9 @@ export default function Navbar({ isAdminLoggedIn = false }) {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/categories", label: "Categories" },
+      { href: "/product", label: "Products" },
     { href: "/about", label: "About Us" },
     { href: "#", label: "Login", onClick: handleLoginClick },
-    // { href: "/blogs", label: "Blogs" },
     // { href: "/contact", label: "Contact Us" },
   ];
 
