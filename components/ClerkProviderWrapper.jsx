@@ -1,17 +1,16 @@
+'use client';
 import { ClerkProvider } from "@clerk/nextjs";
 
 export default function ClerkProviderWrapper({ children }) {
-  // Check if Clerk environment variables are available
-  const hasClerkConfig = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY;
-  
-  if (!hasClerkConfig) {
-    // Return children without ClerkProvider if environment variables are missing
-    console.warn("Clerk environment variables not found. Authentication features will be disabled.");
+  const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+  if (!publishableKey) {
+    console.warn("Clerk publishable key not found. Authentication features will be disabled.");
     return children;
   }
-  
+
   return (
-    <ClerkProvider>
+    <ClerkProvider publishableKey={publishableKey}>
       {children}
     </ClerkProvider>
   );

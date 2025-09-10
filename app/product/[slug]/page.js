@@ -1,7 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import { useQuery } from "convex/react";
-import { api } from "../../../convex/_generated/api";
+import { useProductBySku, useActiveProducts, useProductsByCategory } from "../../../lib/hooks";
 import ProductDetails from "../../../components/ProductDetails";
 import ConditionalLayout from "../../../components/ConditionalLayout";
 import Link from "next/link";
@@ -19,11 +18,11 @@ const ProductList = ({ products, title }) => {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mb-8">
                 {products.map((p) => (
-                    <div key={p._id} className="product-card-new">
+                    <div key={p.id} className="product-card-new">
                         <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
                             <div className="relative">
                                 <Link href={`/product/${encodeURIComponent(p.sku)}`}>
-                                    <img src={p.mainImage || "/spoon-product.jpg"} width={256} height={256} alt={p.name} className="w-full h-60 object-cover"/>
+                                    <img src={p.main_image || "/spoon-product.jpg"} width={256} height={256} alt={p.name} className="w-full h-60 object-cover"/>
                                 </Link>
                             </div>
                             <div className="p-5">
@@ -46,9 +45,9 @@ export default function ProductPage() {
     const params = useParams();
     const sku = Array.isArray(params?.slug) ? params.slug[0] : params?.slug;
     
-    const product = useQuery(api.products.getProductBySku, sku ? { sku } : "skip");
-    const relatedProducts = useQuery(api.products.getProductsByCategory, product?._id ? { categoryId: product.categoryId } : 'skip');
-    const allProducts = useQuery(api.products.getActiveProducts, product ? {} : 'skip');
+    const { data: product } = useProductBySku(sku);
+    const { data: relatedProducts } = useProductsByCategory(product?.category_id);
+    const { data: allProducts } = useActiveProducts();
 
     let displayProducts = [];
     let displayTitle = "";
@@ -56,12 +55,12 @@ export default function ProductPage() {
     const isLoadingRecommendations = product && relatedProducts === undefined && allProducts === undefined;
 
     if (product && relatedProducts) {
-        const filteredRelated = relatedProducts.filter(r => r._id !== product._id);
+        const filteredRelated = relatedProducts.filter(r => r.id !== product.id);
         if (filteredRelated.length > 0) {
             displayProducts = filteredRelated.slice(0, 8);
             displayTitle = "Related Products";
         } else if (allProducts) {
-            const otherCategoryProducts = allProducts.filter(p => p.categoryId !== product.categoryId).slice(0, 8);
+            const otherCategoryProducts = allProducts.filter(p => p.category_id !== product.category_id).slice(0, 8);
             if (otherCategoryProducts.length > 0) {
                 displayProducts = otherCategoryProducts;
                 displayTitle = "Other Products You Might Like";

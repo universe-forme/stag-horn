@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import { useMutation } from 'convex/react';
-import { api } from '../convex/_generated/api';
+import { useSubmitContactForm } from '../lib/hooks';
+import { sendContactNotification } from '../lib/email-service';
 
 export default function ContactForm() {
     const [formData, setFormData] = useState({
@@ -23,7 +23,7 @@ export default function ContactForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null);
     
-    const submitContactForm = useMutation(api.contact.submitContactForm);
+    const { submitContactForm, isLoading: isSubmittingHook } = useSubmitContactForm();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -45,7 +45,10 @@ export default function ContactForm() {
                 productQuantity: formData.productQuantity ? parseInt(formData.productQuantity) : undefined
             };
 
-            await submitContactForm(submissionData);
+            const result = await submitContactForm(submissionData);
+            
+            // Send email notification
+            await sendContactNotification(result);
             
             setSubmitStatus('success');
             setFormData({

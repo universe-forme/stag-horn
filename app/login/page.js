@@ -2,8 +2,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSignIn } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useVerifyAdminLogin } from '../../lib/hooks';
 import { setAdminSession, getClientIP, getUserAgent } from '../../lib/utils';
@@ -24,10 +22,7 @@ function LoginContent() {
     });
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [isAdminLogin, setIsAdminLogin] = useState(false);
-    const { signIn, setActive } = useSignIn();
-    const router = useRouter();
-    const verifyAdminLogin = useVerifyAdminLogin();
+    const { verifyAdminLogin, isLoading: isVerifyingAdmin } = useVerifyAdminLogin();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -42,64 +37,32 @@ function LoginContent() {
         setIsLoading(true);
 
         try {
-            if (isAdminLogin) {
-                // Handle admin login
-                const ipAddress = await getClientIP();
-                const userAgent = getUserAgent();
-                
-                console.log('Attempting admin login with:', { username: formData.email, password: formData.password });
-                
-                const result = await verifyAdminLogin({
+            const ipAddress = await getClientIP();
+            const userAgent = getUserAgent();
+
+            const result = await verifyAdminLogin(
+                formData.email,
+                formData.password,
+                ipAddress,
+                userAgent
+            );
+
+            if (result?.success) {
+                const sessionData = {
                     username: formData.email,
-                    password: formData.password,
+                    loginTime: Date.now(),
                     ipAddress,
                     userAgent
-                });
-
-                console.log('Admin login result:', result);
-
-                if (result.success) {
-                    // Set admin session
-                    const sessionData = {
-                        username: formData.email,
-                        loginTime: Date.now(),
-                        ipAddress,
-                        userAgent
-                    };
-                    setAdminSession(sessionData);
-                    
-                    toast.success('Admin login successful!');
-                    router.push('/admin');
-                } else {
-                    toast.error(result.message || 'Admin login failed');
-                }
+                };
+                setAdminSession(sessionData);
+                toast.success('Admin login successful!');
+                window.location.href = '/admin';
             } else {
-                // Handle regular user login
-                const result = await signIn.create({
-                    identifier: formData.email,
-                    password: formData.password,
-                });
-
-                if (result.status === "complete") {
-                    await setActive({ session: result.createdSessionId });
-                    
-                    // Check if user is admin and redirect accordingly
-                    const user = result.createdSessionId?.user;
-                    if (user?.publicMetadata?.role === 'admin') {
-                        router.push('/admin');
-                    } else {
-                        router.push('/');
-                        toast.success('Successfully logged in!');
-                    }
-                }
+                toast.error(result?.message || 'Admin login failed');
             }
         } catch (error) {
             console.error('Login error:', error);
-            if (isAdminLogin) {
-                toast.error('Admin login failed. Please check your credentials.');
-            } else {
-                toast.error('Login failed. Please check your credentials.');
-            }
+            toast.error('Admin login failed. Please check your credentials.');
         } finally {
             setIsLoading(false);
         }
@@ -121,7 +84,7 @@ function LoginContent() {
                     </div>
                     <h1 className="text-4xl font-bold mb-4">Welcome Back</h1>
                     <p className="text-xl opacity-90">
-                        Sign in to your account to continue your journey with Wazir Cutlery
+                        Admin access only
                     </p>
                 </div>
             </div>
@@ -141,59 +104,31 @@ function LoginContent() {
                             />
                         </div>
                         <h1 className="font-quattrocento text-3xl font-bold text-[#0E0E0E] mb-2">
-                            Welcome Back
+                            Admin Login
                         </h1>
                         <p className="text-[#2C2C2C] text-lg">
-                            Sign in to your account
+                            Sign in with your admin credentials
                         </p>
-                    </div>
-
-                    {/* Login Type Toggle */}
-                    <div className="mb-6">
-                        <div className="flex bg-gray-100 rounded-lg p-1">
-                            <button
-                                type="button"
-                                onClick={() => setIsAdminLogin(false)}
-                                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                                    !isAdminLogin 
-                                        ? 'bg-white text-[#D6AF66] shadow-sm' 
-                                        : 'text-gray-600 hover:text-gray-800'
-                                }`}
-                            >
-                                User Login
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => setIsAdminLogin(true)}
-                                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                                    isAdminLogin 
-                                        ? 'bg-white text-[#D6AF66] shadow-sm' 
-                                        : 'text-gray-600 hover:text-gray-800'
-                                }`}
-                            >
-                                Admin Login
-                            </button>
-                        </div>
                     </div>
 
                     {/* Login Form */}
                     <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8">
                         <form onSubmit={handleSubmit} className="space-y-6">
-                            {/* Email/Username Field */}
+                            {/* Username Field */}
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-[#2C2C2C] mb-2">
-                                    {isAdminLogin ? 'Username' : 'Email Address'}
+                                    Email
                                 </label>
                                 <div className="relative">
                                     <input
-                                        type={isAdminLogin ? "text" : "email"}
+                                        type="text"
                                         id="email"
                                         name="email"
                                         value={formData.email}
                                         onChange={handleInputChange}
                                         required
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400"
-                                        placeholder={isAdminLogin ? "Enter username" : "Enter your email"}
+                                        placeholder="Enter Email"
                                     />
                                     <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -238,62 +173,21 @@ function LoginContent() {
                                 </div>
                             </div>
 
-                            {/* Remember Me & Forgot Password */}
-                            {!isAdminLogin && (
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center">
-                                        <input
-                                            id="remember-me"
-                                            name="remember-me"
-                                            type="checkbox"
-                                            className="h-4 w-4 text-[#D6AF66] focus:ring-[#D6AF66] border-gray-300 rounded"
-                                        />
-                                        <label htmlFor="remember-me" className="ml-2 block text-sm text-[#2C2C2C]">
-                                            Remember me
-                                        </label>
-                                    </div>
-                                    <Link 
-                                        href="/forgot-password" 
-                                        className="text-sm text-[#D6AF66] hover:text-[#C49F5A] transition-colors duration-200 font-medium"
-                                    >
-                                        Forgot password?
-                                    </Link>
-                                </div>
-                            )}
-
                             {/* Submit Button */}
                             <button
                                 type="submit"
                                 disabled={isLoading}
                                 className="w-full bg-[#D6AF66] text-white py-3 px-4 rounded-lg font-medium text-lg hover:bg-[#C49F5A] focus:ring-2 focus:ring-[#D6AF66] focus:ring-offset-2 transition-all duration-200 transform hover:translate-y-[-1px] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                             >
-                                {isLoading ? (
-                                    <div className="flex items-center justify-center">
-                                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                        </svg>
-                                        Signing in...
-                                    </div>
-                                ) : (
-                                    'Sign In'
-                                )}
+                                {isLoading ? 'Signing in...' : 'Sign In'}
                             </button>
 
-                            {/* Sign Up Link */}
-                            {!isAdminLogin && (
-                                <div className="text-center mt-6">
-                                    <p className="text-sm text-[#2C2C2C]">
-                                        Don&apos;t have an account?{' '}
-                                        <Link 
-                                            href="/signup" 
-                                            className="font-medium text-[#D6AF66] hover:text-[#C49F5A] transition-colors duration-200"
-                                        >
-                                            Sign up
-                                        </Link>
-                                    </p>
-                                </div>
-                            )}
+                            {/* Forgot Password hidden for admin-only */}
+                            <div className="text-center mt-6">
+                                <p className="text-sm text-[#2C2C2C]">
+                                    Admin access only
+                                </p>
+                            </div>
                         </form>
                     </div>
 

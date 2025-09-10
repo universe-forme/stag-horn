@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useMutation, useQuery } from "convex/react";
-import { api } from "../../../convex/_generated/api";
+import { useAllProducts, useAllCategories, useDeleteProduct } from "../../../lib/hooks";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../components/ui/card";
@@ -18,19 +17,19 @@ export default function ProductsPage() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [filterCategory, setFilterCategory] = useState("all");
 
-  const products = useQuery(api.products.getAllProducts);
-  const categories = useQuery(api.categories.getAllCategories);
-  const deleteProduct = useMutation(api.products.deleteProduct);
+  const { data: products, isLoading: productsLoading } = useAllProducts();
+  const { data: categories, isLoading: categoriesLoading } = useAllCategories();
+  const { deleteProduct, isLoading: isDeleting } = useDeleteProduct();
 
   const filteredProducts = products?.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          product.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          product.sku.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === "all" || 
-                         (filterStatus === "active" && product.isActive) ||
-                         (filterStatus === "inactive" && !product.isActive);
+                         (filterStatus === "active" && product.is_active) ||
+                         (filterStatus === "inactive" && !product.is_active);
     const matchesCategory = filterCategory === "all" || 
-                           product.categoryId === filterCategory;
+                           product.category_id === filterCategory;
     return matchesSearch && matchesStatus && matchesCategory;
   }) || [];
 
@@ -47,7 +46,7 @@ export default function ProductsPage() {
   const handleDeleteProduct = async (productId) => {
     if (confirm("Are you sure you want to delete this product?")) {
       try {
-        await deleteProduct({ productId });
+        await deleteProduct(productId);
       } catch (error) {
         console.error("Error deleting product:", error);
       }
@@ -60,7 +59,7 @@ export default function ProductsPage() {
   };
 
   const getCategoryName = (categoryId) => {
-    const category = categories?.find(cat => cat._id === categoryId);
+    const category = categories?.find(cat => cat.id === categoryId);
     return category?.name || "Unknown Category";
   };
 
@@ -116,7 +115,7 @@ export default function ProductsPage() {
             >
               <option value="all">All Categories</option>
               {categories?.map(category => (
-                <option key={category._id} value={category._id}>
+                <option key={category.id} value={category.id}>
                   {category.name}
                 </option>
               ))}
@@ -146,11 +145,11 @@ export default function ProductsPage() {
             </TableHeader>
             <TableBody>
               {filteredProducts.map((product) => (
-                <TableRow key={product._id}>
+                <TableRow key={product.id}>
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <img
-                        src={product.mainImage}
+                        src={product.main_image}
                         alt={product.name}
                         className="w-12 h-12 rounded-lg object-cover"
                       />
@@ -160,12 +159,12 @@ export default function ProductsPage() {
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell>{getCategoryName(product.categoryId)}</TableCell>
+                  <TableCell>{getCategoryName(product.category_id)}</TableCell>
                   <TableCell>${product.price}</TableCell>
-                  <TableCell>{product.stockQuantity}</TableCell>
+                  <TableCell>{product.stock_quantity}</TableCell>
                   <TableCell>
-                    <Badge variant={product.isActive ? 'default' : 'secondary'}>
-                      {product.isActive ? (
+                    <Badge variant={product.is_active ? 'default' : 'secondary'}>
+                      {product.is_active ? (
                         <>
                           <Eye className="mr-1 h-3 w-3" />
                           Active
@@ -192,7 +191,7 @@ export default function ProductsPage() {
                         variant="outline" 
                         size="sm" 
                         className="bg-white text-red-600 hover:text-red-700 border border-[#C0C0C0] hover:bg-gray-50"
-                        onClick={() => handleDeleteProduct(product._id)}
+                        onClick={() => handleDeleteProduct(product.id)}
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>

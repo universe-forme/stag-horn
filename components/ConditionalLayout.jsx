@@ -21,9 +21,10 @@ export default function ConditionalLayout({ children }) {
     }
   }, []);
 
-  // Don't show navbar and footer on admin pages
+  // Don't show navbar and footer on admin and auth pages
   const isAdminPage = pathname.startsWith('/admin');
-  const shouldShowNavbarFooter = !isAdminPage;
+  const isAuthPage = pathname === '/login' || pathname === '/signup' || pathname === '/forgot-password';
+  const shouldShowNavbarFooter = !isAdminPage && !isAuthPage;
 
   if (isLoading) {
     return <div></div>;

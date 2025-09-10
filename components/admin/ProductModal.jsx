@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useMutation, useQuery } from "convex/react";
-import { api } from "../../convex/_generated/api";
+import { useAllCategories, useCreateProduct, useUpdateProduct } from "../../lib/hooks";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -44,9 +43,9 @@ export default function ProductModal({ isOpen, onClose, product }) {
   const mainImageInputRef = useRef(null);
   const additionalImagesInputRef = useRef(null);
 
-  const categories = useQuery(api.categories.getAllCategories);
-  const createProduct = useMutation(api.products.createProduct);
-  const updateProduct = useMutation(api.products.updateProduct);
+  const { data: categories } = useAllCategories();
+  const { createProduct, isLoading: isCreating } = useCreateProduct();
+  const { updateProduct, isLoading: isUpdating } = useUpdateProduct();
 
   useEffect(() => {
     if (product) {
@@ -320,24 +319,23 @@ export default function ProductModal({ isOpen, onClose, product }) {
 
       if (product) {
         // Update existing product
-        await updateProduct({
-          productId: product._id,
+        await updateProduct(product.id, {
           name: formData.name,
           description: formData.description,
-          shortDescription: formData.shortDescription,
+          short_description: formData.shortDescription,
           price: formData.price,
-          comparePrice: formData.comparePrice,
-          categoryId: formData.categoryId,
-          mainImage,
+          compare_price: formData.comparePrice,
+          category_id: formData.categoryId,
+          main_image: mainImage,
           images,
           sku: formData.sku,
-          stockQuantity: formData.stockQuantity,
+          stock_quantity: formData.stockQuantity,
           weight: formData.weight,
-          estimatedDelivery: formData.estimatedDelivery,
-          isActive: formData.isActive,
-          isFeatured: formData.isFeatured,
-          isTopRated: formData.isTopRated,
-          isBestSelling: formData.isBestSelling,
+          estimated_delivery: formData.estimatedDelivery,
+          is_active: formData.isActive,
+          is_featured: formData.isFeatured,
+          is_top_rated: formData.isTopRated,
+          is_best_selling: formData.isBestSelling,
           tags: formData.tags,
         });
       } else {
@@ -345,20 +343,20 @@ export default function ProductModal({ isOpen, onClose, product }) {
         await createProduct({
           name: formData.name,
           description: formData.description,
-          shortDescription: formData.shortDescription,
+          short_description: formData.shortDescription,
           price: formData.price,
-          comparePrice: formData.comparePrice,
-          categoryId: formData.categoryId,
-          mainImage,
+          compare_price: formData.comparePrice,
+          category_id: formData.categoryId,
+          main_image: mainImage,
           images,
           sku: formData.sku,
-          stockQuantity: formData.stockQuantity,
+          stock_quantity: formData.stockQuantity,
           weight: formData.weight,
-          estimatedDelivery: formData.estimatedDelivery,
-          isActive: formData.isActive,
-          isFeatured: formData.isFeatured,
-          isTopRated: formData.isTopRated,
-          isBestSelling: formData.isBestSelling,
+          estimated_delivery: formData.estimatedDelivery,
+          is_active: formData.isActive,
+          is_featured: formData.isFeatured,
+          is_top_rated: formData.isTopRated,
+          is_best_selling: formData.isBestSelling,
           tags: formData.tags,
         });
       }

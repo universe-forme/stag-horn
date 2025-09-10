@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import { useMutation } from 'convex/react';
-import { api } from '../convex/_generated/api';
+import { useCreateOrder } from '../lib/hooks';
+import { sendOrderNotification } from '../lib/email-service';
 import { useUser } from '@clerk/nextjs';
 
 export default function OrderForm({ product, onOrderSuccess }) {
@@ -21,7 +21,7 @@ export default function OrderForm({ product, onOrderSuccess }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null);
     
-    const createOrder = useMutation(api.orders.createOrder);
+    const { createOrder, isLoading: isSubmittingHook } = useCreateOrder();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -48,34 +48,37 @@ export default function OrderForm({ product, onOrderSuccess }) {
 
             // Create order data
             const orderData = {
-                userId: user?.id || 'guest', // You might need to handle guest users differently
-                orderNumber,
+                user_id: user?.id || 'guest', // You might need to handle guest users differently
+                order_number: orderNumber,
                 status: 'pending',
                 items: [{
-                    productId: product._id,
+                    product_id: product.id,
                     quantity: formData.quantity,
                     price: product.price,
                     total: subtotal
                 }],
                 subtotal,
-                shippingCost,
+                shipping_cost: shippingCost,
                 tax,
                 total,
-                shippingAddress: {
-                    fullName: formData.fullName,
+                shipping_address: {
+                    full_name: formData.fullName,
                     address: formData.address,
                     city: formData.city,
                     country: formData.country,
-                    postalCode: formData.postalCode,
+                    postal_code: formData.postalCode,
                     phone: formData.phone
                 },
-                paymentStatus: 'pending',
-                paymentMethod: 'cash_on_delivery',
+                payment_status: 'pending',
+                payment_method: 'cash_on_delivery',
                 notes: formData.notes,
-                estimatedDelivery: '2-3 working days'
+                estimated_delivery: '2-3 working days'
             };
 
-            await createOrder(orderData);
+            const result = await createOrder(orderData);
+            
+            // Send email notification
+            await sendOrderNotification(result);
             
             setSubmitStatus('success');
             if (onOrderSuccess) {

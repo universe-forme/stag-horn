@@ -1,11 +1,10 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useQuery } from "convex/react";
-import { api } from "../convex/_generated/api";
+import { useActiveCategories } from "../lib/hooks";
 
 const Footer = () => {
-  const categories = useQuery(api.categories.getActiveCategories);
+  const { data: categories } = useActiveCategories();
   const topCategories = categories?.slice(0, 5);
 
   return (
@@ -43,7 +42,7 @@ const Footer = () => {
               <h3 className="footer-heading font-medium text-lg mb-6">Categories</h3>
               <ul className="space-y-4">
                 {topCategories?.map((category) => (
-                  <li key={category._id}>
+                  <li key={category.id}>
                     <Link href={`/categories/${category.slug}`} className="footer-link text-base">
                       {category.name}
                     </Link>

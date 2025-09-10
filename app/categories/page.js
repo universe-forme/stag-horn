@@ -2,8 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useQuery } from 'convex/react';
-import { api } from "../../convex/_generated/api";
+import { useCategoriesWithProductCounts } from "../../lib/hooks";
 import ConditionalLayout from "../../components/ConditionalLayout";
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -42,8 +41,7 @@ const CategoriesContent = () => {
         };
     }, []);
 
-    const categories = useQuery(api.categories.getActiveCategories);
-    const products = useQuery(api.products.getActiveProducts);
+    const { data: categories } = useCategoriesWithProductCounts();
     const router = useRouter();
     const searchParams = useSearchParams();
     const pageParam = parseInt(searchParams.get('page') || '1', 10);
@@ -105,8 +103,8 @@ const CategoriesContent = () => {
                             <div className="col-span-full text-center">Loading categories...</div>
                         )}
                         {Array.isArray(pageItems) && pageItems.map((cat) => (
-                            <Link key={cat._id} href={`/product?categoryId=${encodeURIComponent(cat._id)}`}>
-                                <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: `url('${cat.imageUrl || "/knife-img.jpg"}')`}}>
+                            <Link key={cat.id} href={`/product?categoryId=${encodeURIComponent(cat.id)}`}>
+                                <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: `url('${cat.image_url || "/knife-img.jpg"}')`}}>
                                     <div className="category-overlay w-full h-full flex items-center justify-center">
                                         <h3 className="category-title px-4">{cat.name}</h3>
                                     </div>

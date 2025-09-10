@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useMutation, useQuery } from "convex/react";
-import { api } from "../../../convex/_generated/api";
+import { useAllCategories, useDeleteCategory } from "../../../lib/hooks";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../components/ui/card";
@@ -17,15 +16,15 @@ export default function CategoriesPage() {
   const [editingCategory, setEditingCategory] = useState(null);
   const [filterStatus, setFilterStatus] = useState("all");
 
-  const categories = useQuery(api.categories.getAllCategories);
-  const deleteCategory = useMutation(api.categories.deleteCategory);
+  const { data: categories, isLoading: categoriesLoading } = useAllCategories();
+  const { deleteCategory, isLoading: isDeleting } = useDeleteCategory();
 
   const filteredCategories = categories?.filter(category => {
     const matchesSearch = category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          category.description?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === "all" || 
-                         (filterStatus === "active" && category.isActive) ||
-                         (filterStatus === "inactive" && !category.isActive);
+                         (filterStatus === "active" && category.is_active) ||
+                         (filterStatus === "inactive" && !category.is_active);
     return matchesSearch && matchesStatus;
   }) || [];
 
@@ -42,7 +41,7 @@ export default function CategoriesPage() {
   const handleDeleteCategory = async (categoryId) => {
     if (confirm("Are you sure you want to delete this category?")) {
       try {
-        await deleteCategory({ categoryId });
+        await deleteCategory(categoryId);
       } catch (error) {
         console.error("Error deleting category:", error);
       }
@@ -124,12 +123,12 @@ export default function CategoriesPage() {
             </TableHeader>
             <TableBody>
               {filteredCategories.map((category) => (
-                <TableRow key={category._id}>
+                <TableRow key={category.id}>
                   <TableCell>
                     <div className="flex items-center gap-3">
-                      {category.imageUrl ? (
+                      {category.image_url ? (
                         <img
-                          src={category.imageUrl}
+                          src={category.image_url}
                           alt={category.name}
                           className="w-12 h-12 rounded-lg object-cover"
                         />
@@ -140,7 +139,7 @@ export default function CategoriesPage() {
                       )}
                       <div>
                         <div className="font-medium">{category.name}</div>
-                        <div className="text-sm text-muted-foreground">ID: {category._id}</div>
+                        <div className="text-sm text-muted-foreground">ID: {category.id}</div>
                       </div>
                     </div>
                   </TableCell>
@@ -155,8 +154,8 @@ export default function CategoriesPage() {
                     </code>
                   </TableCell>
                   <TableCell>
-                    <Badge variant={category.isActive ? 'default' : 'secondary'}>
-                      {category.isActive ? (
+                    <Badge variant={category.is_active ? 'default' : 'secondary'}>
+                      {category.is_active ? (
                         <>
                           <Eye className="mr-1 h-3 w-3" />
                           Active
@@ -169,7 +168,7 @@ export default function CategoriesPage() {
                       )}
                     </Badge>
                   </TableCell>
-                  <TableCell>{category.sortOrder}</TableCell>
+                  <TableCell>{category.sort_order}</TableCell>
                   <TableCell>
                     <div className="flex gap-2">
                       <Button 
@@ -183,7 +182,7 @@ export default function CategoriesPage() {
                         variant="outline" 
                         size="sm" 
                         className="text-red-600 hover:text-red-700"
-                        onClick={() => handleDeleteCategory(category._id)}
+                        onClick={() => handleDeleteCategory(category.id)}
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>

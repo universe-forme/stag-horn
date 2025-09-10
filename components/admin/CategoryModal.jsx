@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useMutation } from "convex/react";
-import { api } from "../../convex/_generated/api";
+import { useCreateCategory, useUpdateCategory } from "../../lib/hooks";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -25,8 +24,8 @@ export default function CategoryModal({ isOpen, onClose, category }) {
   const [errors, setErrors] = useState({});
   const fileInputRef = useRef(null);
 
-  const createCategory = useMutation(api.categories.createCategory);
-  const updateCategory = useMutation(api.categories.updateCategory);
+  const { createCategory, isLoading: isCreating } = useCreateCategory();
+  const { updateCategory, isLoading: isUpdating } = useUpdateCategory();
 
   useEffect(() => {
     if (category) {
@@ -211,14 +210,13 @@ export default function CategoryModal({ isOpen, onClose, category }) {
 
       if (category) {
         // Update existing category
-        await updateCategory({
-          categoryId: category._id,
+        await updateCategory(category.id, {
           name: formData.name,
           description: formData.description,
           slug: formData.slug,
-          imageUrl,
-          isActive: formData.isActive,
-          sortOrder: formData.sortOrder,
+          image_url: imageUrl,
+          is_active: formData.isActive,
+          sort_order: formData.sortOrder,
         });
       } else {
         // Create new category
@@ -226,9 +224,9 @@ export default function CategoryModal({ isOpen, onClose, category }) {
           name: formData.name,
           description: formData.description,
           slug: formData.slug,
-          imageUrl,
-          isActive: formData.isActive,
-          sortOrder: formData.sortOrder,
+          image_url: imageUrl,
+          is_active: formData.isActive,
+          sort_order: formData.sortOrder,
         });
       }
 

@@ -3,8 +3,7 @@ import Image from 'next/image';
 import React from "react";
 import Link from 'next/link';
 import ConditionalLayout from "../../components/ConditionalLayout";
-import { useQuery } from 'convex/react';
-import { api } from "../../convex/_generated/api";
+import { useActiveProducts, useProductsByCategory } from "../../lib/hooks";
 import { useSearchParams, useRouter } from 'next/navigation';
 
 const ProductPage = () => {
@@ -23,8 +22,8 @@ const ProductContent = () => {
     const page = Number.isNaN(pageParam) || pageParam < 1 ? 1 : pageParam;
     const pageSize = 12;
 
-    const allProducts = useQuery(api.products.getActiveProducts);
-    const productsByCategory = useQuery(api.products.getProductsByCategory, categoryId ? { categoryId } : 'skip');
+    const { data: allProducts } = useActiveProducts();
+    const { data: productsByCategory } = useProductsByCategory(categoryId);
     const dataset = categoryId ? productsByCategory : allProducts;
     const total = Array.isArray(dataset) ? dataset.length : 0;
     const totalPages = Math.max(1, Math.ceil(total / pageSize));

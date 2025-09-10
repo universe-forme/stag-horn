@@ -2,7 +2,7 @@ import { Poppins } from "next/font/google";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import AdminHeader from "../../components/admin/AdminHeader";
 import AdminRouteProtection from "../../components/AdminRouteProtection";
-import ConvexClientProvider from "../../components/ConvexClientProvider";
+import SupabaseClientProvider from "../../components/SupabaseClientProvider";
 import { AdminAuthProvider } from "../../components/AdminAuthProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,7 +22,7 @@ export default function AdminLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${poppins.variable} antialiased bg-gray-50`}>
-        <ConvexClientProvider>
+        <SupabaseClientProvider>
           <AdminAuthProvider>
             <AdminRouteProtection>
               <div className="flex h-screen bg-gray-100">
@@ -37,7 +37,7 @@ export default function AdminLayout({ children }) {
               <ToastContainer position="top-right" />
             </AdminRouteProtection>
           </AdminAuthProvider>
-        </ConvexClientProvider>
+        </SupabaseClientProvider>
       </body>
     </html>
   );

@@ -2,8 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from 'react';
-import { useQuery } from "convex/react";
-import { api } from "../convex/_generated/api";
+import { useActiveCategories, useActiveProducts } from "../lib/hooks";
 import TestimonialScroller from "../components/TestimonialScroller";
 import ContactForm from "../components/ContactForm";
 import ConditionalLayout from "../components/ConditionalLayout";
@@ -26,8 +25,8 @@ function HomeContent() {
     const categoryPrevBtnRef = useRef(null);
     const categoryNextBtnRef = useRef(null);
 
-    const categories = useQuery(api.categories.getActiveCategories);
-    const products = useQuery(api.products.getActiveProducts);
+    const { data: categories, isLoading: categoriesLoading } = useActiveCategories();
+    const { data: products, isLoading: productsLoading } = useActiveProducts();
 
 
     useEffect(() => {
@@ -235,7 +234,7 @@ function HomeContent() {
                                     Explore fine craftsmanship — from chef knives to timeless swords and elegant dining tools.
                                 </p>
                                 <Link href="/categories">
-                                    <button className="bg-highlight text-white px-10 py-4 rounded-lg font-medium text-lg hover:opacity-90 transition-opacity shadow-lg">
+                                    <button className="bg-highlight text-white px-10 py-4 rounded-lg font-medium text-lg hover:opacity-90 transition-opacity shadow-lg cursor-pointer">
                                         Explore Collection
                                     </button>
                                 </Link>
@@ -257,12 +256,12 @@ function HomeContent() {
                                 {/* Customer Reviews */}
                                 <div className="flex items-center gap-4 pt-4 justify-center lg:justify-start">
                                     <div className="flex -space-x-2">
-                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face"
-                                             alt="Customer" className="w-12 h-12 rounded-full border-2 border-white object-cover" />
-                                        <img src="https://images.unsplash.com/photo-1494790108755-2616b90b3f5e?w=50&h=50&fit=crop&crop=face"
-                                             alt="Customer" className="w-12 h-12 rounded-full border-2 border-white object-cover" />
-                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face"
-                                             alt="Customer" className="w-12 h-12 rounded-full border-2 border-white object-cover" />
+                                        <Image src="/review-1.svg" width={60} height={60}
+                                             alt="Customer" className="rounded-full object-cover" />
+                                        <Image src="/review-2.svg" width={60} height={60}
+                                             alt="Customer" className="rounded-full object-cover" />
+                                        <Image src="/review-3.svg" width={60} height={60}
+                                             alt="Customer" className="rounded-full object-cover" />
                                     </div>
                                     <div>
                                         <div className="text-primary font-bold text-xl font-quattrocento">70k+</div>
@@ -325,8 +324,8 @@ function HomeContent() {
                                 )}
                                 {Array.isArray(categories) && categories.map((cat) => (
                                     <div key={cat._id} className="w-full md:w-1/2 lg:w-1/4 flex-shrink-0 px-3 category-card-item">
-                                        <Link href={`/product?categoryId=${cat._id}`}>
-                                            <div className="category-card h-[350px]" style={{backgroundImage: `url('${cat.imageUrl || "/knife-img.jpg"}')`}}>
+                                        <Link href={`/product?categoryId=${cat._id}`} className="cursor-pointer">
+                                            <div className="category-card h-[350px]" style={{backgroundImage: `url('${cat.imageUrl}')`}}>
                                                 <div className="category-overlay w-full h-full flex items-center justify-center p-6">
                                                     <h3 className="font-quattrocento text-2xl lg:text-3xl font-bold text-white leading-tight text-center">{cat.name}</h3>
                                                 </div>
@@ -337,16 +336,16 @@ function HomeContent() {
                             </div>
                         </div>
                         <button ref={categoryPrevBtnRef} className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-[#D6AF66] rounded-md p-3 shadow-md hidden md:block">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
                         </button>
                         <button ref={categoryNextBtnRef} className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-[#D6AF66] rounded-md p-3 shadow-md hidden md:block">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
                         </button>
                     </div>
                     {/* Explore Collection Button */}
                     <div className="text-center mt-12">
                         <Link href="/categories">
-                            <button className="bg-highlight text-white px-10 py-4 rounded-lg font-medium text-lg hover:opacity-90 transition-opacity shadow-lg">
+                            <button className="bg-highlight text-white px-10 py-4 rounded-lg font-medium text-lg hover:opacity-90 transition-opacity shadow-lg cursor-pointer">
                                 Explore Collection
                             </button>
                         </Link>
@@ -382,7 +381,7 @@ function HomeContent() {
                                     <div key={p._id} className="product-card-new">
                                         <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
                                             <div className="relative">
-                                                <Link href={`/product/${encodeURIComponent(p.sku)}`}>
+                                                <Link href={`/product/${encodeURIComponent(p.sku)}`} className="cursor-pointer">
                                                     <img src={p.mainImage || "/spoon-product.jpg"} width={256} height={256} alt={p.name} className="w-full h-60 object-cover"/>
                                                 </Link>
                                             </div>
