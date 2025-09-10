@@ -52,27 +52,27 @@ export default function ProductModal({ isOpen, onClose, product }) {
       setFormData({
         name: product.name || "",
         description: product.description || "",
-        shortDescription: product.shortDescription || "",
+        shortDescription: product.short_description || "",
         price: product.price || 0,
-        comparePrice: product.comparePrice || 0,
-        categoryId: product.categoryId || "",
+        comparePrice: product.compare_price || 0,
+        categoryId: product.category_id || "",
         sku: product.sku || "",
-        stockQuantity: product.stockQuantity || 0,
+        stockQuantity: product.stock_quantity || 0,
         weight: product.weight || "",
-        weightInGrams: product.weightInGrams || 0,
-        productSize: product.productSize || "",
-        askingPrice: product.askingPrice || 0,
-        manufacturingCost: product.manufacturingCost || "",
-        estimateShippingCost: product.estimateShippingCost || "",
-        readyToShip: product.readyToShip ?? false,
-        estimatedDelivery: product.estimatedDelivery || "",
-        isActive: product.isActive ?? true,
-        isFeatured: product.isFeatured ?? false,
-        isTopRated: product.isTopRated ?? false,
-        isBestSelling: product.isBestSelling ?? false,
+        weightInGrams: product.weight_in_grams || 0,
+        productSize: product.product_size || "",
+        askingPrice: product.asking_price || 0,
+        manufacturingCost: product.manufacturing_cost || "",
+        estimateShippingCost: product.estimate_shipping_cost || "",
+        readyToShip: product.ready_to_ship ?? false,
+        estimatedDelivery: product.estimated_delivery || "",
+        isActive: product.is_active ?? true,
+        isFeatured: product.is_featured ?? false,
+        isTopRated: product.is_top_rated ?? false,
+        isBestSelling: product.is_best_selling ?? false,
         tags: product.tags || []
       });
-      setMainImagePreview(product.mainImage || "");
+      setMainImagePreview(product.main_image || "");
       setAdditionalImages(product.images || []);
     } else {
       setFormData({
@@ -331,6 +331,12 @@ export default function ProductModal({ isOpen, onClose, product }) {
           sku: formData.sku,
           stock_quantity: formData.stockQuantity,
           weight: formData.weight,
+          weight_in_grams: formData.weightInGrams,
+          product_size: formData.productSize,
+          asking_price: formData.askingPrice,
+          manufacturing_cost: formData.manufacturingCost,
+          estimate_shipping_cost: formData.estimateShippingCost,
+          ready_to_ship: formData.readyToShip,
           estimated_delivery: formData.estimatedDelivery,
           is_active: formData.isActive,
           is_featured: formData.isFeatured,
@@ -352,6 +358,12 @@ export default function ProductModal({ isOpen, onClose, product }) {
           sku: formData.sku,
           stock_quantity: formData.stockQuantity,
           weight: formData.weight,
+          weight_in_grams: formData.weightInGrams,
+          product_size: formData.productSize,
+          asking_price: formData.askingPrice,
+          manufacturing_cost: formData.manufacturingCost,
+          estimate_shipping_cost: formData.estimateShippingCost,
+          ready_to_ship: formData.readyToShip,
           estimated_delivery: formData.estimatedDelivery,
           is_active: formData.isActive,
           is_featured: formData.isFeatured,
@@ -428,7 +440,7 @@ export default function ProductModal({ isOpen, onClose, product }) {
               >
                 <option value="">Select a category</option>
                 {categories?.map(category => (
-                  <option key={category._id} value={category._id}>
+                  <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
                 ))}

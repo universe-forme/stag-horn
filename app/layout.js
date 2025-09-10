@@ -1,20 +1,20 @@
-import { Poppins, Quattrocento, Open_Sans } from "next/font/google";
+import {Open_Sans, Outfit, Cabin} from "next/font/google";
 import "./globals.css";
 import SupabaseClientProvider from "../components/SupabaseClientProvider";
 import ClerkProviderWrapper from "../components/ClerkProviderWrapper";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
 
-const quattrocento = Quattrocento({
-  variable: "--font-quattrocento",
+const cabin = Cabin({
+  variable: "--font-cabin",
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const openSans = Open_Sans({
@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProviderWrapper>
       <html lang="en">
-        <body className={`${poppins.variable} ${quattrocento.variable} ${openSans.variable} antialiased`}>
+        <body className={`${outfit.variable} ${cabin.variable} ${openSans.variable} antialiased`}>
           <SupabaseClientProvider>
             {children}
             <ToastContainer position="top-right" />

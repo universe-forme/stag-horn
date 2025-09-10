@@ -1,159 +1,99 @@
-"use client";
-import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+'use client';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
-export default function Navbar({ isAdminLoggedIn = false }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef(null);
-  const buttonRef = useRef(null);
-  const pathname = usePathname();
-  const router = useRouter();
+export default function Navbar() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const pathname = usePathname();
 
-  // Close menu when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target)
-      ) {
-        setIsMenuOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+    const toggleMobileMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
     };
-  }, []);
 
-  // Close menu on resize
-  useEffect(() => {
-    function handleResize() {
-      if (window.innerWidth >= 1024) {
-        setIsMenuOpen(false);
-      }
-    }
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 768) {
+                setIsMenuOpen(false);
+            }
+        };
 
-  // Handle login click
-  const handleLoginClick = (e) => {
-    e.preventDefault();
-    if (isAdminLoggedIn) {
-      router.push('/admin');
-    } else {
-      router.push('/login');
-    }
-  };
+        window.addEventListener('resize', handleResize);
 
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/categories", label: "Categories" },
-      { href: "/product", label: "Products" },
-    { href: "/about", label: "About Us" },
-    { href: "#", label: "Login", onClick: handleLoginClick },
-    // { href: "/contact", label: "Contact Us" },
-  ];
+        // Cleanup the event listener on component unmount
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
-  return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50 p-4 transition-all duration-500 ease-in-out translate-y-0 opacity-100"
-    >
-      <nav className="w-full max-w-[1392px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-[86px] px-6 justify-between items-center rounded-3xl border glass-bg backdrop-blur-navbar" style={{ borderColor: "#C0C0C0" }}>
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center">
-              <div className="w-12 h-12 flex items-center justify-center">
-                <Image src="/logo.svg" alt="Logo" width={96} height={96} />
-              </div>
-            </Link>
-          </div>
+    const navLinks = [
+        { href: '/', label: 'Home' },
+        { href: '/categories', label: 'Categories' },
+        { href: '/about', label: 'About Us' },
+        { href: '/contact', label: 'Contact Us' },
+    ];
 
-          {/* Desktop Navigation & CTA */}
-          <div className="hidden lg:flex items-center space-x-8">
-            {navLinks.map(link => (
-              link.onClick ? (
-                <button
-                  key={link.href}
-                  onClick={link.onClick}
-                  className="navbar-link"
-                >
-                  {link.label}
-                </button>
-              ) : (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`navbar-link${pathname === link.href ? " active" : ""}`}
-                >
-                  {link.label}
-                </Link>
-              )
-            ))}
-            <Link href="/contact" className="bg-[#D6AF66] text-[#F9F9F6] px-6 py-3 rounded-xl font-medium text-sm hover:bg-[#D6AF66]/90 transition-colors duration-200">Contact Us</Link>
-          </div>
+    return (
+        <nav className="bg-[#F9F9F6] nav-shadow py-4 sticky top-0 z-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center h-16">
+                    {/* Logo */}
+                    <div className="flex items-center space-x-3">
+                        <div className="logo-antlers">
+                            <Link href="/">
+                                <Image src="/logo.svg" alt="Logo" width={96} height={64} />
+                            </Link>
+                        </div>
+                    </div>
 
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden">
-            <button
-              ref={buttonRef}
-              onClick={() => setIsMenuOpen((open) => !open)}
-              className="p-2 text-[#C0C0C0] hover:text-[#D6AF66] transition-colors duration-200"
-              aria-label="Toggle menu"
-            >
-              {/* Menu Icon */}
-              <svg className={`w-6 h-6 ${isMenuOpen ? "hidden" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
-              {/* Close Icon */}
-              <svg className={`w-6 h-6 ${isMenuOpen ? "" : "hidden"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
+                    {/* Desktop Navigation Links */}
+                    <div className="hidden md:flex items-center space-x-8">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className={`nav-link text-gray-500 font-medium ${pathname === link.href ? 'active text-gray-900' : ''}`}>
+                                {link.label}
+                            </Link>
+                        ))}
+                    </div>
 
-        {/* Mobile Menu */}
-        <div
-          ref={menuRef}
-          className={`lg:hidden mt-4 p-6 rounded-3xl border bg-[#F9F9F6] mobile-menu ${isMenuOpen ? "" : "hidden"}`}
-          style={{ borderColor: "#C0C0C0" }}
-        >
-          <div className="flex flex-col space-y-4">
-            {navLinks.map(link => (
-              link.onClick ? (
-                <button
-                  key={link.href}
-                  onClick={(e) => {
-                    link.onClick(e);
-                    setIsMenuOpen(false);
-                  }}
-                  className="navbar-link text-left"
-                >
-                  {link.label}
-                </button>
-              ) : (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`navbar-link${pathname === link.href ? " active" : ""}`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              )
-            ))}
-            <Link href="/contact" className="bg-[#D6AF66] text-[#F9F9F6] px-6 py-3 rounded-xl font-medium text-sm hover:bg-[#D6AF66]/90 transition-colors duration-200 text-center mt-4" onClick={() => setIsMenuOpen(false)}>Contact Us</Link>
-          </div>
-        </div>
-      </nav>
-    </header>
-  );
+                    {/* Right Side Icons */}
+                    <div className="flex items-center space-x-4">
+                        {/* Shopping Cart */}
+                        <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                            <Image src="/shopping-bag.svg" alt={"Shopping Bag Icon"} width={24} height={24} className="object-cover" />
+                        </button>
+
+                        {/* Mobile Menu Button */}
+                        <button className={`hamburger md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors ${isMenuOpen ? 'open' : ''}`} onClick={toggleMobileMenu}>
+                            <div className="flex flex-col space-y-1">
+                                <span className="w-6 h-0.5 bg-gray-700 rounded-full"></span>
+                                <span className="w-6 h-0.5 bg-gray-700 rounded-full"></span>
+                                <span className="w-6 h-0.5 bg-gray-700 rounded-full"></span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Mobile Menu */}
+            <div className={`mobile-menu md:hidden fixed top-16 right-0 w-64 h-screen bg-white shadow-lg z-40 ${isMenuOpen ? 'open' : ''}`}>
+                <div className="p-6 space-y-6">
+                    {navLinks.map((link) => (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            className={`block nav-link text-gray-500 font-medium text-lg ${pathname === link.href ? 'active text-gray-900' : ''}`}
+                            onClick={toggleMobileMenu} // Close menu on link click
+                        >
+                            {link.label}
+                        </Link>
+                    ))}
+                </div>
+            </div>
+
+            {/* Mobile Menu Overlay */}
+            <div className={`mobile-overlay md:hidden fixed inset-0 bg-black bg-opacity-50 z-30 ${isMenuOpen ? '' : 'hidden'}`} onClick={toggleMobileMenu}></div>
+        </nav>
+    );
 }

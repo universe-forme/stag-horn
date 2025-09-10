@@ -100,7 +100,7 @@ export default function ContactForm() {
 
     return (
         <div className="form-container">
-            <h2 className="form-title">Order Now</h2>
+            <h2 className="form-title">Let's Talk</h2>
 
             {submitStatus === 'error' && (
                 <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
