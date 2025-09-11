@@ -8,6 +8,7 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import { X, Upload, Image as ImageIcon, Trash2, Plus } from "lucide-react";
+import { toast } from "react-toastify";
 
 export default function ProductModal({ isOpen, onClose, product }) {
   const [formData, setFormData] = useState({
@@ -20,16 +21,10 @@ export default function ProductModal({ isOpen, onClose, product }) {
     sku: "",
     stockQuantity: 0,
     weight: "",
-    weightInGrams: 0,
     productSize: "",
-    askingPrice: 0,
-    manufacturingCost: "",
-    estimateShippingCost: "",
-    readyToShip: false,
-    estimatedDelivery: "",
     isActive: true,
     isFeatured: false,
-    isTopRated: false,
+    isTrending: false,
     isBestSelling: false,
     tags: []
   });
@@ -59,17 +54,11 @@ export default function ProductModal({ isOpen, onClose, product }) {
         sku: product.sku || "",
         stockQuantity: product.stock_quantity || 0,
         weight: product.weight || "",
-        weightInGrams: product.weight_in_grams || 0,
         productSize: product.product_size || "",
-        askingPrice: product.asking_price || 0,
-        manufacturingCost: product.manufacturing_cost || "",
-        estimateShippingCost: product.estimate_shipping_cost || "",
-        readyToShip: product.ready_to_ship ?? false,
-        estimatedDelivery: product.estimated_delivery || "",
-        isActive: product.is_active ?? true,
-        isFeatured: product.is_featured ?? false,
-        isTopRated: product.is_top_rated ?? false,
-        isBestSelling: product.is_best_selling ?? false,
+        isActive: Boolean(product.is_active),
+        isFeatured: Boolean(product.is_featured),
+        isTrending: Boolean(product.is_trending || product.is_top_rated),
+        isBestSelling: Boolean(product.is_best_selling),
         tags: product.tags || []
       });
       setMainImagePreview(product.main_image || "");
@@ -85,16 +74,10 @@ export default function ProductModal({ isOpen, onClose, product }) {
         sku: "",
         stockQuantity: 0,
         weight: "",
-        weightInGrams: 0,
         productSize: "",
-        askingPrice: 0,
-        manufacturingCost: "",
-        estimateShippingCost: "",
-        readyToShip: false,
-        estimatedDelivery: "",
         isActive: true,
         isFeatured: false,
-        isTopRated: false,
+        isTrending: false,
         isBestSelling: false,
         tags: []
       });
@@ -121,7 +104,6 @@ export default function ProductModal({ isOpen, onClose, product }) {
       setFormData(prev => ({ ...prev, sku }));
     }
     
-    // Clear error for this field
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: "" }));
     }
@@ -312,13 +294,10 @@ export default function ProductModal({ isOpen, onClose, product }) {
     setIsLoading(true);
 
     try {
-      // TODO: Implement actual image upload to cloud storage
-      // For now, we'll use the preview URLs as placeholders
       const mainImage = mainImagePreview;
       const images = additionalImages;
 
       if (product) {
-        // Update existing product
         await updateProduct(product.id, {
           name: formData.name,
           description: formData.description,
@@ -331,21 +310,16 @@ export default function ProductModal({ isOpen, onClose, product }) {
           sku: formData.sku,
           stock_quantity: formData.stockQuantity,
           weight: formData.weight,
-          weight_in_grams: formData.weightInGrams,
           product_size: formData.productSize,
-          asking_price: formData.askingPrice,
-          manufacturing_cost: formData.manufacturingCost,
-          estimate_shipping_cost: formData.estimateShippingCost,
-          ready_to_ship: formData.readyToShip,
-          estimated_delivery: formData.estimatedDelivery,
           is_active: formData.isActive,
           is_featured: formData.isFeatured,
-          is_top_rated: formData.isTopRated,
+          is_trending: formData.isTrending,
+          is_top_rated: formData.isTrending,
           is_best_selling: formData.isBestSelling,
           tags: formData.tags,
         });
+        toast.success('Product updated successfully!');
       } else {
-        // Create new product
         await createProduct({
           name: formData.name,
           description: formData.description,
@@ -358,24 +332,21 @@ export default function ProductModal({ isOpen, onClose, product }) {
           sku: formData.sku,
           stock_quantity: formData.stockQuantity,
           weight: formData.weight,
-          weight_in_grams: formData.weightInGrams,
           product_size: formData.productSize,
-          asking_price: formData.askingPrice,
-          manufacturing_cost: formData.manufacturingCost,
-          estimate_shipping_cost: formData.estimateShippingCost,
-          ready_to_ship: formData.readyToShip,
-          estimated_delivery: formData.estimatedDelivery,
           is_active: formData.isActive,
           is_featured: formData.isFeatured,
-          is_top_rated: formData.isTopRated,
+          is_trending: formData.isTrending,
+          is_top_rated: formData.isTrending,
           is_best_selling: formData.isBestSelling,
           tags: formData.tags,
         });
+        toast.success('Product created successfully!');
       }
 
       onClose();
     } catch (error) {
       console.error("Error saving product:", error);
+      toast.error(product ? 'Failed to update product. Please try again.' : 'Failed to create product. Please try again.');
       setErrors(prev => ({ ...prev, submit: "Failed to save product. Please try again." }));
     } finally {
       setIsLoading(false);
@@ -387,10 +358,9 @@ export default function ProductModal({ isOpen, onClose, product }) {
   return (
     <div 
       className="fixed inset-0 bg-gray-100 bg-opacity-80 backdrop-blur-md flex items-center justify-center z-50 p-4"
-      onClick={onClose}
     >
       <div 
-        className="bg-white rounded-2xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white rounded-2xl shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
@@ -407,7 +377,7 @@ export default function ProductModal({ isOpen, onClose, product }) {
           </Button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        <form id="product-form" onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-6 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Product Name */}
             <div>
@@ -720,22 +690,6 @@ export default function ProductModal({ isOpen, onClose, product }) {
             </div>
 
             <div>
-              <Label htmlFor="weightInGrams" className="text-sm font-medium text-[#2C2C2C]">
-                Weight in Grams
-              </Label>
-              <Input
-                id="weightInGrams"
-                type="number"
-                step="0.01"
-                value={formData.weightInGrams}
-                onChange={(e) => handleInputChange("weightInGrams", parseFloat(e.target.value) || 0)}
-                placeholder="0"
-                min="0"
-                className="mt-1"
-              />
-            </div>
-
-            <div>
               <Label htmlFor="productSize" className="text-sm font-medium text-[#2C2C2C]">
                 Product Size
               </Label>
@@ -745,80 +699,6 @@ export default function ProductModal({ isOpen, onClose, product }) {
                 value={formData.productSize}
                 onChange={(e) => handleInputChange("productSize", e.target.value)}
                 placeholder="e.g., 18.5 inches Overall length"
-                className="mt-1"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="askingPrice" className="text-sm font-medium text-[#2C2C2C]">
-                Asking Price
-              </Label>
-              <Input
-                id="askingPrice"
-                type="number"
-                step="0.01"
-                value={formData.askingPrice}
-                onChange={(e) => handleInputChange("askingPrice", parseFloat(e.target.value) || 0)}
-                placeholder="0.00"
-                min="0"
-                className="mt-1"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="manufacturingCost" className="text-sm font-medium text-[#2C2C2C]">
-                Manufacturing Cost
-              </Label>
-              <Input
-                id="manufacturingCost"
-                type="text"
-                value={formData.manufacturingCost}
-                onChange={(e) => handleInputChange("manufacturingCost", e.target.value)}
-                placeholder="e.g., 1300Rs"
-                className="mt-1"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="estimateShippingCost" className="text-sm font-medium text-[#2C2C2C]">
-                Estimate Shipping Cost
-              </Label>
-              <Input
-                id="estimateShippingCost"
-                type="text"
-                value={formData.estimateShippingCost}
-                onChange={(e) => handleInputChange("estimateShippingCost", e.target.value)}
-                placeholder="e.g., $5.00"
-                className="mt-1"
-              />
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div>
-                <Label htmlFor="readyToShip" className="text-sm font-medium text-[#2C2C2C]">
-                  Ready to Ship
-                </Label>
-                <p className="text-xs text-[#2C2C2C] opacity-60 mt-1">
-                  Mark if product is ready to ship
-                </p>
-              </div>
-              <Switch
-                id="readyToShip"
-                checked={formData.readyToShip}
-                onCheckedChange={(checked) => handleInputChange("readyToShip", checked)}
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="estimatedDelivery" className="text-sm font-medium text-[#2C2C2C]">
-                Estimated Delivery
-              </Label>
-              <Input
-                id="estimatedDelivery"
-                type="text"
-                value={formData.estimatedDelivery}
-                onChange={(e) => handleInputChange("estimatedDelivery", e.target.value)}
-                placeholder="e.g., 3-5 business days"
                 className="mt-1"
               />
             </div>
@@ -862,17 +742,17 @@ export default function ProductModal({ isOpen, onClose, product }) {
 
               <div className="flex items-center justify-between">
                 <div>
-                  <Label htmlFor="isTopRated" className="text-sm font-medium text-[#2C2C2C]">
-                    Top Rated
+                  <Label htmlFor="isTrending" className="text-sm font-medium text-[#2C2C2C]">
+                    Trending
                   </Label>
                   <p className="text-xs text-[#2C2C2C] opacity-60 mt-1">
-                    Mark as top rated product
+                    Mark as trending product
                   </p>
                 </div>
                 <Switch
-                  id="isTopRated"
-                  checked={formData.isTopRated}
-                  onCheckedChange={(checked) => handleInputChange("isTopRated", checked)}
+                  id="isTrending"
+                  checked={formData.isTrending}
+                  onCheckedChange={(checked) => handleInputChange("isTrending", checked)}
                 />
               </div>
 
@@ -893,41 +773,44 @@ export default function ProductModal({ isOpen, onClose, product }) {
               </div>
             </div>
           </div>
-
-          {/* Submit Error */}
-          {errors.submit && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-              <p className="text-sm text-red-600">{errors.submit}</p>
-            </div>
-          )}
-
-          {/* Action Buttons */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onClose}
-              disabled={isLoading}
-              className="bg-white text-[#2C2C2C] border border-[#C0C0C0] hover:bg-gray-50"
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              className="bg-[#D6AF66] hover:bg-[#C49F5A] text-white border border-[#D6AF66]"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  Saving...
-                </>
-              ) : (
-                product ? "Update Product" : "Create Product"
-              )}
-            </Button>
-          </div>
         </form>
+        
+        <div className="p-6 border-t border-gray-200">
+            {/* Submit Error */}
+            {errors.submit && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
+                <p className="text-sm text-red-600">{errors.submit}</p>
+                </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex justify-end gap-3">
+                <Button
+                type="button"
+                variant="outline"
+                onClick={onClose}
+                disabled={isLoading}
+                className="bg-white text-[#2C2C2C] border border-[#C0C0C0] hover:bg-gray-50"
+                >
+                Cancel
+                </Button>
+                <Button
+                type="submit"
+                form="product-form"
+                className="bg-[#D6AF66] hover:bg-[#C49F5A] text-white border border-[#D6AF66]"
+                disabled={isLoading}
+                >
+                {isLoading ? (
+                    <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Saving...
+                    </>
+                ) : (
+                    product ? "Update Product" : "Create Product"
+                )}
+                </Button>
+            </div>
+        </div>
       </div>
     </div>
   );

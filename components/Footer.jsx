@@ -31,7 +31,7 @@ const Footer = () => {
               <ul className="space-y-4">
                 <li><Link href="/" className="footer-link text-base">Home</Link></li>
                 <li><Link href="/categories" className="footer-link text-base">Categories</Link></li>
-                  <li><Link href="/product" className="footer-link text-base">Products</Link></li>
+                  <li><Link href="/product" className="footer-link text-base">All Products</Link></li>
                 <li><Link href="/about" className="footer-link text-base">About Us</Link></li>
                 <li><Link href="/contact" className="footer-link text-base">Contact Us</Link></li>
               </ul>
@@ -43,7 +43,7 @@ const Footer = () => {
               <ul className="space-y-4">
                 {topCategories?.map((category) => (
                   <li key={category.id}>
-                    <Link href={`/categories/${category.slug}`} className="footer-link text-base">
+                    <Link href={`/categories/${category.slug}`} className="footer-link text-base capitalize">
                       {category.name}
                     </Link>
                   </li>

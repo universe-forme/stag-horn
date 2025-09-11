@@ -220,9 +220,9 @@ function HomeContent() {
                             {categories && categories.length > 0 ? categories.slice(0, 5).map((cat) => (
                                 <div key={cat.id} className="w-full category-card-item">
                                     <Link href={`/categories?category=${cat.slug}`} className="cursor-pointer">
-                                        <div className="category-card h-[300px]" style={{backgroundImage: `url('${cat.image_url || '/product-section-bg.jpg'}')`}}>
+                                        <div className="category-card h-[300px]" style={{backgroundImage: `url('${cat.image_url}')`}}>
                                             <div className="category-overlay w-full h-full flex items-center justify-center p-6">
-                                                <h3 className=" text-2xl lg:text-3xl font-bold text-white leading-tight text-center">{cat.name}</h3>
+                                                <h3 className=" text-2xl lg:text-3xl font-bold text-white leading-tight text-center capitalize">{cat.name}</h3>
                                             </div>
                                         </div>
                                     </Link>

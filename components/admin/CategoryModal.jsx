@@ -8,6 +8,7 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import { X, Upload, Image as ImageIcon, Trash2 } from "lucide-react";
+import { toast } from "react-toastify";
 
 export default function CategoryModal({ isOpen, onClose, category }) {
   const [formData, setFormData] = useState({
@@ -33,11 +34,11 @@ export default function CategoryModal({ isOpen, onClose, category }) {
         name: category.name || "",
         description: category.description || "",
         slug: category.slug || "",
-        isActive: category.isActive ?? true,
-        sortOrder: category.sortOrder || 0,
-        imageUrl: category.imageUrl || ""
+        isActive: Boolean(category.is_active),
+        sortOrder: category.sort_order || 0,
+        imageUrl: category.image_url || ""
       });
-      setImagePreview(category.imageUrl || "");
+      setImagePreview(category.image_url || "");
     } else {
       setFormData({
         name: "",
@@ -70,7 +71,6 @@ export default function CategoryModal({ isOpen, onClose, category }) {
       setFormData(prev => ({ ...prev, slug }));
     }
     
-    // Clear error for this field
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: "" }));
     }
@@ -83,7 +83,6 @@ export default function CategoryModal({ isOpen, onClose, category }) {
         setImageFile(file);
         setErrors(prev => ({ ...prev, image: "" }));
         
-        // Create preview
         const reader = new FileReader();
         reader.onload = (e) => {
           setImagePreview(e.target.result);
@@ -94,13 +93,11 @@ export default function CategoryModal({ isOpen, onClose, category }) {
   };
 
   const handleImageValidation = (file) => {
-    // Validate file type
     if (!file.type.startsWith('image/')) {
       setErrors(prev => ({ ...prev, image: "Please select a valid image file" }));
       return false;
     }
 
-    // Validate file size (5MB limit)
     if (file.size > 5 * 1024 * 1024) {
       setErrors(prev => ({ ...prev, image: "Image size must be less than 5MB" }));
       return false;
@@ -109,25 +106,24 @@ export default function CategoryModal({ isOpen, onClose, category }) {
     return true;
   };
 
-  const handleImageDrop = (e) => {
+  const handleDrop = (e) => {
     e.preventDefault();
     e.currentTarget.classList.remove('border-blue-500', 'bg-blue-50');
     
     const files = e.dataTransfer.files;
     if (files.length > 0) {
       const file = files[0];
-      handleImageValidation(file);
+      if (handleImageValidation(file)) {
+        setImageFile(file);
+        setErrors(prev => ({ ...prev, image: "" }));
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImagePreview(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
     }
-  };
-
-  const handleImageDragOver = (e) => {
-    e.preventDefault();
-    e.currentTarget.classList.add('border-blue-500', 'bg-blue-50');
-  };
-
-  const handleImageDragLeave = (e) => {
-    e.preventDefault();
-    e.currentTarget.classList.remove('border-blue-500', 'bg-blue-50');
   };
 
   const handleDragOver = (e) => {
@@ -138,32 +134,6 @@ export default function CategoryModal({ isOpen, onClose, category }) {
   const handleDragLeave = (e) => {
     e.preventDefault();
     e.currentTarget.classList.remove('border-blue-500', 'bg-blue-50');
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.currentTarget.classList.remove('border-blue-500', 'bg-blue-50');
-    
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      const file = files[0];
-      if (file.type.startsWith('image/')) {
-        if (file.size <= 5 * 1024 * 1024) {
-          setImageFile(file);
-          setErrors(prev => ({ ...prev, image: "" }));
-          
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            setImagePreview(e.target.result);
-          };
-          reader.readAsDataURL(file);
-        } else {
-          setErrors(prev => ({ ...prev, image: "Image size must be less than 5MB" }));
-        }
-      } else {
-        setErrors(prev => ({ ...prev, image: "Please select a valid image file" }));
-      }
-    }
   };
 
   const removeImage = () => {
@@ -204,12 +174,9 @@ export default function CategoryModal({ isOpen, onClose, category }) {
     setIsLoading(true);
 
     try {
-      // TODO: Implement actual image upload to cloud storage
-      // For now, we'll use the preview URL as a placeholder
       const imageUrl = imagePreview || formData.imageUrl;
 
       if (category) {
-        // Update existing category
         await updateCategory(category.id, {
           name: formData.name,
           description: formData.description,
@@ -218,8 +185,8 @@ export default function CategoryModal({ isOpen, onClose, category }) {
           is_active: formData.isActive,
           sort_order: formData.sortOrder,
         });
+        toast.success('Category updated successfully!');
       } else {
-        // Create new category
         await createCategory({
           name: formData.name,
           description: formData.description,
@@ -228,11 +195,13 @@ export default function CategoryModal({ isOpen, onClose, category }) {
           is_active: formData.isActive,
           sort_order: formData.sortOrder,
         });
+        toast.success('Category created successfully!');
       }
 
       onClose();
     } catch (error) {
       console.error("Error saving category:", error);
+      toast.error(category ? 'Failed to update category. Please try again.' : 'Failed to create category. Please try again.');
       setErrors(prev => ({ ...prev, submit: "Failed to save category. Please try again." }));
     } finally {
       setIsLoading(false);
@@ -247,7 +216,7 @@ export default function CategoryModal({ isOpen, onClose, category }) {
       onClick={onClose}
     >
       <div 
-        className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
@@ -264,7 +233,7 @@ export default function CategoryModal({ isOpen, onClose, category }) {
           </Button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        <form id="category-form" onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-6 space-y-6">
           {/* Category Name */}
           <div>
             <Label htmlFor="name" className="text-sm font-medium text-[#2C2C2C]">
@@ -406,41 +375,44 @@ export default function CategoryModal({ isOpen, onClose, category }) {
               onCheckedChange={(checked) => handleInputChange("isActive", checked)}
             />
           </div>
-
-          {/* Submit Error */}
-          {errors.submit && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-              <p className="text-sm text-red-600">{errors.submit}</p>
-            </div>
-          )}
-
-          {/* Action Buttons */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onClose}
-              disabled={isLoading}
-              className="bg-white text-[#2C2C2C] border border-[#C0C0C0] hover:bg-gray-50"
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              className="bg-[#D6AF66] hover:bg-[#C49F5A] text-white border border-[#D6AF66]"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  Saving...
-                </>
-              ) : (
-                category ? "Update Category" : "Create Category"
-              )}
-            </Button>
-          </div>
         </form>
+
+        <div className="p-6 border-t border-gray-200">
+            {/* Submit Error */}
+            {errors.submit && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
+                <p className="text-sm text-red-600">{errors.submit}</p>
+                </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex justify-end gap-3">
+                <Button
+                type="button"
+                variant="outline"
+                onClick={onClose}
+                disabled={isLoading}
+                className="bg-white text-[#2C2C2C] border border-[#C0C0C0] hover:bg-gray-50"
+                >
+                Cancel
+                </Button>
+                <Button
+                type="submit"
+                form="category-form"
+                className="bg-[#D6AF66] hover:bg-[#C49F5A] text-white border border-[#D6AF66]"
+                disabled={isLoading}
+                >
+                {isLoading ? (
+                    <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Saving...
+                    </>
+                ) : (
+                    category ? "Update Category" : "Create Category"
+                )}
+                </Button>
+            </div>
+        </div>
       </div>
     </div>
   );

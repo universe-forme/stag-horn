@@ -59,9 +59,20 @@ const FeaturedItems = () => {
                         <Link key={product.id} href={`/product/${product.sku}`} className="cursor-pointer">
                             <div className="card-border p-6 flex flex-col h-full hover:shadow-lg transition-shadow duration-300">
                                 <div className="relative mb-4">
-                                    {product.is_featured && (
-                                        <span className="best-sale-badge absolute top-2 right-2 z-10">Featured</span>
-                                    )}
+                                    <div className="absolute top-2 right-2 z-10 flex flex-col gap-1">
+                                        {(() => {
+                                            const badges = [];
+                                            if (product.is_best_selling) badges.push('Best Selling');
+                                            if (product.is_featured) badges.push('Featured');
+                                            if (product.is_trending || product.is_top_rated) badges.push('Trending');
+                                            
+                                            return badges.slice(0, 2).map((badge, index) => (
+                                                <span key={index} className="best-sale-badge text-xs px-2 py-1">
+                                                    {badge}
+                                                </span>
+                                            ));
+                                        })()}
+                                    </div>
                                     <div className="aspect-square rounded-lg flex items-center justify-center overflow-hidden">
                                         <Image 
                                             src={product.main_image || '/product.jpg'} 
@@ -73,7 +84,7 @@ const FeaturedItems = () => {
                                     </div>
                                 </div>
 
-                                <h3 className="outfit-font product-title mb-3">{product.name}</h3>
+                                <h3 className="outfit-font product-title mb-3 capitalize">{product.name}</h3>
 
                                 <div className="flex items-center mb-3">
                                     <div className="flex star-rating">
@@ -93,8 +104,8 @@ const FeaturedItems = () => {
                                     {product.estimated_delivery || 'Estimate delivery in 2-3 working days'}
                                 </p>
 
-                                <button className="buy-button outfit-font text-white font-medium text-sm w-full flex items-center justify-center">
-                                    Buy Now
+                                <button className="cta-button-new w-full py-2 rounded-md font-medium mt-2">
+                                    Add To Cart
                                 </button>
                             </div>
                         </Link>

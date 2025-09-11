@@ -1,4 +1,4 @@
-import { Poppins } from "next/font/google";
+import {Outfit, Poppins} from "next/font/google";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import AdminHeader from "../../components/admin/AdminHeader";
 import AdminRouteProtection from "../../components/AdminRouteProtection";
@@ -7,8 +7,8 @@ import { AdminAuthProvider } from "../../components/AdminAuthProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
@@ -21,7 +21,7 @@ export const metadata = {
 export default function AdminLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} antialiased bg-gray-50`}>
+      <body className={`${outfit.variable} antialiased bg-gray-50`}>
         <SupabaseClientProvider>
           <AdminAuthProvider>
             <AdminRouteProtection>

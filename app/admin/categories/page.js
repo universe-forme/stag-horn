@@ -10,6 +10,7 @@ import { Badge } from "../../../components/ui/badge";
 import { Plus, Search, Edit, Trash2, Eye, EyeOff, FolderOpen } from "lucide-react";
 import CategoryModal from "../../../components/admin/CategoryModal";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 export default function CategoriesPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -43,8 +44,10 @@ export default function CategoriesPage() {
     if (confirm("Are you sure you want to delete this category?")) {
       try {
         await deleteCategory(categoryId);
+        toast.success('Category deleted successfully!');
       } catch (error) {
         console.error("Error deleting category:", error);
+        toast.error('Failed to delete category. Please try again.');
       }
     }
   };
@@ -131,6 +134,8 @@ export default function CategoriesPage() {
                         <Image
                           src={category.image_url}
                           alt={category.name}
+                          width={120}
+                          height={120}
                           className="w-12 h-12 rounded-lg object-cover"
                         />
                       ) : (

@@ -96,7 +96,7 @@ const CategoriesContent = () => {
                             <Link key={cat.id} href={`/product?categoryId=${encodeURIComponent(cat.id)}`}>
                                 <div className="category-card h-72 md:h-96 flex items-center justify-center" style={{backgroundImage: `url('${cat.image_url || "/knife-img.jpg"}')`}}>
                                     <div className="category-overlay w-full h-full flex items-center justify-center">
-                                        <h3 className="category-title px-4">{cat.name}</h3>
+                                        <h3 className="category-title px-4 capitalize">{cat.name}</h3>
                                     </div>
                                 </div>
                             </Link>

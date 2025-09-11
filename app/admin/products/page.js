@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useAllProducts, useAllCategories, useDeleteProduct } from "../../../lib/hooks";
+import { useAllProducts, useAllCategories, useDeleteProduct, useUpdateProduct } from "../../../lib/hooks";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../components/ui/card";
@@ -10,6 +10,7 @@ import { Badge } from "../../../components/ui/badge";
 import { Plus, Search, Edit, Trash2, Eye, EyeOff } from "lucide-react";
 import ProductModal from "../../../components/admin/ProductModal";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,9 +19,11 @@ export default function ProductsPage() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [filterCategory, setFilterCategory] = useState("all");
 
-  const { data: products, isLoading: productsLoading } = useAllProducts();
+  const [reloadToken, setReloadToken] = useState(0);
+  const { data: products, isLoading: productsLoading } = useAllProducts(reloadToken);
   const { data: categories, isLoading: categoriesLoading } = useAllCategories();
   const { deleteProduct, isLoading: isDeleting } = useDeleteProduct();
+  const { updateProduct, isLoading: isUpdating } = useUpdateProduct();
 
   const filteredProducts = products?.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -48,9 +51,23 @@ export default function ProductsPage() {
     if (confirm("Are you sure you want to delete this product?")) {
       try {
         await deleteProduct(productId);
+        setReloadToken((t) => t + 1);
+        toast.success('Product deleted successfully!');
       } catch (error) {
         console.error("Error deleting product:", error);
+        toast.error('Failed to delete product. Please try again.');
       }
+    }
+  };
+
+  const toggleActive = async (product) => {
+    try {
+      await updateProduct(product.id, { is_active: !product.is_active });
+      setReloadToken((t) => t + 1);
+      toast.success(`Product ${!product.is_active ? 'activated' : 'deactivated'} successfully!`);
+    } catch (e) {
+      console.error('Failed to update status', e);
+      toast.error('Failed to update product status. Please try again.');
     }
   };
 
@@ -141,6 +158,9 @@ export default function ProductsPage() {
                 <TableHead>Price</TableHead>
                 <TableHead>Stock</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>Featured</TableHead>
+                <TableHead>Best Selling</TableHead>
+                <TableHead>Trending</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -152,6 +172,8 @@ export default function ProductsPage() {
                       <Image
                         src={product.main_image}
                         alt={product.name}
+                        width={120}
+                        height={120}
                         className="w-12 h-12 rounded-lg object-cover"
                       />
                       <div>
@@ -164,18 +186,35 @@ export default function ProductsPage() {
                   <TableCell>${product.price}</TableCell>
                   <TableCell>{product.stock_quantity}</TableCell>
                   <TableCell>
-                    <Badge variant={product.is_active ? 'default' : 'secondary'}>
-                      {product.is_active ? (
-                        <>
-                          <Eye className="mr-1 h-3 w-3" />
-                          Active
-                        </>
-                      ) : (
-                        <>
-                          <EyeOff className="mr-1 h-3 w-3" />
-                          Inactive
-                        </>
-                      )}
+                    <button onClick={() => toggleActive(product)} className="inline-flex items-center">
+                      <Badge variant={product.is_active ? 'default' : 'secondary'}>
+                        {product.is_active ? (
+                          <>
+                            <Eye className="mr-1 h-3 w-3" />
+                            Active
+                          </>
+                        ) : (
+                          <>
+                            <EyeOff className="mr-1 h-3 w-3" />
+                            Inactive
+                          </>
+                        )}
+                      </Badge>
+                    </button>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant={product.is_featured ? 'default' : 'secondary'}>
+                      {product.is_featured ? 'Active' : 'Inactive'}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant={product.is_best_selling ? 'default' : 'secondary'}>
+                      {product.is_best_selling ? 'Active' : 'Inactive'}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant={(product.is_trending || product.is_top_rated) ? 'default' : 'secondary'}>
+                      {(product.is_trending || product.is_top_rated) ? 'Active' : 'Inactive'}
                     </Badge>
                   </TableCell>
                   <TableCell>

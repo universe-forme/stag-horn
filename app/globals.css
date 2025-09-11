@@ -2,7 +2,7 @@
 
 :root {
   --Background: #F9F9F6;
-  --Main-Primary-Color: #0E0E0E;
+  --Main-Primary-Color: #212121;
   --primary-text-products-name: #2C2C2C;
   --ct-as-buttons-highlights: #F27F0C;
   --body-text-headings: rgba(33, 33, 33, 1);
@@ -10,6 +10,7 @@
   --headings-nav-bars: rgba(5, 63, 92, 1);
   --links-secondary-buttons: rgba(66, 158, 189, 1);
   --main-background: rgba(255, 255, 255, 1);
+    --main-primary-buttons: #f27f0c;
   --main-primary-buttons: rgba(242, 127, 12, 1);
   --price-highlights: rgba(247, 173, 25, 1);
   --sections-background: rgba(242, 243, 245, 1);
@@ -169,7 +170,7 @@ p, span, li, a, div, input, textarea, button {
 
 /* Footer Styles */
 .bg-footer {
-  background: var(--Main-Primary-Color, #0E0E0E);
+  background: var(--Main-Primary-Color, #212121);
 }
 
 .footer-heading {
@@ -1023,10 +1024,10 @@ p, span, li, a, div, input, textarea, button {
     border-radius: 12px;
 }
 .best-sale-badge {
-    background: #F27F0C;
-    border-radius: 20px;
-    padding: 4px 12px;
-    color: white;
+    color: #fff;
+    background: #f27f0c;
+    border-radius: 5px;
+    padding: 8px 12px;
     font-size: 12px;
     font-weight: 500;
 }
@@ -1202,3 +1203,24 @@ p, span, li, a, div, input, textarea, button {
         padding: 8px 32px;
     }
 }
+
+.product-image {
+    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 100%);
+}
+
+.star-rating svg {
+    width: 16px;
+    height: 16px;
+    fill: #fbbf24;
+}
+
+.bg-main-background { background-color: var(--main-background); }
+.bg-main-primary-buttons { background-color: var(--main-primary-buttons); }
+.text-main-primary-buttons { color: var(--main-primary-buttons); }
+.text-sub-texts-mute-lable { color: var(--sub-texts-mute-lable); }
+.text-variable-collection-main-primary-color { color: var(--variable-collection-main-primary-color); }
+.text-body-text-headings { color: var(--body-text-headings); }
+.border-sub-texts-mute-lable { border-color: var(--sub-texts-mute-lable); }
+.border-borders { border-color: var(--borders); }
+.border-main-primary-buttons { border-color: var(--main-primary-buttons); }
+.text-main-background { color: var(--main-background); }

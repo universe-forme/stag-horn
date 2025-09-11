@@ -76,17 +76,11 @@ CREATE TABLE products (
     stock_quantity INTEGER DEFAULT 0,
     sku TEXT UNIQUE NOT NULL,
     weight TEXT,
-    weight_in_grams INTEGER,
     product_size TEXT,
-    asking_price DECIMAL(10,2),
-    manufacturing_cost TEXT,
-    estimate_shipping_cost TEXT,
-    ready_to_ship BOOLEAN,
     dimensions JSONB,
     tags TEXT[] DEFAULT '{}',
     rating DECIMAL(3,2) DEFAULT 0,
     review_count INTEGER DEFAULT 0,
-    estimated_delivery TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

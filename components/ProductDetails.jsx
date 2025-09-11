@@ -1,193 +1,165 @@
 'use client';
-
-import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import Link from "next/link";
-import OrderForm from './OrderForm';
+import React, { useState, useEffect } from 'react';
 
+const ProductDetails = ({ product }) => {
+    const { name, short_description, description, price, main_image, images, category, tags, estimated_delivery, rating } = product;
 
-export default function ProductDetails({ product }) {
-    const previewImages = Array.isArray(product.previewImages) && product.previewImages.length > 0
-        ? product.previewImages
-        : (Array.isArray(product.images) ? product.images : []);
-    const [mainImage, setMainImage] = useState(previewImages[0]);
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [showOrderForm, setShowOrderForm] = useState(false);
+    const [activeImage, setActiveImage] = useState(main_image);
 
-    const sliderRef = useRef(null);
-    const prevBtnRef = useRef(null);
-    const nextBtnRef = useRef(null);
-
-    const totalImages = previewImages.length;
-
-    const changeMainImage = (index) => {
-        setMainImage(previewImages[index]);
-    };
-
-    // This effect handles the visual sliding and button state updates
     useEffect(() => {
-        const slider = sliderRef.current;
-        if (!slider) return;
+        setActiveImage(main_image);
+    }, [main_image]);
 
-        const isMobile = window.innerWidth <= 768;
-        const slideWidthPercentage = isMobile ? 100 : 50;
-        const translateX = -(currentSlide * slideWidthPercentage);
-        slider.style.transform = `translateX(${translateX}%)`;
-
-        if (!isMobile) {
-            const prevBtn = prevBtnRef.current;
-            const nextBtn = nextBtnRef.current;
-            if (!prevBtn || !nextBtn) return;
-            
-            const maxDesktopSlide = Math.max(0, totalImages - 2);
-            prevBtn.disabled = currentSlide === 0;
-            prevBtn.classList.toggle('slider-btn-disabled', currentSlide === 0);
-            nextBtn.disabled = currentSlide >= maxDesktopSlide;
-            nextBtn.classList.toggle('slider-btn-disabled', currentSlide >= maxDesktopSlide);
-        }
-    }, [currentSlide, totalImages]);
-
-    // This effect handles setting up intervals and event listeners
-    useEffect(() => {
-        const prevBtn = prevBtnRef.current;
-        const nextBtn = nextBtnRef.current;
-
-        let autoSlideInterval = null;
-
-        const handleNext = () => {
-            setCurrentSlide(prev => {
-                const maxDesktopSlide = Math.max(0, totalImages - 2);
-                return Math.min(prev + 1, maxDesktopSlide);
-            });
-        };
-        const handlePrev = () => {
-            setCurrentSlide(prev => Math.max(prev - 1, 0));
-        };
-
-        const setupSliderForCurrentScreenSize = () => {
-            clearInterval(autoSlideInterval);
-            const isMobile = window.innerWidth <= 768;
-
-            if (isMobile) {
-                if (prevBtn) prevBtn.style.display = 'none';
-                if (nextBtn) nextBtn.style.display = 'none';
-
-                autoSlideInterval = setInterval(() => {
-                    setCurrentSlide(prev => (prev + 1) % totalImages);
-                }, 1000); // 1 second interval
-            } else {
-                if (prevBtn) prevBtn.style.display = 'block';
-                if (nextBtn) nextBtn.style.display = 'block';
-                const maxDesktopSlide = Math.max(0, totalImages - 2);
-                setCurrentSlide(prev => Math.min(prev, maxDesktopSlide));
-            }
-        };
-
-        setupSliderForCurrentScreenSize();
-        
-        if (nextBtn) nextBtn.addEventListener('click', handleNext);
-        if (prevBtn) prevBtn.addEventListener('click', handlePrev);
-        window.addEventListener('resize', setupSliderForCurrentScreenSize);
-
-        return () => {
-            clearInterval(autoSlideInterval);
-            if (nextBtn) nextBtn.removeEventListener('click', handleNext);
-            if (prevBtn) prevBtn.removeEventListener('click', handlePrev);
-            window.removeEventListener('resize', setupSliderForCurrentScreenSize);
-        };
-    }, [totalImages]);
+    const allImages = [main_image, ...(images || [])].filter(Boolean);
+    const uniqueImages = Array.from(new Set(allImages));
 
     return (
-        <div className="container mx-auto px-8 py-16 mt-24 max-w-6xl">
-            <div className="text-center mb-12">
-                <h1 className="font-quattrocento font-bold text-primary">
-                    {product.name}
-                </h1>
-            </div>
+        <main className="container mx-auto px-4 md:px-8 lg:px-24 py-8">
+            <h1 className="font-outfit font-medium text-variable-collection-main-primary-color text-3xl md:text-[64px] text-center mb-8 md:mb-16">
+                Product Detail
+            </h1>
 
-            <div className="flex justify-center mb-12">
-                <div className="max-w-2xl w-full">
-                    <img id="mainImage" src={mainImage} alt={product.name} className="w-full rounded-2xl shadow-lg object-cover" style={{ aspectRatio: '4/3' }} />
+            <section className="flex flex-col lg:flex-row items-start justify-center gap-6 mb-16">
+                <div className="w-full lg:w-[612px] h-80 md:h-96 lg:h-[612px] rounded-3xl border border-solid border-sub-texts-mute-lable product-image flex items-center justify-center">
+                    <Image src={activeImage || '/spoon-product.jpg'} alt={name} width={612} height={612} className="object-cover w-full h-full rounded-3xl" />
                 </div>
-            </div>
 
-            <div className="max-w-7xl mx-auto mb-8">
-                <h3 className="mb-8 font-quattrocento text-2xl font-bold text-primary">Preview</h3>
-                
-                <div className="relative max-w-7xl mx-auto">
-                    <div className="product-slider-wrapper">
-                        <div className="flex transition-transform duration-500 ease-in-out preview-slider-container" ref={sliderRef}>
-                            {previewImages.map((imgSrc, index) => (
-                                <div className="preview-card px-2" key={index}>
-                                    <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden cursor-pointer" onClick={() => changeMainImage(index)}>
-                                        <div className="relative">
-                                            <img src={imgSrc} alt={`${product.name} preview ${index + 1}`} className="w-full object-cover" style={{ height: '240px' }} />
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
+                <article className="w-full lg:w-[612px] flex flex-col gap-6">
+                    <h2 className="font-outfit font-semibold text-black text-2xl md:text-[34px] leading-normal">
+                        {name}
+                    </h2>
+
+                    <div className="flex items-center" role="img" aria-label={`${rating || 0} star rating`}>
+                        <div className="flex star-rating">
+                            {'★'.repeat(Math.floor(rating || 0))}
+                            {'☆'.repeat(5 - Math.floor(rating || 0))}
                         </div>
                     </div>
 
-                    <button ref={prevBtnRef} className="absolute left-[-10px] top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-[#D6AF66] rounded-md p-3 shadow-md hidden md:block transition-all duration-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-                    <button ref={nextBtnRef} className="absolute right-[-10px] top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-[#D6AF66] rounded-md p-3 shadow-md hidden md:block transition-all duration-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
+                    <div className="font-outfit font-bold sale-price text-2xl md:text-[34px]">
+                        ${price}
+                    </div>
 
-            <div className="max-w-7xl mx-auto">
-                <div className="mb-8">
-                    <p className="text-lg mb-2 text-primary">Price: 
-                        <span className="price-color font-bold text-2xl"> {product.price} $</span>
+                    <p className="font-outfit text-variable-collection-main-primary-color text-lg leading-normal">
+                        {short_description || (description ? `${description.substring(0, 120)}...` : '')}
                     </p>
-                </div>
 
-                <div className="mb-8">
-                    <h2 className="font-quattrocento font-bold text-3xl mb-6 text-primary">Description</h2>
-                    <div className="prose prose-lg max-w-none">
-                        <p className="mb-4 leading-relaxed text-secondary">{product.description}</p>
+                    <p className="font-outfit text-sub-texts-mute-lable text-sm">
+                        {estimated_delivery || 'Estimate delivery in 2-3 working days'}
+                    </p>
+
+                    <hr className="border-t border-sub-texts-mute-lable" />
+
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+                        <div className="flex items-center justify-center gap-2.5 px-6 py-3 bg-main-background rounded-xl border border-solid border-main-primary-buttons">
+                            <select id="quantity" className="font-outfit text-main-primary-buttons text-lg bg-transparent border-none outline-none">
+                                {[...Array(5)].map((_, i) => (
+                                    <option key={i + 1} value={i + 1}>Qty {i + 1}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <button className="flex items-center justify-center gap-2.5 px-8 py-3.5 bg-main-primary-buttons rounded-xl hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-main-primary-buttons focus:ring-offset-2 w-full sm:w-auto">
+                            <span className="font-outfit text-main-background text-lg">Add To Cart</span>
+                        </button>
                     </div>
-                </div>
 
-                <div className="text-center">
-                    <button 
-                        onClick={() => setShowOrderForm(true)}
-                        className="cta-button"
-                    >
-                        Order Now
-                    </button>
-                </div>
-            </div>
+                    <hr className="border-t border-sub-texts-mute-lable" />
 
-            {/* Order Form Modal */}
-            {showOrderForm && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-                    <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-                        <div className="p-6">
-                            <div className="flex justify-between items-center mb-6">
-                                <h2 className="text-2xl font-bold">Place Your Order</h2>
-                                <button
-                                    onClick={() => setShowOrderForm(false)}
-                                    className="text-gray-500 hover:text-gray-700 text-2xl"
-                                >
-                                    ×
-                                </button>
-                            </div>
-                            <OrderForm 
-                                product={product} 
-                                onOrderSuccess={() => setShowOrderForm(false)}
-                            />
+                    <p className="font-outfit text-lg">
+                        <span className="text-black">Category: </span>
+                        <span className="text-sub-texts-mute-lable capitalize">{category?.name || 'N/A'}</span>
+                    </p>
+
+                    <p className="font-outfit text-lg">
+                        <span className="text-black">Tag: </span>
+                        <span className="text-sub-texts-mute-lable">{tags?.join(', ') || 'N/A'}</span>
+                    </p>
+
+                    <div className="flex items-center gap-4">
+                        <span className="font-outfit text-black text-lg">Share this product:</span>
+                        <div className="flex gap-2">
+                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
+                                <Image
+                                    src="/facebook-logo.svg"
+                                    width={20}
+                                    height={20}
+                                    className="w-full h-full object-contain"
+                                    alt="Facebook Logo"
+                                />
+                            </button>
+                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
+                                <Image
+                                    src="/instagram-logo.svg"
+                                    width={20}
+                                    height={20}
+                                    className="w-full h-full object-contain"
+                                    alt="Instagram Logo"
+                                />
+                            </button>
+                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
+                                <Image
+                                    src="/linkedin-logo.svg"
+                                    width={20}
+                                    height={20}
+                                    className="w-full h-full object-contain"
+                                    alt="LinkedIn Logo"
+                                />
+                            </button>
+                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
+                                <Image
+                                    src="/whatsapp-logo.svg"
+                                    width={20}
+                                    height={20}
+                                    className="w-full h-full object-contain"
+                                    alt="WhatsApp Logo"
+                                />
+                            </button>
+                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
+                                <Image
+                                    src="/x-logo.svg"
+                                    width={24}
+                                    height={24}
+                                    className="w-full h-full object-contain"
+                                    alt="X Logo"
+                                />
+                            </button>
                         </div>
                     </div>
+
+                </article>
+            </section>
+
+            <nav className="flex items-center gap-4 mb-16 overflow-x-auto" aria-label="Product thumbnails">
+                <button className="flex-shrink-0 w-6 h-6 text-gray-400" aria-label="Previous thumbnail">
+                    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </button>
+
+                <div className="flex gap-4">
+                    {uniqueImages.map((image, index) => (
+                        <button key={index} onClick={() => setActiveImage(image)} className={`flex-shrink-0 w-20 h-20 md:w-[100px] md:h-[100px] rounded-3xl border border-solid ${activeImage === image ? 'border-main-primary-buttons' : 'border-borders'} product-image`} aria-label={`Product thumbnail ${index + 1}`}>
+                           <Image src={image || '/spoon-product.jpg'} alt={`${name} thumbnail ${index + 1}`} width={100} height={100} className="object-cover w-full h-full rounded-3xl" />
+                        </button>
+                    ))}
                 </div>
-            )}
-        </div>
+
+                <button className="flex-shrink-0 w-6 h-6 text-gray-400" aria-label="Next thumbnail">
+                    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                </button>
+            </nav>
+
+            <section className="flex flex-col items-center gap-8 mb-16">
+                <h2 className="font-outfit font-medium text-black text-2xl md:text-[34px] text-center">
+                    Description
+                </h2>
+
+                <p className="font-outfit text-variable-collection-main-primary-color text-lg leading-normal text-justify">
+                    {description}
+                </p>
+            </section>
+        </main>
     );
-}
+};
+
+export default ProductDetails;
