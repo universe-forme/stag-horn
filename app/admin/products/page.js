@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { Badge } from "../../../components/ui/badge";
 import { Plus, Search, Edit, Trash2, Eye, EyeOff } from "lucide-react";
 import ProductModal from "../../../components/admin/ProductModal";
+import Image from "next/image";
 
 export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -148,7 +149,7 @@ export default function ProductsPage() {
                 <TableRow key={product.id}>
                   <TableCell>
                     <div className="flex items-center gap-3">
-                      <img
+                      <Image
                         src={product.main_image}
                         alt={product.name}
                         className="w-12 h-12 rounded-lg object-cover"

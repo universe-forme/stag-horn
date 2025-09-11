@@ -65,7 +65,7 @@ const ProductContent = () => {
                                 <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
                                     <div className="relative">
                                         <Link href={`/product/${encodeURIComponent(p.sku)}`}>
-                                            <img src={p.mainImage || "/spoon-product.jpg"} width={256} height={256} alt={p.name} className="w-full h-60 object-cover"/>
+                                            <Image src={p.mainImage || "/spoon-product.jpg"} width={256} height={256} alt={p.name} className="w-full h-60 object-cover"/>
                                         </Link>
                                     </div>
                                     <div className="p-5">

@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { Badge } from "../../../components/ui/badge";
 import { Plus, Search, Edit, Trash2, Eye, EyeOff, FolderOpen } from "lucide-react";
 import CategoryModal from "../../../components/admin/CategoryModal";
+import Image from "next/image";
 
 export default function CategoriesPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -127,7 +128,7 @@ export default function CategoriesPage() {
                   <TableCell>
                     <div className="flex items-center gap-3">
                       {category.image_url ? (
-                        <img
+                        <Image
                           src={category.image_url}
                           alt={category.name}
                           className="w-12 h-12 rounded-lg object-cover"

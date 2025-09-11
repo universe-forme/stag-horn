@@ -74,7 +74,7 @@ const PromoCardsSection = () => {
             <div className="bg-[#F8F3F0] shadow-xl rounded-3xl p-8 flex items-center space-x-6">
                 <div className="flex-1">
                     <h3 className="text-2xl font-bold mb-2">Deals & Promotions</h3>
-                    <p className="text-gray-600">Shop Today's Deals, Lightning Deals, and limited time discounts</p>
+                    <p className="text-gray-600">Shop Today&apos;s Deals, Lightning Deals, and limited time discounts</p>
                 </div>
                 <div className="flex-shrink-0">
                     <div className="w-24 h-24 flex items-center justify-center relative">
@@ -85,7 +85,7 @@ const PromoCardsSection = () => {
             <div className="bg-[#F8F3F0] shadow-xl rounded-3xl p-8 flex items-center space-x-6">
                 <div className="flex-1">
                     <h3 className="text-2xl font-bold mb-2">Deals & Promotions</h3>
-                    <p className="text-gray-600">Shop Today's Deals, Lightning Deals, and limited time discounts</p>
+                    <p className="text-gray-600">Shop Today&apos;s Deals, Lightning Deals, and limited time discounts</p>
                 </div>
                 <div className="flex-shrink-0">
                     <div className="w-24 h-24 flex items-center justify-center relative">
