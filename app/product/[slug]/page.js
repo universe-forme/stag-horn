@@ -4,6 +4,7 @@ import { useProductBySku, useActiveProducts, useProductsByCategory } from "../..
 import ProductDetails from "../../../components/ProductDetails";
 import ConditionalLayout from "../../../components/ConditionalLayout";
 import Link from "next/link";
+import Image from "next/image";
 
 // Component to render a list of products
 const ProductList = ({ products, title }) => {
@@ -22,7 +23,7 @@ const ProductList = ({ products, title }) => {
                         <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden">
                             <div className="relative">
                                 <Link href={`/product/${encodeURIComponent(p.sku)}`}>
-                                    <img src={p.main_image || "/spoon-product.jpg"} width={256} height={256} alt={p.name} className="w-full h-60 object-cover"/>
+                                    <Image src={p.main_image || "/spoon-product.jpg"} width={256} height={256} alt={p.name} className="w-full h-60 object-cover"/>
                                 </Link>
                             </div>
                             <div className="p-5">

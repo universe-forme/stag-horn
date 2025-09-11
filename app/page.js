@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useActiveProducts } from "../lib/hooks";
-import { useActiveCategories } from "../lib/supabase-hooks";
+import { useActiveCategories } from "@/lib/supabase-hooks";
 import TestimonialScroller from "../components/TestimonialScroller";
 import ContactForm from "../components/ContactForm";
 import ConditionalLayout from "../components/ConditionalLayout";
