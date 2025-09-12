@@ -60,9 +60,11 @@ export default function Navbar() {
                     {/* Right Side Icons */}
                     <div className="flex items-center space-x-4">
                         {/* Shopping Cart */}
-                        <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                            <Image src="/shopping-bag.svg" alt={"Shopping Bag Icon"} width={24} height={24} className="object-cover" />
-                        </button>
+                        <Link href="/cart">
+                            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                                <Image src="/shopping-bag.svg" alt={"Shopping Bag Icon"} width={24} height={24} className="object-cover" />
+                            </button>
+                        </Link>
 
                         {/* Mobile Menu Button */}
                         <button className={`hamburger md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors ${isMenuOpen ? 'open' : ''}`} onClick={toggleMobileMenu}>
@@ -77,7 +79,7 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Menu */}
-            <div className={`mobile-menu md:hidden fixed top-16 right-0 w-64 h-screen bg-white shadow-lg z-40 ${isMenuOpen ? 'open' : ''}`}>
+            <div className={`mobile-menu md:hidden fixed top-24 right-0 w-64 h-screen bg-white shadow-lg z-40 ${isMenuOpen ? 'open' : ''}`}>
                 <div className="p-6 space-y-6">
                     {navLinks.map((link) => (
                         <Link
@@ -93,7 +95,7 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Menu Overlay */}
-            <div className={`mobile-overlay md:hidden fixed inset-0 bg-black bg-opacity-50 z-30 ${isMenuOpen ? '' : 'hidden'}`} onClick={toggleMobileMenu}></div>
+            {/*<div className={`mobile-overlay md:hidden fixed inset-0 bg-black bg-opacity-50 z-30 ${isMenuOpen ? '' : 'hidden'}`} onClick={toggleMobileMenu}></div>*/}
         </nav>
     );
 }
