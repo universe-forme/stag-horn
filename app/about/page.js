@@ -30,19 +30,19 @@ const AboutContent = () => {
 
                     <div className="text-center font-outfit text-black max-w-5xl px-4">
                         <p className="text-lg lg:text-xl mb-4 leading-relaxed">
-                            Nestled in the heart of Wazirabad, the historic city known as the "City of Cutlery", Wazir Cutlery has been crafting excellence for over 5 years. Our journey began with a simple mission — to bring Pakistan's rich cutlery heritage to the global stage through uncompromising quality, timeless design, and passionate craftsmanship.
+                            Nestled in the heart of Wazirabad, the historic city known as the &quot;City of Cutlery&quot;, Wazir Cutlery has been crafting excellence for over 5 years. Our journey began with a simple mission — to bring Pakistan&apos;s rich cutlery heritage to the global stage through uncompromising quality, timeless design, and passionate craftsmanship.
                         </p>
 
                         <p className="text-lg lg:text-xl mb-4 leading-relaxed">
-                            At Wazir Cutlery, every blade tells a story. From professional chef knives and elegant dining sets to exquisite collector swords, we fuse traditional forging techniques with modern aesthetics. Our artisans, trained in generations-old craftsmanship, forge each product with precision, strength, and a commitment to beauty.
+                            At Wazir Cutlery, every blade tells a story. From professional chef knives, and elegant dining sets to exquisite collector swords, we fuse traditional forging techniques with modern aesthetics. Our artisans, trained in generations-old craftsmanship, forge each product with precision, strength, and a commitment to beauty.
                         </p>
 
                         <p className="text-lg lg:text-xl mb-6 leading-relaxed">
-                            What started in a small workshop in Wazirabad is now a name recognized by chefs, collectors, and cutlery connoisseurs across borders. Whether you're slicing in the kitchen, gifting elegance, or adding to your collection, Wazir Cutlery delivers a cut above the rest.
+                            What started in a small workshop in Wazirabad is now a name recognized by chefs, collectors, and cutlery connoisseurs across borders. Whether you&apos;re slicing in the kitchen, gifting elegance, or adding to your collection, Wazir Cutlery delivers a cut above the rest.
                         </p>
 
                         <p className="font-semibold text-lg lg:text-xl">
-                            Because here, it's not just metal — it's mastery in your hands.
+                            Because here, it&apos;s not just metal — it&apos;s mastery in your hands.
                         </p>
                     </div>
                 </div>
@@ -59,7 +59,7 @@ const AboutContent = () => {
                     <p className="font-outfit font-normal text-2xl lg:text-3xl xl:text-4xl leading-tight">
                         <span className="text-black">Looking for Powerful </span>
                         <span className="font-semibold text-orange-600">Blades and Unmatched Craftsmanship?</span>
-                        <span className="text-black"> It's Time to Choose Wazir Cutlery.</span>
+                        <span className="text-black"> It&apos;s Time to Choose Wazir Cutlery.</span>
                     </p>
                 </header>
 
@@ -81,7 +81,7 @@ const AboutContent = () => {
                                 Our Vision
                             </h4>
                             <p className="font-outfit font-normal text-black text-lg text-center leading-relaxed">
-                                To become the world's most trusted name in premium cutlery and battle gear, where tradition meets innovation, and every blade tells a story of power and legacy.
+                                To become the world&apos;s most trusted name in premium cutlery and battle gear, where tradition meets innovation, and every blade tells a story of power and legacy.
                             </p>
                         </article>
                     </div>
@@ -185,7 +185,7 @@ const AboutContent = () => {
                                 Ali
                             </h3>
                             <blockquote className="font-outfit font-normal text-gray-600 text-sm lg:text-base">
-                                "Wazir cutlery's blades combine strength, precision, and beautiful craftsmanship. Every piece tells a story of quality and tradition."
+                                &quot;Wazir cutlery&apos;s blades combine strength, precision, and beautiful craftsmanship. Every piece tells a story of quality and tradition.&quot;
                             </blockquote>
                         </div>
                     </article>
@@ -216,7 +216,7 @@ const AboutContent = () => {
                                 M Rafy
                             </h3>
                             <blockquote className="font-outfit font-normal text-gray-600 text-sm lg:text-base">
-                                "Outstanding quality and exceptional service. These blades are not just tools, they're works of art that perform flawlessly."
+                                &quot;Outstanding quality and exceptional service. These blades are not just tools, they&apos;re works of art that perform flawlessly.&quot;
                             </blockquote>
                         </div>
                     </article>
@@ -247,7 +247,7 @@ const AboutContent = () => {
                                 Zain
                             </h3>
                             <blockquote className="font-outfit font-normal text-gray-600 text-sm lg:text-base">
-                                "The craftsmanship is incredible. Each blade feels perfectly balanced and the attention to detail is remarkable. Highly recommended!"
+                                &quot;The craftsmanship is incredible. Each blade feels perfectly balanced and the attention to detail is remarkable. Highly recommended!&quot;
                             </blockquote>
                         </div>
                     </article>
