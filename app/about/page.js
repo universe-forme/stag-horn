@@ -30,7 +30,7 @@ const AboutContent = () => {
 
                     <div className="text-center font-outfit  w-full px-4">
                         <p className="text-lg lg:text-xl mb-4 leading-relaxed">
-                            Nestled in the heart of Wazirabad, the historic city known as the &quot;City of Cutlery&quot;, Wazir Cutlery has been crafting excellence for over 5 years. Our journey began with a simple mission — to bring Pakistan's rich cutlery heritage to the global stage through uncompromising quality, timeless design, and passionate craftsmanship.
+                            Nestled in the heart of Wazirabad, the historic city known as the &quot;City of Cutlery&quot;, Wazir Cutlery has been crafting excellence for over 5 years. Our journey began with a simple mission — to bring Pakistan&apos;s rich cutlery heritage to the global stage through uncompromising quality, timeless design, and passionate craftsmanship.
                         </p>
 
                         <p className="text-lg lg:text-xl mb-4 leading-relaxed">
@@ -38,11 +38,11 @@ const AboutContent = () => {
                         </p>
 
                         <p className="text-lg lg:text-xl mb-6 leading-relaxed">
-                            What started in a small workshop in Wazirabad is now a name recognized by chefs, collectors, and cutlery connoisseurs across borders. Whether you're slicing in the kitchen, gifting elegance, or adding to your collection, Wazir Cutlery delivers a cut above the rest.
+                            What started in a small workshop in Wazirabad is now a name recognized by chefs, collectors, and cutlery connoisseurs across borders. Whether you&apos;re slicing in the kitchen, gifting elegance, or adding to your collection, Wazir Cutlery delivers a cut above the rest.
                         </p>
 
                         <p className="font-semibold text-lg lg:text-xl">
-                            Because here, it's not just metal — it's mastery in your hands.
+                            Because here, it&apos;s not just metal — it&apos;s mastery in your hands.
                         </p>
                     </div>
                 </div>
@@ -57,7 +57,7 @@ const AboutContent = () => {
                         <div className="text-main-primary-buttons text-lg font-semibold mb-2">Wazir Cutlery</div>
                         <h2 className="text-4xl lg:text-5xl font-normal leading-tight max-w-2xl">
                             Looking for Powerful <strong className="text-[#F27F0C] text-3xl lg:text-4xl leading-tight">Blades and Unmatched
-                                Craftsmanship?</strong> It's Time to Choose Wazir Cutlery.
+                                Craftsmanship?</strong> It&apos;s Time to Choose Wazir Cutlery.
                         </h2>
                     </div>
                     {/* Our Mission Card */}
@@ -73,7 +73,7 @@ const AboutContent = () => {
                     <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center justify-center lg:col-span-1 lg:order-2 hover-lift">
                         <h2 className="text-main-primary-buttons text-[34px] font-semibold leading-[48px] mb-6">Our Vision</h2>
                         <p className="text-center text-lg font-normal leading-normal">
-                            To become the world's most trusted name in premium cutlery and battle gear, where tradition meets
+                            To become the world&apos;s most trusted name in premium cutlery and battle gear, where tradition meets
                             innovation, and every blade tells a story of power and legacy.
                         </p>
                     </div>
@@ -174,7 +174,7 @@ const AboutContent = () => {
                                 Ali
                             </h3>
                             <blockquote className="font-outfit font-normal text-gray-600 text-sm lg:text-base">
-                                &quot;Wazir cutlery's blades combine strength, precision, and beautiful craftsmanship. Every piece tells a story of quality and tradition.&quot;
+                                &quot;Wazir cutlery&apos;s blades combine strength, precision, and beautiful craftsmanship. Every piece tells a story of quality and tradition.&quot;
                             </blockquote>
                         </div>
                     </article>
@@ -205,7 +205,7 @@ const AboutContent = () => {
                                 M Rafy
                             </h3>
                             <blockquote className="font-outfit font-normal text-gray-600 text-sm lg:text-base">
-                                &quot;Outstanding quality and exceptional service. These blades are not just tools, they're works of art that perform flawlessly.&quot;
+                                &quot;Outstanding quality and exceptional service. These blades are not just tools, they&apos;re works of art that perform flawlessly.&quot;
                             </blockquote>
                         </div>
                     </article>
