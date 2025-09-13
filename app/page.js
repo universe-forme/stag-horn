@@ -30,10 +30,12 @@ const NewHeroSection = () => {
                             Where ancient artistry meets modern mastery, shaping legends that endure.
                         </p>
 
-                        <button
-                            className="cta-button px-8 py-4 rounded-lg transition-colors duration-300 text-lg">
-                            Explore Collection
-                        </button>
+                        <Link href={"/categories"}>
+                            <button
+                                className="cta-button px-8 py-4 rounded-lg transition-colors duration-300 text-lg">
+                                Explore Collection
+                            </button>
+                        </Link>
 
                         {/* Stats */}
                         <div className="grid grid-cols-3 gap-8 pt-8">

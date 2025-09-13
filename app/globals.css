@@ -10,7 +10,6 @@
   --headings-nav-bars: rgba(5, 63, 92, 1);
   --links-secondary-buttons: rgba(66, 158, 189, 1);
   --main-background: rgba(255, 255, 255, 1);
-    --main-primary-buttons: #f27f0c;
   --main-primary-buttons: rgba(242, 127, 12, 1);
   --price-highlights: rgba(247, 173, 25, 1);
   --sections-background: rgba(242, 243, 245, 1);
@@ -224,6 +223,7 @@ p, span, li, a, div, input, textarea, button {
     background-color: var(--ct-as-buttons-highlights);
     color: white;
     transition: all 0.2s ease;
+    cursor: pointer;
 }
 
 .cta-button-new:hover {
@@ -645,17 +645,18 @@ p, span, li, a, div, input, textarea, button {
 }
 
 .filter-button {
-    border: 1px solid #E5E7EB;
-    padding: 12px 24px;
-    font-family: Poppins, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    color: var(--primary-text-products-name, #2C2C2C);
-    cursor: pointer;
-    transition: all 0.2s ease;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    min-width: 220px;
+    padding: 12px 20px;
+    gap: 12px;
+    transition: all 0.2s ease;
+    position: relative;
+    width: 100%;
+    max-width: 220px;
+    border: 1px solid #E5E7EB;
+    background: white;
+    border-radius: 8px;
 }
 
 .filter-button:hover {
@@ -664,12 +665,54 @@ p, span, li, a, div, input, textarea, button {
 }
 
 .filter-arrow-icon {
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
     margin-left: auto;
 }
 
 .filter-arrow-icon.rotated {
     transform: rotate(180deg);
+}
+
+.filter-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    z-index: 50;
+}
+
+.filter-dropdown-item {
+    display: block;
+    padding: 8px 16px;
+    color: #2C2C2C;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.filter-dropdown-item:hover {
+    background-color: #F9F9F6;
+    color: var(--ct-as-buttons-highlights, #D6AF66);
+}
+
+.filter-dropdown-item.active {
+    color: var(--ct-as-buttons-highlights, #D6AF66);
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .filter-button {
+        max-width: 100%;
+    }
+
+    .filter-dropdown-menu {
+        width: 100%;
+    }
 }
 
 .diagonal-bg {
@@ -691,61 +734,44 @@ p, span, li, a, div, input, textarea, button {
 /* Filter Dropdown Styles */
 .filter-dropdown-menu {
     position: absolute;
-    top: 100%;
-    right: 0;
-    background: var(--Background, #F9F9F6);
-    border: 1px solid #C0C0C0;
-    border-radius: 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-top: 8px;
-    width: 220px;
-    z-index: 30;
-    padding: 16px;
-    overflow: hidden;
+    top: calc(100% + 4px); /* Position right below the button with a small gap */
+    left: 0; /* Align with the left edge of the button */
+    right: 0; /* Stretch to match button width */
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    min-width: 200px;
+    z-index: 50;
 }
 
 .filter-dropdown-item {
     display: block;
-    padding: 12px 0;
-    font-size: 18px;
-    color: var(--primary-text-products-name, #2C2C2C);
-    text-align: center;
-    border-bottom: 1px solid #E5E7EB;
-    margin: 0 auto;
-    width: 80%;
-    transition: color 0.2s ease;
-}
-
-.filter-dropdown-item:last-child {
-    border-bottom: none;
+    padding: 8px 16px;
+    color: #2C2C2C;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
 }
 
 .filter-dropdown-item:hover {
+    background-color: #F9F9F6;
     color: var(--ct-as-buttons-highlights, #D6AF66);
 }
+
+.filter-dropdown-item.active {
+    color: var(--ct-as-buttons-highlights, #D6AF66);
+    font-weight: 500;
+}
+
 @media (max-width: 768px) {
+    .filter-button {
+        max-width: 100%;
+    }
+
     .filter-dropdown-menu {
-        left: 0;
         width: 100%;
     }
-}
-
-@media (max-width: 768px) {
-    .category-title {
-        font-size: 18px;
-    }
-}
-
-@media (max-width: 640px) {
-    .category-title {
-        font-size: 16px;
-    }
-}
-
-.trust-title {
-    font-weight: bold;
-    font-size: 24px;
-    font-family: 'Cabin', serif;
 }
 
 /* Our Masters Section */
@@ -1021,6 +1047,9 @@ p, span, li, a, div, input, textarea, button {
     background: #F27F0C;
     border-radius: 12px;
 }
+.see-button:hover {
+    background-color: #f2860c;
+}
 .best-sale-badge {
     color: #fff;
     background: #f27f0c;
@@ -1224,4 +1253,76 @@ select option {
 select option:hover {
   background: #F27F0C;
   color: white;
+}
+
+/* Filter Styles */
+.filter-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    gap: 12px;
+    transition: all 0.2s ease;
+    position: relative;
+    width: 100%;
+    max-width: 220px;
+    border: 1px solid #E5E7EB;
+    background: white;
+    border-radius: 8px;
+}
+
+.filter-button:hover {
+    border-color: var(--ct-as-buttons-highlights, #D6AF66);
+    box-shadow: 0 2px 8px rgba(214, 175, 102, 0.2);
+}
+
+.filter-arrow-icon {
+    transition: transform 0.2s ease;
+    margin-left: auto;
+}
+
+.filter-arrow-icon.rotated {
+    transform: rotate(180deg);
+}
+
+.filter-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    z-index: 50;
+}
+
+.filter-dropdown-item {
+    display: block;
+    padding: 8px 16px;
+    color: #2C2C2C;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.filter-dropdown-item:hover {
+    background-color: #F9F9F6;
+    color: var(--ct-as-buttons-highlights, #D6AF66);
+}
+
+.filter-dropdown-item.active {
+    color: var(--ct-as-buttons-highlights, #D6AF66);
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .filter-button {
+        max-width: 100%;
+    }
+
+    .filter-dropdown-menu {
+        width: 100%;
+    }
 }

@@ -102,8 +102,8 @@ const TrendingItems = () => {
                 </div>
 
                 <div className="text-center">
-                    <Link href="/categories">
-                        <button className="see-button outfit-font text-white font-medium text-sm px-8 py-3">
+                    <Link href="/product?type=trending">
+                        <button className="see-button outfit-font text-white font-medium text-sm px-8 py-3 cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                             See more items
                         </button>
                     </Link>

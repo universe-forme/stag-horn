@@ -104,7 +104,7 @@ const ForYouItems = () => {
                                     {product.estimated_delivery || 'Estimate delivery in 2-3 working days'}
                                 </p>
 
-                                <button className="cta-button-new w-full py-2 rounded-md font-medium mt-2">
+                                <button className="cta-button-new w-full py-2 rounded-md font-medium mt-2 ">
                                     Add To Cart
                                 </button>
                             </div>
@@ -113,8 +113,8 @@ const ForYouItems = () => {
                 </div>
 
                 <div className="text-center">
-                    <Link href="/categories">
-                        <button className="see-button outfit-font text-white font-medium text-sm px-8 py-3">
+                    <Link href="/product">
+                        <button className="see-button outfit-font text-white font-medium text-sm px-8 py-3 cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                             See more items
                         </button>
                     </Link>
