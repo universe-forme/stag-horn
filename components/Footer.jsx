@@ -24,7 +24,7 @@ const Footer = () => {
           </div>
 
           {/* Links Grid */}
-          <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8">
             {/* Quick Links */}
             <div>
               <h3 className="footer-heading font-medium text-lg mb-6">Quick Links</h3>
@@ -69,10 +69,41 @@ const Footer = () => {
             <div>
                 <h3 className="footer-heading font-medium text-lg mb-6">Special</h3>
                 <ul className="space-y-4">
-                    <li><Link href="" className="footer-link text-base">B2B Contract</Link></li>
-                    <li><Link href="" className="footer-link text-base">Customize Order</Link></li>
+                    <li><Link href="#" className="footer-link text-base">B2B Contract</Link></li>
+                    <li><Link href="#" className="footer-link text-base">Customize Order</Link></li>
                 </ul>
             </div>
+            {/* Social Links */}
+              <div>
+                  <ul className="flex flex-col gap-4">
+                      <li>
+                          <Link href="#" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]">
+                              <Image src="/facebook-gray.svg" alt="Facebook" width={24} height={24} />
+                          </Link>
+                      </li>
+                      <li>
+                          <Link href="#" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]">
+                              <Image src="/instagram-gray.svg" alt="Instagram" width={24} height={24} />
+                          </Link>
+                      </li>
+                      <li>
+                          <Link href="#" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]">
+                              <Image src="/linkedin-gray.svg" alt="LinkedIn" width={24} height={24} />
+                          </Link>
+                      </li>
+                      <li>
+                          <Link href="#" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]">
+                              <Image src="/whatsapp-gray.svg" alt="WhatsApp" width={24} height={24} />
+                          </Link>
+                      </li>
+                      <li>
+                          <Link href="#" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]">
+                              <Image src="/x-gray.svg" alt="X" width={24} height={24} />
+                          </Link>
+                      </li>
+                  </ul>
+              </div>
+
           </div>
         </div>
 

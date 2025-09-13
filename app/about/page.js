@@ -16,21 +16,21 @@ const AboutContent = () => {
     return (
         <div className="bg-white overflow-x-hidden">
             {/* About Us Section */}
-            <section className="flex flex-col items-center justify-center gap-8 lg:gap-16 px-4 py-8 lg:py-16 animate-fade-in">
+            <section className="mx-auto container px-4 flex flex-col items-center justify-center gap-8 lg:gap-16 py-8 lg:py-16 animate-fade-in">
                 <header className="text-center">
-                    <h1 className="font-outfit font-medium text-4xl lg:text-6xl text-black leading-tight">
+                    <h1 className="font-outfit font-medium text-4xl lg:text-6xl  leading-tight">
                         About Us
                     </h1>
                 </header>
 
-                <div className="flex flex-col items-center justify-center gap-4 max-w-6xl mx-auto">
-                    <h2 className="font-cabin font-medium text-2xl lg:text-4xl xl:text-5xl text-black text-center leading-tight px-4">
+                <div className="flex flex-col items-center justify-center gap-4 w-full">
+                    <h2 className="font-cabin font-medium text-2xl lg:text-4xl xl:text-5xl  text-center leading-tight px-4">
                         Wazir Cutlery – Forged in Tradition, Sharpened for the Future
                     </h2>
 
-                    <div className="text-center font-outfit text-black max-w-5xl px-4">
+                    <div className="text-center font-outfit  w-full px-4">
                         <p className="text-lg lg:text-xl mb-4 leading-relaxed">
-                            Nestled in the heart of Wazirabad, the historic city known as the &quot;City of Cutlery&quot;, Wazir Cutlery has been crafting excellence for over 5 years. Our journey began with a simple mission — to bring Pakistan&apos;s rich cutlery heritage to the global stage through uncompromising quality, timeless design, and passionate craftsmanship.
+                            Nestled in the heart of Wazirabad, the historic city known as the &quot;City of Cutlery&quot;, Wazir Cutlery has been crafting excellence for over 5 years. Our journey began with a simple mission — to bring Pakistan's rich cutlery heritage to the global stage through uncompromising quality, timeless design, and passionate craftsmanship.
                         </p>
 
                         <p className="text-lg lg:text-xl mb-4 leading-relaxed">
@@ -38,91 +38,80 @@ const AboutContent = () => {
                         </p>
 
                         <p className="text-lg lg:text-xl mb-6 leading-relaxed">
-                            What started in a small workshop in Wazirabad is now a name recognized by chefs, collectors, and cutlery connoisseurs across borders. Whether you&apos;re slicing in the kitchen, gifting elegance, or adding to your collection, Wazir Cutlery delivers a cut above the rest.
+                            What started in a small workshop in Wazirabad is now a name recognized by chefs, collectors, and cutlery connoisseurs across borders. Whether you're slicing in the kitchen, gifting elegance, or adding to your collection, Wazir Cutlery delivers a cut above the rest.
                         </p>
 
                         <p className="font-semibold text-lg lg:text-xl">
-                            Because here, it&apos;s not just metal — it&apos;s mastery in your hands.
+                            Because here, it's not just metal — it's mastery in your hands.
                         </p>
                     </div>
                 </div>
             </section>
 
             {/* Hero Section */}
-            <section className="flex flex-col items-center justify-center gap-8 lg:gap-12 px-4 py-8 lg:py-16 max-w-7xl mx-auto animate-fade-up">
-                {/* Centered Header */}
-                <header className="flex flex-col items-center justify-center gap-4 text-center max-w-4xl">
-                    <h3 className="font-outfit font-normal text-orange-600 text-lg lg:text-xl">
-                        Wazir Cutlery
-                    </h3>
-
-                    <p className="font-outfit font-normal text-2xl lg:text-3xl xl:text-4xl leading-tight">
-                        <span className="text-black">Looking for Powerful </span>
-                        <span className="font-semibold text-orange-600">Blades and Unmatched Craftsmanship?</span>
-                        <span className="text-black"> It&apos;s Time to Choose Wazir Cutlery.</span>
-                    </p>
-                </header>
-
-                {/* Cards Layout */}
-                <div className="w-full max-w-6xl">
-                    {/* Mission and Vision Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <article className="flex flex-col items-center gap-6 p-6 lg:p-8 bg-white rounded-3xl border border-gray-200 shadow-custom hover-lift">
-                            <h4 className="font-outfit font-semibold text-orange-600 text-2xl lg:text-3xl text-center">
-                                Our Mission
-                            </h4>
-                            <p className="font-outfit font-normal text-black text-lg text-center leading-relaxed">
-                                To craft blades and tools that combine strength, precision, and artistry, empowering warriors, collectors, and adventurers with unmatched quality and timeless designs.
-                            </p>
-                        </article>
-
-                        <article className="flex flex-col items-center gap-6 p-6 lg:p-8 bg-white rounded-3xl border border-gray-200 shadow-custom hover-lift">
-                            <h4 className="font-outfit font-semibold text-orange-600 text-2xl lg:text-3xl text-center">
-                                Our Vision
-                            </h4>
-                            <p className="font-outfit font-normal text-black text-lg text-center leading-relaxed">
-                                To become the world&apos;s most trusted name in premium cutlery and battle gear, where tradition meets innovation, and every blade tells a story of power and legacy.
-                            </p>
-                        </article>
+            <section className="py-12 lg:py-20 px-4 lg:px-8 container mx-auto">
+                {/* Cards Section */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-6">
+                    {/* Header Text */}
+                    <div className="mb-16">
+                        <div className="text-main-primary-buttons text-lg font-semibold mb-2">Wazir Cutlery</div>
+                        <h2 className="text-4xl lg:text-5xl font-normal leading-tight max-w-2xl">
+                            Looking for Powerful <strong className="text-[#F27F0C] text-3xl lg:text-4xl leading-tight">Blades and Unmatched
+                                Craftsmanship?</strong> It's Time to Choose Wazir Cutlery.
+                        </h2>
+                    </div>
+                    {/* Our Mission Card */}
+                    <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center justify-center lg:col-span-1 lg:order-1 hover-lift">
+                        <h2 className="text-main-primary-buttons text-[34px] font-semibold leading-[48px] mb-6">Our Mission</h2>
+                        <p className=" text-center text-lg font-normal leading-normal">
+                            To craft blades and tools that combine strength, precision, and artistry, empowering warriors,
+                            collectors, and adventurers with unmatched quality and timeless designs.
+                        </p>
                     </div>
 
-                    {/* Purpose Card Centered */}
-                    <div className="flex justify-center">
-                        <article className="flex flex-col items-center gap-6 p-6 lg:p-8 bg-white rounded-3xl border border-gray-200 shadow-custom hover-lift max-w-2xl w-full">
-                            <h4 className="font-outfit font-semibold text-orange-600 text-2xl lg:text-3xl text-center">
-                                Our Purpose
-                            </h4>
-                            <p className="font-outfit font-normal text-black text-lg text-center leading-relaxed">
-                                To preserve the ancient craft of blade-making, while delivering modern, durable, and inspiring weapons that serve as both functional tools and symbols of honor.
-                            </p>
-                        </article>
+                    {/* Our Vision Card */}
+                    <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center justify-center lg:col-span-1 lg:order-2 hover-lift">
+                        <h2 className="text-main-primary-buttons text-[34px] font-semibold leading-[48px] mb-6">Our Vision</h2>
+                        <p className="text-center text-lg font-normal leading-normal">
+                            To become the world's most trusted name in premium cutlery and battle gear, where tradition meets
+                            innovation, and every blade tells a story of power and legacy.
+                        </p>
+                    </div>
+
+                    {/* Our Purpose Card */}
+                    <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center justify-center lg:col-span-1 lg:order-3 hover-lift">
+                        <h2 className="text-main-primary-buttons text-[34px] font-semibold leading-[48px] mb-6">Our Purpose</h2>
+                        <p className="text-center text-lg font-normal leading-normal">
+                            To preserve the ancient craft of blade-making, while delivering modern, durable, and inspiring
+                            weapons that serve as both functional tools and symbols of honor.
+                        </p>
                     </div>
                 </div>
             </section>
 
             {/* Detail Section */}
-            <section className="flex flex-col lg:flex-row gap-6 px-4 py-8 lg:py-16 max-w-7xl mx-auto animate-fade-up">
+            <section className="mx-auto container px-4 flex flex-col lg:flex-row gap-6 py-8 lg:py-16 animate-fade-up">
                 <div className="flex flex-col gap-6 w-full lg:w-1/2">
                     <div className="flex flex-col gap-4">
-                        <h2 className="font-cabin font-medium text-3xl lg:text-4xl text-gray-800 leading-tight">
+                        <h2 className="font-cabin font-medium text-3xl lg:text-4xl leading-tight">
                             Crafted by Hand. Forged by Fire.
                         </h2>
-                        <p className="font-outfit font-normal text-black text-lg leading-relaxed">
+                        <p className="font-outfit font-normal  text-lg leading-relaxed">
                             Our cutlery is the result of time-honored techniques, artisan attention, and select materials. Each blade passes through 12+ stages — from forging, grinding, and polishing to precise finishing by hand.
                             <br /><br />
                             We use only high-carbon steel, Damascus layers, and handle materials like rosewood, ebony, and buffalo horn. Every product reflects our commitment to strength, balance, and beauty.
                         </p>
 
-                        <h3 className="font-medium text-gray-800 text-2xl mt-4">
+                        <h3 className="font-medium text-2xl mt-4">
                             Trusted Across Borders
                         </h3>
 
-                        <p className="font-outfit font-normal text-gray-700 text-lg leading-relaxed">
+                        <p className="font-outfit font-normal text-lg leading-relaxed">
                             Over 10,000 blades shipped globally. Customers in {" "}
-                            <span className="font-bold">UAE</span>, {" "}
-                            <span className="font-bold">USA</span>, {" "}
-                            <span className="font-bold">UK</span>, {" "}
-                            <span className="font-bold">KSA</span>. {" "}
+                            <strong className="font-bold">UAE</strong>, {" "}
+                            <strong className="font-bold">USA</strong>, {" "}
+                            <strong className="font-bold">UK</strong>, {" "}
+                            <strong className="font-bold">KSA</strong>. {" "}
                             Used by top chefs, collectors, and gifting brands worldwide.
                         </p>
                     </div>
@@ -141,25 +130,25 @@ const AboutContent = () => {
             </section>
 
             {/* Testimonials Section */}
-            <section className="flex flex-col lg:flex-row items-start justify-center gap-6 px-4 py-8 lg:py-16 max-w-7xl mx-auto animate-fade-up">
-                <div className="flex flex-col gap-6 w-full lg:w-2/5">
+            <section className="mx-auto container px-4 flex flex-col lg:flex-row items-center justify-center gap-6 py-8 lg:py-16 animate-fade-up">
+                <div className="flex flex-col gap-6 w-full items-center justify-center lg:w-2/5">
                     <div className="flex flex-col gap-4">
-                        <h2 className="font-cabin font-medium text-2xl lg:text-3xl text-gray-800 leading-normal">
+                        <h2 className="font-cabin font-medium text-2xl lg:text-3xl  leading-normal">
                             What Our Warriors & Collectors Say About Us
                         </h2>
-                        <p className="font-outfit font-normal text-gray-600 text-lg leading-relaxed">
+                        <p className="font-outfit font-normal  text-lg leading-relaxed">
                             Trusted by warriors, collectors, and adventurers worldwide — hear their real experiences with our blades, tools, and timeless craftsmanship.
                         </p>
                     </div>
 
-                    <button className="inline-flex h-12 lg:h-14 items-center justify-center gap-2 px-6 lg:px-8 py-3 bg-orange-600 text-white rounded-xl font-outfit text-lg btn-primary self-start hover:bg-orange-500 transition-all duration-300">
+                    <button className="inline-flex h-12 lg:h-14 items-center justify-center gap-2 px-6 lg:px-8 py-3 bg-[#F27F0C] text-white rounded-xl font-outfit text-lg btn-primary self-start hover:bg-orange-500 transition-all duration-300">
                         Join Now
                     </button>
                 </div>
 
                 <div className="w-full lg:w-3/5 space-y-4">
                     {/* Testimonial Cards */}
-                    <article className="flex items-start gap-4 lg:gap-6 p-4 lg:p-6 bg-white rounded-lg border border-gray-200 hover-lift">
+                    <article className="flex items-start gap-4 lg:gap-6 p-4 lg:p-6 bg-white rounded-lg border border-gray-200 hover-lift ml-12 lg:ml-20">
                         <div className="w-3 bg-gray-200 rounded-lg flex-shrink-0 self-stretch"></div>
                         <div className="w-16 h-16 lg:w-20 lg:h-20 relative flex-shrink-0">
                             <Image
@@ -181,17 +170,17 @@ const AboutContent = () => {
                                     priority
                                 />
                             </div>
-                            <h3 className="font-outfit font-bold text-gray-800 text-xl lg:text-2xl mt-4">
+                            <h3 className="font-outfit font-bold text-xl lg:text-2xl mt-4">
                                 Ali
                             </h3>
                             <blockquote className="font-outfit font-normal text-gray-600 text-sm lg:text-base">
-                                &quot;Wazir cutlery&apos;s blades combine strength, precision, and beautiful craftsmanship. Every piece tells a story of quality and tradition.&quot;
+                                &quot;Wazir cutlery's blades combine strength, precision, and beautiful craftsmanship. Every piece tells a story of quality and tradition.&quot;
                             </blockquote>
                         </div>
                     </article>
 
-                    <article className="flex items-start gap-4 lg:gap-6 p-4 lg:p-6 bg-white rounded-lg border border-gray-200 hover-lift ml-8 lg:ml-12">
-                        <div className="w-3 bg-orange-600 rounded-lg flex-shrink-0 self-stretch"></div>
+                    <article className="flex items-start gap-4 lg:gap-6 p-4 lg:p-6 bg-white rounded-lg border border-gray-200 hover-lift mr-16 lg:mr-20">
+                        <div className="w-3 bg-[#F27F0C] rounded-lg flex-shrink-0 self-stretch"></div>
                         <div className="w-16 h-16 lg:w-20 lg:h-20 relative flex-shrink-0">
                             <Image
                                 src="/m-rafy.svg"
@@ -212,16 +201,16 @@ const AboutContent = () => {
                                     priority
                                 />
                             </div>
-                            <h3 className="font-outfit font-bold text-gray-800 text-xl lg:text-2xl mt-4">
+                            <h3 className="font-outfit font-bold text-xl lg:text-2xl mt-4">
                                 M Rafy
                             </h3>
                             <blockquote className="font-outfit font-normal text-gray-600 text-sm lg:text-base">
-                                &quot;Outstanding quality and exceptional service. These blades are not just tools, they&apos;re works of art that perform flawlessly.&quot;
+                                &quot;Outstanding quality and exceptional service. These blades are not just tools, they're works of art that perform flawlessly.&quot;
                             </blockquote>
                         </div>
                     </article>
 
-                    <article className="flex items-start gap-4 lg:gap-6 p-4 lg:p-6 bg-white rounded-lg border border-gray-200 hover-lift">
+                    <article className="flex items-start gap-4 lg:gap-6 p-4 lg:p-6 bg-white rounded-lg border border-gray-200 hover-lift ml-12 lg:ml-20">
                         <div className="w-3 bg-gray-200 rounded-lg flex-shrink-0 self-stretch"></div>
                         <div className="w-16 h-16 lg:w-20 lg:h-20 relative flex-shrink-0">
                             <Image
@@ -243,7 +232,7 @@ const AboutContent = () => {
                                     priority
                                 />
                             </div>
-                            <h3 className="font-outfit font-bold text-gray-800 text-xl lg:text-2xl mt-4">
+                            <h3 className="font-outfit font-bold text-xl lg:text-2xl mt-4">
                                 Zain
                             </h3>
                             <blockquote className="font-outfit font-normal text-gray-600 text-sm lg:text-base">
@@ -254,12 +243,7 @@ const AboutContent = () => {
                 </div>
             </section>
 
-            {/* Contact Form Section */}
-            <section className="py-16 px-4">
-                <div className="max-w-7xl mx-auto">
-                    <ContactForm />
-                </div>
-            </section>
+            <ContactForm />
 
             <style jsx global>{`
                 .hover-lift {
@@ -308,7 +292,7 @@ const AboutContent = () => {
                 }
                 
                 .shadow-custom {
-                    box-shadow: 0px 0px 34px rgba(0, 0, 0, 0.06);
+                    box-shadow: 0 0 34px rgba(0, 0, 0, 0.06);
                 }
             `}</style>
         </div>
@@ -316,5 +300,3 @@ const AboutContent = () => {
 };
 
 export default AboutPage;
-
-//hello

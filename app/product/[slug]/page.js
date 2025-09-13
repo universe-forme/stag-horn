@@ -40,8 +40,8 @@ export default function ProductPage() {
     return (
         <ConditionalLayout>
             {!sku && <div className="container mx-auto px-8 py-16 mt-24">Invalid product.</div>}
-            {sku && product === undefined && <div className="container mx-auto px-8 py-16 mt-24">Loading...</div>}
-            {sku && product === null && <div className="container mx-auto px-8 py-16 mt-24">Product not found.</div>}
+            {sku && product === null && <div className="container mx-auto px-8 py-16 mt-24">Loading...</div>}
+            {sku && product === undefined && <div className="container mx-auto px-8 py-16 mt-24">Product not found.</div>}
             
             {sku && productWithCategory && (
                 <>

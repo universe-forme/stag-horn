@@ -8,8 +8,8 @@ const FeaturedItems = () => {
 
     if (isLoading) {
         return (
-            <div className="py-10">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="p-6 lg:p-12">
+                <div className="container mx-auto">
                     <h2 className="cabin-font text-4xl font-normal text-black text-center mb-12">Featured Items</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-16">
                         {[...Array(5)].map((_, i) => (
@@ -29,8 +29,8 @@ const FeaturedItems = () => {
 
     if (error) {
         return (
-            <div className="py-10">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="p-6 lg:p-12">
+                <div className="container mx-auto">
                     <h2 className="cabin-font text-4xl font-normal text-black text-center mb-12">Featured Items</h2>
                     <div className="text-center text-red-500">Error loading products: {error.message}</div>
                 </div>
@@ -40,8 +40,8 @@ const FeaturedItems = () => {
 
     if (!products || products.length === 0) {
         return (
-            <div className="py-10">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="p-6 lg:p-12">
+                <div className="container mx-auto">
                     <h2 className="cabin-font text-4xl font-normal text-black text-center mb-12">Featured Items</h2>
                     <div className="text-center text-gray-500">No featured products available at the moment.</div>
                 </div>
@@ -50,8 +50,8 @@ const FeaturedItems = () => {
     }
 
     return (
-        <div className="py-10">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="p-6 lg:p-12">
+            <div className="container mx-auto">
                 <h2 className="cabin-font text-4xl font-normal text-black text-center mb-12">Featured Items</h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-16">

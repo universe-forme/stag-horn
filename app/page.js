@@ -70,26 +70,28 @@ const NewHeroSection = () => {
 
 const PromoCardsSection = () => {
     return (
-        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-8 mb-12">
-            <div className="bg-[#F8F3F0] shadow-xl rounded-3xl p-8 flex items-center space-x-6">
-                <div className="flex-1">
-                    <h3 className="text-2xl font-bold mb-2">Deals & Promotions</h3>
-                    <p className="text-gray-600">Shop Today&apos;s Deals, Lightning Deals, and limited time discounts</p>
-                </div>
-                <div className="flex-shrink-0">
-                    <div className="w-24 h-24 flex items-center justify-center relative">
-                        <Image src="/clock.png" alt="clock" width={96} height={96} />
+        <div className="p-6 lg:p-12">
+            <div className="container mx-auto grid md:grid-cols-2 gap-8">
+                <div className="bg-[#F8F3F0] shadow-xl rounded-3xl p-8 flex items-center space-x-6">
+                    <div className="flex-1">
+                        <h3 className="text-2xl font-bold mb-2">Deals & Promotions</h3>
+                        <p className="text-gray-600">Shop Today&apos;s Deals, Lightning Deals, and limited time discounts</p>
+                    </div>
+                    <div className="flex-shrink-0">
+                        <div className="w-24 h-24 flex items-center justify-center relative">
+                            <Image src="/clock.png" alt="clock" width={96} height={96} />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="bg-[#F8F3F0] shadow-xl rounded-3xl p-8 flex items-center space-x-6">
-                <div className="flex-1">
-                    <h3 className="text-2xl font-bold mb-2">Deals & Promotions</h3>
-                    <p className="text-gray-600">Shop Today&apos;s Deals, Lightning Deals, and limited time discounts</p>
-                </div>
-                <div className="flex-shrink-0">
-                    <div className="w-24 h-24 flex items-center justify-center relative">
-                        <Image src="/clock.png" alt="clock" width={96} height={96} />
+                <div className="bg-[#F8F3F0] shadow-xl rounded-3xl p-8 flex items-center space-x-6">
+                    <div className="flex-1">
+                        <h3 className="text-2xl font-bold mb-2">Deals & Promotions</h3>
+                        <p className="text-gray-600">Shop Today&apos;s Deals, Lightning Deals, and limited time discounts</p>
+                    </div>
+                    <div className="flex-shrink-0">
+                        <div className="w-24 h-24 flex items-center justify-center relative">
+                            <Image src="/clock.png" alt="clock" width={96} height={96} />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,35 +115,37 @@ const HeroImageSlider = () => {
     }, [totalSlides]);
     const goToSlide = (idx) => setCurrentSlide(idx);
     return (
-        <div className="container max-w-7xl mx-auto px-8 py-8 mb-12">
-            <div className="rounded-3xl shadow-xl overflow-hidden relative h-96 md:h-80">
-                {images.map((src, idx) => (
-                    <div
-                        key={idx}
-                        className={`slide absolute inset-0 flex items-center justify-between ${idx === currentSlide ? 'active' : ''} ${idx < currentSlide ? 'prev' : ''}`}
-                        style={{ transition: 'all 0.5s ease-in-out' }}
-                    >
-                        <Image src={src} alt="slider" fill className="object-cover" />
-                    </div>
-                ))}
+        <div className="p-6 lg:p-12">
+            <div className="container mx-auto">
+                <div className="rounded-3xl shadow-xl overflow-hidden relative h-96 md:h-80">
+                    {images.map((src, idx) => (
+                        <div
+                            key={idx}
+                            className={`slide absolute inset-0 flex items-center justify-between ${idx === currentSlide ? 'active' : ''} ${idx < currentSlide ? 'prev' : ''}`}
+                            style={{ transition: 'all 0.5s ease-in-out' }}
+                        >
+                            <Image src={src} alt="slider" fill className="object-cover" />
+                        </div>
+                    ))}
+                </div>
+                <div className="flex justify-center mt-6 space-x-2">
+                    {images.map((_, idx) => (
+                        <button
+                            key={idx}
+                            className={`dot w-2 h-2 rounded-full bg-gray-400${idx === currentSlide ? ' active' : ''}`}
+                            onClick={() => goToSlide(idx)}
+                            aria-label={`Go to slide ${idx + 1}`}
+                        />
+                    ))}
+                </div>
+                <style jsx>{`
+                    .slide { opacity: 0.4; transform: translateX(100%); }
+                    .slide.active { opacity: 1; transform: translateX(0); }
+                    .slide.prev { transform: translateX(-100%); }
+                    .dot { transition: all 0.3s ease; }
+                    .dot.active { background-color: #F27F0C; }
+                `}</style>
             </div>
-            <div className="flex justify-center mt-6 space-x-2">
-                {images.map((_, idx) => (
-                    <button
-                        key={idx}
-                        className={`dot w-2 h-2 rounded-full bg-gray-400${idx === currentSlide ? ' active' : ''}`}
-                        onClick={() => goToSlide(idx)}
-                        aria-label={`Go to slide ${idx + 1}`}
-                    />
-                ))}
-            </div>
-            <style jsx>{`
-                .slide { opacity: 0.4; transform: translateX(100%); }
-                .slide.active { opacity: 1; transform: translateX(0); }
-                .slide.prev { transform: translateX(-100%); }
-                .dot { transition: all 0.3s ease; }
-                .dot.active { background-color: #F27F0C; }
-            `}</style>
         </div>
     );
 };
@@ -202,8 +206,8 @@ function HomeContent() {
             </section>
 
             {/* Categories Section */}
-            <section className="py-12 lg:py-10">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <section className="p-6 lg:p-12">
+                <div className="container mx-auto">
                     <h2 className=" text-primary text-center text-3xl lg:text-4xl font-bold mb-16">
                         Categories
                     </h2>
@@ -251,7 +255,7 @@ function HomeContent() {
             <FeaturedItems />
 
             <section className="bg-[#F27F0C] py-12 lg:py-20">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="container mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center py-16">
                         <div className="order-2 lg:order-1">
                             <h3 className="other-heading font-medium text-heading-lg text-white mb-6">
@@ -301,16 +305,8 @@ function HomeContent() {
             {/*<TestimonialScroller />*/}
 
             <ForYouItems />
-
-            <div className="my-12">
-                <Newsletter />
-            </div>
-
-            <section className="py-12 lg:py-20">
-                <div className="container mx-auto">
-                    <ContactForm />
-                </div>
-            </section>
+            <Newsletter />
+            <ContactForm />
         </>
     );
 }

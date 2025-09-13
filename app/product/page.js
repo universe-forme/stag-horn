@@ -46,8 +46,9 @@ const ProductContent = () => {
 
 
     return (
+        <>
         <div className="min-h-screen relative overflow-hidden">
-            <div className="max-w-7xl mx-auto relative z-10 py-20 px-4">
+            <div className="container mx-auto relative z-10 py-20 px-4">
                 <div className="text-center mt-24 mb-24">
                     <h1 className="mb-8 capitalize">{categoryName}</h1>
 
@@ -101,12 +102,10 @@ const ProductContent = () => {
                 <div className="items-center justify-center flex">
                     <button className="cta-button py-2 rounded-md font-medium">Load more</button>
                 </div>
-
-                <div className="my-12">
-                    <Newsletter />
-                </div>
             </div>
         </div>
+        <Newsletter />
+        </>
     );
 }
 export default ProductPage;

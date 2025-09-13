@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import ConditionalLayout from '../../components/ConditionalLayout';
+import Image from "next/image";
 
 const CartPage = () => {
     return (
@@ -50,8 +51,8 @@ const CartContent = () => {
     };
 
     return (
-        <>
-            <main className="container mx-auto px-4 py-8 lg:py-16 max-w-7xl">
+        <div>
+            <main className="mx-auto max-w-7xl px-4 py-8 lg:py-16">
                 {/* Page Header */}
                 <header className="text-center mb-8 lg:mb-16">
                     <h1 className="text-3xl md:text-4xl lg:text-6xl font-medium text-black">
@@ -68,7 +69,7 @@ const CartContent = () => {
                                 id="checkbox-1" onClick={() => toggleCheckbox(1)}>
                                 <div
                                     className="checkbox-unchecked w-full h-full bg-white border border-borders rounded flex items-center justify-center">
-                                    <svg className="w-4 h-3 text-white opacity-0 transition-opacity" viewBox="0 0 16 12"
+                                    <svg className="w-4 h-4 text-white opacity-0 transition-opacity" viewBox="0 0 16 16"
                                         fill="currentColor">
                                         <path
                                             d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
@@ -78,12 +79,12 @@ const CartContent = () => {
                             <h2 className="text-xl md:text-2xl lg:text-3xl font-normal text-black">Today</h2>
                         </div>
                         {/* Cart Item 1 */}
-                        <article className="flex flex-col lg:flex-row items-start gap-4 lg:gap-6">
+                        <div className="flex flex-col lg:flex-row items-start gap-4 lg:gap-6">
                             <div className={`flex items-center justify-center w-7 h-7 rounded cursor-pointer transition-colors ${checkboxStates[2] ? 'checkbox-checked' : ''}`}
                                 id="checkbox-2" onClick={() => toggleCheckbox(2)}>
                                 <div
                                     className="checkbox-unchecked w-full h-full bg-white border border-borders rounded flex items-center justify-center">
-                                    <svg className="w-4 h-3 text-white opacity-0 transition-opacity" viewBox="0 0 16 12"
+                                    <svg className="w-4 h-4 text-white opacity-0 transition-opacity" viewBox="0 0 16 16"
                                         fill="currentColor">
                                         <path
                                             d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
@@ -94,8 +95,8 @@ const CartContent = () => {
                             <div className="flex-1 w-full bg-white rounded-3xl border border-borders p-4 lg:p-6">
                                 <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
                                     {/* Product Image */}
-                                    <div
-                                        className="w-full lg:w-32 h-32 bg-gray-100 rounded-2xl border border-sub-texts-mute-lable flex-shrink-0">
+                                    <div className="w-full lg:w-32 h-32 bg-gray-100 rounded-2xl border border-sub-texts-mute-lable flex-shrink-0">
+                                        <Image src="/product.jpg" alt={"product"} className="rounded-2xl" width={150} height={150} />
                                     </div>
 
                                     {/* Product Details */}
@@ -117,7 +118,7 @@ const CartContent = () => {
                                         </p>
 
                                         <p className="text-xs">
-                                            <span className="text-sub-texts">Category:</span>
+                                            <span className="text-[#616161]">Category:</span>
                                             <span className="text-sub-texts-mute-lable"> Knife, Swords, Daggers</span>
                                         </p>
 
@@ -129,10 +130,10 @@ const CartContent = () => {
                                             {/* Quantity Controls */}
                                             <div className="flex items-center gap-4">
                                                 <button
-                                                    className="w-7 h-7 bg-sections-background rounded-lg flex items-center justify-center hover:bg-gray-200 transition-colors"
+                                                    className="w-7 h-7 bg-sections-background rounded-lg flex items-center justify-center bg-gray-200 transition-colors"
                                                     onClick={() => changeQuantity(1, -1)}>
-                                                    <svg className="w-3 h-0.5 text-sub-texts" viewBox="0 0 12 2" fill="currentColor">
-                                                        <path d="M0 1h12v0H0z" />
+                                                    <svg className="w-3 h-0.5 text-black" viewBox="0 0 12 2" fill="currentColor">
+                                                        <path d="M0 .5h12v1H0z" />
                                                     </svg>
                                                 </button>
                                                 <span
@@ -172,9 +173,8 @@ const CartContent = () => {
                                     </div>
                                 </div>
                             </div>
-                        </article>
+                        </div>
                     </section>
-
                     {/* Yesterday Section */}
                     <section className="space-y-6">
                         <div className="flex items-center gap-4 lg:gap-6">
@@ -182,7 +182,7 @@ const CartContent = () => {
                                 id="checkbox-3" onClick={() => toggleCheckbox(3)}>
                                 <div
                                     className="checkbox-unchecked w-full h-full bg-white border border-borders rounded flex items-center justify-center">
-                                    <svg className="w-4 h-3 text-white opacity-0 transition-opacity" viewBox="0 0 16 12"
+                                    <svg className="w-4 h-4 text-white opacity-0 transition-opacity" viewBox="0 0 16 16"
                                         fill="currentColor">
                                         <path
                                             d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
@@ -198,7 +198,7 @@ const CartContent = () => {
                                 id="checkbox-4" onClick={() => toggleCheckbox(4)}>
                                 <div
                                     className="checkbox-unchecked w-full h-full bg-white border border-borders rounded flex items-center justify-center">
-                                    <svg className="w-4 h-3 text-white opacity-0 transition-opacity" viewBox="0 0 16 12"
+                                    <svg className="w-4 h-4 text-white opacity-0 transition-opacity" viewBox="0 0 16 16"
                                         fill="currentColor">
                                         <path
                                             d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
@@ -208,8 +208,8 @@ const CartContent = () => {
 
                             <div className="flex-1 w-full bg-white rounded-3xl border border-borders p-4 lg:p-6">
                                 <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
-                                    <div
-                                        className="w-full lg:w-32 h-32 bg-gray-100 rounded-2xl border border-sub-texts-mute-lable flex-shrink-0">
+                                    <div className="w-full lg:w-32 h-32 bg-gray-100 rounded-2xl border border-sub-texts-mute-lable flex-shrink-0">
+                                        <Image src="/product.jpg" alt={"product"} className="rounded-2xl" width={150} height={150} />
                                     </div>
                                     <div className="flex-1 space-y-4">
                                         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-2">
@@ -225,7 +225,7 @@ const CartContent = () => {
                                             viverra elit tortor arcu magna duis nulla ut sit consectetur orci semper sed
                                         </p>
                                         <p className="text-xs">
-                                            <span className="text-sub-texts">Category:</span>
+                                            <span className="text-[#616161]">Category:</span>
                                             <span className="text-sub-texts-mute-lable"> Knife, Swords, Daggers</span>
                                         </p>
                                         <p className="text-xs text-sub-texts-mute-lable">
@@ -234,10 +234,10 @@ const CartContent = () => {
                                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                                             <div className="flex items-center gap-4">
                                                 <button
-                                                    className="w-7 h-7 bg-sections-background rounded-lg flex items-center justify-center hover:bg-gray-200 transition-colors"
+                                                    className="w-7 h-7 bg-sections-background rounded-lg flex items-center justify-center bg-gray-200 transition-colors"
                                                     onClick={() => changeQuantity(2, -1)}>
-                                                    <svg className="w-3 h-0.5" viewBox="0 0 12 2" fill="currentColor">
-                                                        <path d="M0 1h12v0H0z" />
+                                                    <svg className="w-3 h-0.5 text-black" viewBox="0 0 12 2" fill="currentColor">
+                                                        <path d="M0 .5h12v1H0z" />
                                                     </svg>
                                                 </button>
                                                 <span
@@ -277,13 +277,13 @@ const CartContent = () => {
                             </div>
                         </article>
 
-                        {/* Cart Item 3 (Inactive) */}
+                        {/* Cart Item 3 */}
                         <article className="flex flex-col lg:flex-row items-start gap-4 lg:gap-6">
                             <div className={`flex items-center justify-center w-7 h-7 rounded cursor-pointer transition-colors ${checkboxStates[5] ? 'checkbox-checked' : ''}`}
                                 id="checkbox-5" onClick={() => toggleCheckbox(5)}>
                                 <div
                                     className="checkbox-unchecked w-full h-full bg-white border border-borders rounded flex items-center justify-center">
-                                    <svg className="w-4 h-3 text-white opacity-0 transition-opacity" viewBox="0 0 16 12"
+                                    <svg className="w-4 h-4 text-white opacity-0 transition-opacity" viewBox="0 0 16 16"
                                         fill="currentColor">
                                         <path
                                             d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
@@ -293,8 +293,8 @@ const CartContent = () => {
 
                             <div className="flex-1 w-full bg-white rounded-3xl border border-borders p-4 lg:p-6">
                                 <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
-                                    <div
-                                        className="w-full lg:w-32 h-32 bg-gray-100 rounded-2xl border border-sub-texts-mute-lable flex-shrink-0">
+                                    <div className="w-full lg:w-32 h-32 bg-gray-100 rounded-2xl border border-sub-texts-mute-lable flex-shrink-0">
+                                        <Image src="/product.jpg" alt={"product"} className="rounded-2xl" width={150} height={150} />
                                     </div>
                                     <div className="flex-1 space-y-4">
                                         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-2">
@@ -310,7 +310,7 @@ const CartContent = () => {
                                             viverra elit tortor arcu magna duis nulla ut sit consectetur orci semper sed
                                         </p>
                                         <p className="text-xs">
-                                            <span className="text-sub-texts">Category:</span>
+                                            <span className="text-[#616161]">Category:</span>
                                             <span className="text-sub-texts-mute-lable"> Knife, Swords, Daggers</span>
                                         </p>
                                         <p className="text-xs text-sub-texts-mute-lable">
@@ -319,10 +319,10 @@ const CartContent = () => {
                                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                                             <div className="flex items-center gap-4">
                                                 <button
-                                                    className="w-7 h-7 bg-sections-background rounded-lg flex items-center justify-center hover:bg-gray-200 transition-colors"
+                                                    className="w-7 h-7 bg-sections-background rounded-lg flex items-center justify-center bg-gray-200 transition-colors"
                                                     onClick={() => changeQuantity(3, -1)}>
-                                                    <svg className="w-3 h-0.5" viewBox="0 0 12 2" fill="currentColor">
-                                                        <path d="M0 1h12v0H0z" />
+                                                    <svg className="w-3 h-0.5 text-black" viewBox="0 0 12 2" fill="currentColor">
+                                                        <path d="M0 .5h12v1H0z" />
                                                     </svg>
                                                 </button>
                                                 <span
@@ -388,7 +388,7 @@ const CartContent = () => {
                     opacity: 1 !important;
                 }
             `}</style>
-        </>
+        </div>
     );
 };
 

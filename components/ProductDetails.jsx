@@ -22,7 +22,7 @@ const ProductDetails = ({ product }) => {
 
             <section className="flex flex-col lg:flex-row items-start justify-center gap-6 mb-16">
                 <div className="w-full lg:w-[612px] h-80 md:h-96 lg:h-[612px] rounded-3xl border border-solid border-sub-texts-mute-lable product-image flex items-center justify-center">
-                    <Image src={activeImage || '/spoon-product.jpg'} alt={name} width={612} height={612} className="object-cover w-full h-full rounded-3xl" />
+                    <Image src={activeImage} alt={name} width={612} height={612} className="object-cover w-full h-full rounded-3xl" />
                 </div>
 
                 <article className="w-full lg:w-[612px] flex flex-col gap-6">
@@ -79,12 +79,12 @@ const ProductDetails = ({ product }) => {
 
                     <div className="flex items-center gap-4">
                         <span className="font-outfit text-black text-lg">Share this product:</span>
-                        <div className="flex gap-2">
+                        <div className="flex gap-4">
                             <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
                                 <Image
                                     src="/facebook-logo.svg"
-                                    width={20}
-                                    height={20}
+                                    width={18}
+                                    height={18}
                                     className="w-full h-full object-contain"
                                     alt="Facebook Logo"
                                 />
@@ -92,8 +92,8 @@ const ProductDetails = ({ product }) => {
                             <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
                                 <Image
                                     src="/instagram-logo.svg"
-                                    width={20}
-                                    height={20}
+                                    width={18}
+                                    height={18}
                                     className="w-full h-full object-contain"
                                     alt="Instagram Logo"
                                 />
@@ -101,8 +101,8 @@ const ProductDetails = ({ product }) => {
                             <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
                                 <Image
                                     src="/linkedin-logo.svg"
-                                    width={20}
-                                    height={20}
+                                    width={18}
+                                    height={18}
                                     className="w-full h-full object-contain"
                                     alt="LinkedIn Logo"
                                 />
@@ -110,8 +110,8 @@ const ProductDetails = ({ product }) => {
                             <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
                                 <Image
                                     src="/whatsapp-logo.svg"
-                                    width={20}
-                                    height={20}
+                                    width={18}
+                                    height={18}
                                     className="w-full h-full object-contain"
                                     alt="WhatsApp Logo"
                                 />
@@ -119,8 +119,8 @@ const ProductDetails = ({ product }) => {
                             <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
                                 <Image
                                     src="/x-logo.svg"
-                                    width={24}
-                                    height={24}
+                                    width={18}
+                                    height={18}
                                     className="w-full h-full object-contain"
                                     alt="X Logo"
                                 />

@@ -62,8 +62,9 @@ const CategoriesContent = () => {
     };
 
     return (
-        <div className="min-h-screen relative overflow-hidden">
-            <div className="max-w-7xl mx-auto relative z-10 py-16 px-4">
+        <>
+        <div className="min-h-screen relative overflow-hidden py-12 lg:py-20">
+            <div className="container mx-auto">
                 <div className="text-center mt-24 mb-24">
                     <h2 className="mb-8">Categories</h2>
                     {/*<div className="relative flex justify-center md:justify-end">*/}
@@ -86,8 +87,7 @@ const CategoriesContent = () => {
                     {/*    </div>*/}
                     {/*</div>*/}
                 </div>
-
-                <div className="max-w-7xl mx-auto">
+                <div className="w-full">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
                         {categories === undefined && (
                             <div className="col-span-full text-center">Loading categories...</div>
@@ -103,34 +103,11 @@ const CategoriesContent = () => {
                         ))}
                     </div>
                 </div>
-
-                {/*<div className="flex justify-center mt-12 space-x-2">*/}
-                {/*    <button onClick={() => goToPage(page - 1)} disabled={page <= 1} className="w-10 h-10 rounded-lg border border-gray-300 flex items-center justify-center text-gray-400 hover:border-yellow-600 hover:text-yellow-600 transition-colors disabled:opacity-50">*/}
-                {/*        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">*/}
-                {/*            <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>*/}
-                {/*        </svg>*/}
-                {/*    </button>*/}
-                {/*    {[...Array(Math.min(totalPages, 3)).keys()].map((i) => {*/}
-                {/*        const num = i + 1;*/}
-                {/*        const isActive = num === page;*/}
-                {/*        return (*/}
-                {/*            <button key={num} onClick={() => goToPage(num)} className={`w-10 h-10 flex items-center justify-center ${isActive ? 'text-yellow-600' : 'text-gray-600'} hover:border-yellow-600 hover:text-yellow-600 transition-colors`}>*/}
-                {/*                {num}*/}
-                {/*            </button>*/}
-                {/*        );*/}
-                {/*    })}*/}
-                {/*    {totalPages > 3 && <span className="w-10 h-10 flex items-center justify-center text-gray-400">...</span>}*/}
-                {/*    <button onClick={() => goToPage(page + 1)} disabled={page >= totalPages} className="w-10 h-10 rounded-lg bg-yellow-600 text-white flex items-center justify-center disabled:opacity-50">*/}
-                {/*        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">*/}
-                {/*            <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>*/}
-                {/*        </svg>*/}
-                {/*    </button>*/}
-                {/*</div>*/}
-            </div>
-            <div className="my-12">
-                <Newsletter />
             </div>
         </div>
+
+            <Newsletter />
+            </>
     );
 };
 

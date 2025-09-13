@@ -2,7 +2,7 @@
 
 :root {
   --Background: #F9F9F6;
-  --Main-Primary-Color: #212121;
+  --Main-Primary-Color: #0E0E0E;
   --primary-text-products-name: #2C2C2C;
   --ct-as-buttons-highlights: #F27F0C;
   --body-text-headings: rgba(33, 33, 33, 1);
@@ -170,7 +170,7 @@ p, span, li, a, div, input, textarea, button {
 
 /* Footer Styles */
 .bg-footer {
-  background: var(--Main-Primary-Color, #212121);
+  background: #212121;
 }
 
 .footer-heading {
@@ -457,8 +457,7 @@ p, span, li, a, div, input, textarea, button {
     border: 2px solid var(--border-color, #C0C0C0);
     border-radius: 24px;
     padding: 48px;
-    max-width: 1240px;
-    margin: 0 auto;
+    width: 100%;
 }
 .form-title {
     color: var(--Main-Primary-Color, #F2F3F5);
@@ -546,7 +545,6 @@ p, span, li, a, div, input, textarea, button {
 @media (max-width: 768px) {
     .form-container {
         padding: 32px 24px;
-        margin: 16px;
         border-radius: 16px;
     }
     .form-title {
@@ -1047,7 +1045,6 @@ p, span, li, a, div, input, textarea, button {
 .newsletter-container {
     display: flex;
     width: 100%;
-    max-width: 1248px;
     height: 320px;
     padding: 34px;
     justify-content: space-between;
@@ -1055,7 +1052,6 @@ p, span, li, a, div, input, textarea, button {
     flex-shrink: 0;
     background: linear-gradient(135deg, #F27F0C, #F7AD19);
     border-radius: 24px;
-    margin: 0 auto;
 }
 
 .newsletter-heading {
@@ -1123,12 +1119,6 @@ p, span, li, a, div, input, textarea, button {
 }
 
 /* Responsive adjustments */
-@media (max-width: 1280px) {
-    .newsletter-container {
-        max-width: calc(100vw - 32px);
-        margin: 0 16px;
-    }
-}
 
 @media (max-width: 1024px) {
     .newsletter-container {
@@ -1224,3 +1214,14 @@ p, span, li, a, div, input, textarea, button {
 .border-borders { border-color: var(--borders); }
 .border-main-primary-buttons { border-color: var(--main-primary-buttons); }
 .text-main-background { color: var(--main-background); }
+
+
+select option {
+  background: white;
+  color: #F27F0C;
+}
+
+select option:hover {
+  background: #F27F0C;
+  color: white;
+}
