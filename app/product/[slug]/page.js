@@ -40,8 +40,8 @@ export default function ProductPage() {
     return (
         <ConditionalLayout>
             {!sku && <div className="container mx-auto px-8 py-16 mt-24">Invalid product.</div>}
-            {sku && product === null && <div className="container mx-auto px-8 py-16 mt-24">Loading...</div>}
-            {sku && product === undefined && <div className="container mx-auto px-8 py-16 mt-24">Product not found.</div>}
+            {sku && product === null && <div className="container mx-auto text-center px-8 py-16 mt-24">Loading...</div>}
+            {sku && product === undefined && <div className="container mx-auto text-center px-8 py-16 mt-24">Product not found.</div>}
             
             {sku && productWithCategory && (
                 <>
@@ -61,7 +61,7 @@ export default function ProductPage() {
                         {showWaitForUpdate && (
                             <div className="my-16">
                                 <div className="text-center">
-                                    <h2 className="font-outfit font-medium text-black text-xl md:text-[28px]">More products coming soon!</h2>
+                                    <h2 className="font-outfit font-medium text-black text-xl md:text-[28px] mb-4">More products coming soon!</h2>
                                     <p>Please check back later.</p>
                                 </div>
                             </div>

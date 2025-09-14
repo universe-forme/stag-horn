@@ -2,11 +2,25 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { useCart } from '../contexts/CartContext';
+import { toast } from 'react-toastify';
 
 const RelatedProducts = ({ products }) => {
+    const { addToCart } = useCart();
+
     if (!products || products.length === 0) {
         return null;
     }
+
+    const handleAddToCart = (product, e) => {
+        e.preventDefault(); // Prevent navigation to product page
+        e.stopPropagation();
+        addToCart(product, 1);
+        toast.success(`${product.name} added to cart!`, {
+            position: "top-right",
+            autoClose: 3000,
+        });
+    };
 
     return (
         <section className="flex flex-col gap-8">
@@ -65,9 +79,19 @@ const RelatedProducts = ({ products }) => {
                                 {product.estimated_delivery || 'Estimate delivery in 2-3 working days'}
                             </p>
 
-                            <button className="cta-button-new w-full py-2 rounded-md font-medium mt-2">
-                            Add To Cart
-                            </button>
+                            <div className="flex gap-2 mt-2">
+                                <button 
+                                    className="flex-1 bg-main-primary-buttons text-white py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors cursor-pointer"
+                                    onClick={(e) => handleAddToCart(product, e)}
+                                >
+                                    Add to Cart
+                                </button>
+                                <Link href={`/product/${product.sku}`} className="flex-1">
+                                    <button className="cta-button-new w-full py-2 rounded-md font-medium cursor-pointer">
+                                        View Details
+                                    </button>
+                                </Link>
+                            </div>
                         </div>
                     </Link>
                 ))}

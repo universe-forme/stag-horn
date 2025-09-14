@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useCart } from '../contexts/CartContext';
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const pathname = usePathname();
+    const { totalItems } = useCart();
 
     const toggleMobileMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -61,8 +63,13 @@ export default function Navbar() {
                     <div className="flex items-center space-x-4">
                         {/* Shopping Cart */}
                         <Link href="/cart">
-                            <button className={`p-2 rounded-md transition-colors hover:bg-[#F27F0C] ${pathname === '/cart' ? 'bg-[#F27F0C]' : ''}`}>
+                            <button className={`relative p-2 rounded-md transition-colors hover:bg-[#F27F0C] ${pathname === '/cart' ? 'bg-[#F27F0C]' : ''}`}>
                                 <Image src="/shopping-bag.svg" alt={"Shopping Bag Icon"} width={24} height={24} className="object-cover" />
+                                {totalItems > 0 && (
+                                    <span className="absolute -top-1 -right-1 bg-[#f27f0c] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                        {totalItems > 99 ? '99+' : totalItems}
+                                    </span>
+                                )}
                             </button>
                         </Link>
 

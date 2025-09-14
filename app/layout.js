@@ -2,6 +2,7 @@ import {Open_Sans, Outfit, Cabin} from "next/font/google";
 import "./globals.css";
 import SupabaseClientProvider from "../components/SupabaseClientProvider";
 import ClerkProviderWrapper from "../components/ClerkProviderWrapper";
+import { CartProvider } from "../contexts/CartContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -34,8 +35,10 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className={`${outfit.variable} ${cabin.variable} ${openSans.variable} antialiased`}>
           <SupabaseClientProvider>
-            {children}
-            <ToastContainer position="top-right" />
+            <CartProvider>
+              {children}
+              <ToastContainer position="top-right" />
+            </CartProvider>
           </SupabaseClientProvider>
         </body>
       </html>

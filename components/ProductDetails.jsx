@@ -1,11 +1,16 @@
 'use client';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
+import RelatedProducts from "@/components/RelatedProducts";
+import { useCart } from '../contexts/CartContext';
+import { toast } from 'react-toastify';
 
 const ProductDetails = ({ product }) => {
     const { name, short_description, description, price, main_image, images, category, tags, estimated_delivery, rating } = product;
+    const { addToCart } = useCart();
 
     const [activeImage, setActiveImage] = useState(main_image);
+    const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         setActiveImage(main_image);
@@ -14,7 +19,16 @@ const ProductDetails = ({ product }) => {
     const allImages = [main_image, ...(images || [])].filter(Boolean);
     const uniqueImages = Array.from(new Set(allImages));
 
+    const handleAddToCart = () => {
+        addToCart(product, quantity);
+        toast.success(`${name} added to cart!`, {
+            position: "top-right",
+            autoClose: 3000,
+        });
+    };
+
     return (
+<>
         <main className="container mx-auto px-4 md:px-8 lg:px-24 py-8">
             <h1 className="font-outfit font-medium text-variable-collection-main-primary-color text-3xl md:text-[64px] text-center mb-8 md:mb-16">
                 Product Detail
@@ -53,14 +67,22 @@ const ProductDetails = ({ product }) => {
 
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
                         <div className="flex items-center justify-center gap-2.5 px-6 py-3 bg-main-background rounded-xl border border-solid border-main-primary-buttons">
-                            <select id="quantity" className="font-outfit text-main-primary-buttons text-lg bg-transparent border-none outline-none">
+                            <select 
+                                id="quantity" 
+                                className="font-outfit text-main-primary-buttons text-lg bg-transparent border-none outline-none"
+                                value={quantity}
+                                onChange={(e) => setQuantity(parseInt(e.target.value))}
+                            >
                                 {[...Array(5)].map((_, i) => (
                                     <option key={i + 1} value={i + 1}>Qty {i + 1}</option>
                                 ))}
                             </select>
                         </div>
 
-                        <button className="flex items-center justify-center gap-2.5 px-8 py-3.5 bg-main-primary-buttons rounded-xl hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-main-primary-buttons focus:ring-offset-2 w-full sm:w-auto">
+                        <button 
+                            className="flex items-center justify-center gap-2.5 px-8 py-3.5 bg-main-primary-buttons rounded-xl hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-main-primary-buttons focus:ring-offset-2 w-full sm:w-auto cursor-pointer"
+                            onClick={handleAddToCart}
+                        >
                             <span className="font-outfit text-main-background text-lg">Add To Cart</span>
                         </button>
                     </div>
@@ -80,7 +102,7 @@ const ProductDetails = ({ product }) => {
                     <div className="flex items-center gap-4">
                         <span className="font-outfit text-black text-lg">Share this product:</span>
                         <div className="flex gap-4">
-                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
+                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
                                 <Image
                                     src="/facebook-logo.svg"
                                     width={18}
@@ -89,7 +111,7 @@ const ProductDetails = ({ product }) => {
                                     alt="Facebook Logo"
                                 />
                             </button>
-                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
+                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
                                 <Image
                                     src="/instagram-logo.svg"
                                     width={18}
@@ -98,7 +120,7 @@ const ProductDetails = ({ product }) => {
                                     alt="Instagram Logo"
                                 />
                             </button>
-                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
+                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
                                 <Image
                                     src="/linkedin-logo.svg"
                                     width={18}
@@ -107,7 +129,7 @@ const ProductDetails = ({ product }) => {
                                     alt="LinkedIn Logo"
                                 />
                             </button>
-                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
+                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
                                 <Image
                                     src="/whatsapp-logo.svg"
                                     width={18}
@@ -116,7 +138,7 @@ const ProductDetails = ({ product }) => {
                                     alt="WhatsApp Logo"
                                 />
                             </button>
-                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1">
+                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
                                 <Image
                                     src="/x-logo.svg"
                                     width={18}
@@ -159,6 +181,8 @@ const ProductDetails = ({ product }) => {
                 </p>
             </section>
         </main>
+        <RelatedProducts />
+    </>
     );
 };
 

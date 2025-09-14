@@ -7,6 +7,8 @@ import { useActiveProducts, useProductsByCategory, useCategoriesWithProductCount
 import { useSearchParams, useRouter } from 'next/navigation';
 import Newsletter from "@/components/Newsletter";
 import RelatedProducts from "@/components/RelatedProducts";
+import {useCart} from "@/contexts/CartContext";
+import {toast} from "react-toastify";
 
 const ProductPage = () => {
     return (
@@ -120,6 +122,19 @@ const ProductContent = () => {
     const pageItems = Array.isArray(filteredDataset) ? filteredDataset.slice(0, displayedItems) : [];
     const hasMoreItems = displayedItems < total;
 
+    const { addToCart } = useCart();
+
+
+    const handleAddToCart = (product, e) => {
+        e.preventDefault(); // Prevent navigation to product page
+        e.stopPropagation();
+        addToCart(product, 1);
+        toast.success(`${product.name} added to cart!`, {
+            position: "top-right",
+            autoClose: 3000,
+        });
+    };
+
     return (
         <>
         <div className="min-h-screen relative overflow-hidden">
@@ -151,7 +166,7 @@ const ProductContent = () => {
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-16">
-                    {dataset === undefined && (
+                    {dataset === null && (
                         <div className="col-span-full text-center">Loading...</div>
                     )}
                     {pageItems.map((p) => (
@@ -180,7 +195,11 @@ const ProductContent = () => {
                                     <p className="product-name-new mb-3 h-10 line-clamp-2 font-semibold text-lg">{p.name}</p>
                                     <span className="text-xl font-bold product-price-new mb-2">${p.price}</span>
                                     <p className="text-sm text-[#0E0E0E] mb-2">{p.estimatedDelivery || "Estimate delivery in 2-3 working days"}</p>
-                                    <button className="cta-button-new w-full py-2 rounded-md font-medium mt-2">Add To Cart</button>
+                                    <button className="cta-button-new w-full py-2 rounded-md font-medium mt-2"
+                                            onClick={(e) => handleAddToCart(product, e)}
+                                    >
+                                        Add To Cart
+                                    </button>
                                 </div>
                             </div>
                         </Link>
