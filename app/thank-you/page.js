@@ -19,26 +19,21 @@ const ThankYouContent = () => {
     const [orderData, setOrderData] = useState(null);
 
     useEffect(() => {
-        // Get order data from sessionStorage
         const storedOrderData = sessionStorage.getItem('order-confirmation');
         if (storedOrderData) {
             setOrderData(JSON.parse(storedOrderData));
-            
-            // Clear cart and checkout data now that we are on the thank you page
             clearCart();
             sessionStorage.removeItem('checkout-data');
         } else {
-            // Redirect to home if no order data
             router.push('/');
         }
 
-        // Cleanup function to remove order confirmation on unmount
         return () => {
             sessionStorage.removeItem('order-confirmation');
         };
-    }, [router, clearCart]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    // Show loading while checking order data
     if (!orderData) {
         return (
             <div className="mx-auto max-w-7xl px-4 py-8 lg:py-16">
@@ -65,7 +60,7 @@ const ThankYouContent = () => {
                         Thank You for Your Order!
                     </h1>
                     <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Your order has been successfully placed. We'll send you a confirmation email shortly.
+                        Your order has been successfully placed. We&apos;ll send you a confirmation email shortly.
                     </p>
                 </div>
 
@@ -195,14 +190,14 @@ const ThankYouContent = () => {
 
                 {/* Next Steps */}
                 <div className="bg-blue-50 rounded-3xl p-6 lg:p-8 mb-12">
-                    <h2 className="text-xl lg:text-2xl font-semibold text-blue-900 mb-4">What's Next?</h2>
+                    <h2 className="text-xl lg:text-2xl font-semibold text-blue-900 mb-4">What&apos;s Next?</h2>
                     
                     <div className="space-y-3 text-blue-800">
                         <div className="flex items-start gap-3">
                             <div className="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                                 <span className="text-sm font-bold text-blue-800">1</span>
                             </div>
-                            <p>We'll send you an order confirmation email with all the details.</p>
+                            <p>We&apos;ll send you an order confirmation email with all the details.</p>
                         </div>
                         
                         <div className="flex items-start gap-3">
@@ -216,7 +211,7 @@ const ThankYouContent = () => {
                             <div className="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                                 <span className="text-sm font-bold text-blue-800">3</span>
                             </div>
-                            <p>You'll receive tracking information once your order ships.</p>
+                            <p>You&apos;ll receive tracking information once your order ships.</p>
                         </div>
                         
                         <div className="flex items-start gap-3">
