@@ -86,11 +86,6 @@ const RelatedProducts = ({ products }) => {
                                 >
                                     Add to Cart
                                 </button>
-                                <Link href={`/product/${product.sku}`} className="flex-1">
-                                    <button className="cta-button-new w-full py-2 rounded-md font-medium cursor-pointer">
-                                        View Details
-                                    </button>
-                                </Link>
                             </div>
                         </div>
                     </Link>
