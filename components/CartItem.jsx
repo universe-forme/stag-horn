@@ -26,15 +26,13 @@ const CartItem = ({ item }) => {
   return (
     <div className="flex flex-col lg:flex-row items-start gap-4 lg:gap-6">
       {/* Checkbox */}
-      <div 
-        className={`flex items-center justify-center w-7 h-7 rounded cursor-pointer transition-colors ${selected ? 'checkbox-checked' : ''}`}
+      <div
+        className={`flex items-center justify-center w-7 h-7 rounded cursor-pointer transition-colors border ${selected ? 'bg-main-primary-buttons border-main-primary-buttons' : 'bg-[#f9f9f6] border-borders'}`}
         onClick={handleToggleSelection}
       >
-        <div className="checkbox-unchecked w-full h-full bg-white border border-borders rounded flex items-center justify-center">
-          <svg className="w-4 h-4 text-white opacity-0 transition-opacity" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
-          </svg>
-        </div>
+        <svg className={`w-4 h-4 text-white transition-opacity ${selected ? 'opacity-100' : 'opacity-0'}`} viewBox="0 0 16 16" fill="currentColor">
+          <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+        </svg>
       </div>
 
       {/* Product Card */}
@@ -43,7 +41,7 @@ const CartItem = ({ item }) => {
           {/* Product Image */}
           <div className="w-full lg:w-32 h-32 bg-gray-100 rounded-2xl border border-sub-texts-mute-lable flex-shrink-0">
             <Image 
-              src={product.main_image || '/product.jpg'} 
+              src={product.main_image}
               alt={product.name} 
               className="rounded-2xl object-cover w-full h-full" 
               width={150} 

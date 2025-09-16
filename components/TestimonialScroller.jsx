@@ -1,50 +1,146 @@
 'use client';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
-const testimonials = [
-    { text: "Top-notch quality. My cooking feels professional now!", name: "Emma Collins", date: "01 - 08 - 2025", img: "/testimonial-profile-img.jpg" },
-    { text: "I ordered a custom-forged sword and was blown away by the detail. It is not just a weapon — it is art. Wazir has revived old-world quality in a modern world.", name: "Mariam Zafar", date: "01 - 08 - 2025", img: "/testimonial-profile-img.jpg" },
-    { text: "I bought a 3-piece knife set from Wazir, and I now actually enjoy cooking. The grip, the sharpness, the design — love everything!", name: "Naveed Ahmed", date: "01 - 08 - 2025", img: "/testimonial-profile-img.jpg" },
-    { text: "I bought a 3-piece knife set from Wazir, and I now actually enjoy cooking. The grip, the sharpness, the design — love everything!", name: "Sarah Lee", date: "01 - 08 - 2025", img: "/testimonial-profile-img.jpg" },
-    { text: "We have been sourcing from Wazir Cutlery Work for over two years. Their consistency, packaging, and client service are exceptional. Every piece feels like a premium product — because it is.", name: "Jimmy", date: "01 - 08 - 2025", img: "/testimonial-profile-img.jpg" },
-    { text: "Blades that do not just cut — they glide. Excellent craftsmanship. Proud to support a Pakistani brand making waves globally.", name: "John Doe", date: "01 - 08 - 2025", img: "/testimonial-profile-img.jpg" },
-    { text: "The custom sword I ordered was beyond my expectations. Intricate hand-etching, perfectly balanced, and incredibly well packaged. This is world-class metalwork.", name: "Alex Turner", date: "01 - 08 - 2025", img: "/testimonial-profile-img.jpg" },
-    { text: "We have been sourcing from Wazir Cutlery Work for over two years. Their consistency, packaging, and client service are exceptional. Every piece feels like a premium product — because it is.", name: "Mike Johnson", date: "01 - 08 - 2025", img: "/testimonial-profile-img.jpg" },
+const testimonialsData = [
+    {
+        name: 'Ali',
+        image: '/ali.svg',
+        quote: "Wazir cutlery's blades combine strength, precision, and beautiful craftsmanship. Every piece tells a story of quality and tradition.",
+    },
+    {
+        name: 'M Rafy',
+        image: '/m-rafy.svg',
+        quote: "Outstanding quality and exceptional service. These blades are not just tools, they're works of art that perform flawlessly.",
+    },
+    {
+        name: 'Zain',
+        image: '/zain.svg',
+        quote: "The craftsmanship is incredible. Each blade feels perfectly balanced and the attention to detail is remarkable. Highly recommended!",
+    },
 ];
 
-const TestimonialItem = ({ testimonial }) => (
-    <div className="testimonial-item">
-        <div className="testimonial-card">
-            <p className="testimonial-text">{testimonial.text}</p>
-        </div>
-        <div className="flex items-center mt-4">
-            <Image src={testimonial.img} width={48} height={48} alt={testimonial.name} className="profile-image" />
-            <div>
-                <div className="customer-name">{testimonial.name}</div>
-                <div className="customer-date">{testimonial.date}</div>
+// Duplicate for infinite scroll
+const extendedTestimonials = [...testimonialsData, ...testimonialsData];
+
+const TestimonialCard = ({ testimonial, isFeatured }) => {
+    const articleClass = `flex items-start gap-4 lg:gap-6 p-4 lg:p-6 bg-white rounded-lg border border-gray-200 hover-lift transition-all duration-500 ease-in-out ${isFeatured ? 'mr-16 lg:mr-20' : 'ml-12 lg:ml-20'}`;
+    const barClass = `w-3 rounded-lg flex-shrink-0 self-stretch transition-colors duration-500 ease-in-out ${isFeatured ? 'bg-[#F27F0C]' : 'bg-gray-200'}`;
+
+    return (
+        <article className={articleClass}>
+            <div className={barClass}></div>
+            <div className="w-16 h-16 lg:w-20 lg:h-20 relative flex-shrink-0">
+                <Image src={testimonial.image} alt={testimonial.name} fill className="rounded-full object-cover" priority />
             </div>
-        </div>
-    </div>
-);
+            <div className="flex flex-col gap-2 flex-grow relative">
+                <div className="absolute right-0 -top-1">
+                    <Image src="/quotes.svg" alt="5 star rating" width={90} height={16} className="h-4 w-auto" priority />
+                </div>
+                <h3 className="font-outfit font-bold text-xl lg:text-2xl mt-4">{testimonial.name}</h3>
+                <blockquote className="font-outfit font-normal text-gray-600 text-sm lg:text-base">
+                    &quot;{testimonial.quote}&quot;
+                </blockquote>
+            </div>
+        </article>
+    );
+};
 
 const TestimonialScroller = () => {
+    const scrollerRef = useRef(null);
+    const [featuredIndex, setFeaturedIndex] = useState(1); // Start with the second item featured
+
+    useEffect(() => {
+        const scroller = scrollerRef.current;
+        if (!scroller) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const index = parseInt(entry.target.dataset.index, 10);
+                        setFeaturedIndex(index % testimonialsData.length);
+                    }
+                });
+            },
+            {
+                root: scroller,
+                rootMargin: '-50% 0px -50% 0px', // Trigger when element is in the vertical center
+                threshold: 0,
+            }
+        );
+
+        const items = scroller.querySelectorAll('.testimonial-item-wrapper');
+        items.forEach(item => observer.observe(item));
+
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        <section className="py-16 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto">
-                <h2 className="mb-16 text-center">Testimonials</h2>
-                <div className="testimonial-scroller">
-                    <div className="masonry-grid scroller-inner">
-                        {testimonials.map((testimonial, index) => (
-                            <TestimonialItem key={index} testimonial={testimonial} />
-                        ))}
-                        {/* Duplicate for infinite scroll effect */}
-                        {testimonials.map((testimonial, index) => (
-                            <TestimonialItem key={`dup-${index}`} testimonial={testimonial} aria-hidden="true" />
+        <>
+            <section className="mx-auto container px-4 flex flex-col lg:flex-row items-center justify-center gap-6 py-8 lg:py-16 animate-fade-up">
+                <div className="flex flex-col gap-6 w-full items-center justify-center lg:w-2/5">
+                    <div className="flex flex-col gap-4">
+                        <h2 className="font-cabin font-medium text-2xl lg:text-3xl  leading-normal">
+                            What Our Warriors & Collectors Say About Us
+                        </h2>
+                        <p className="font-outfit font-normal  text-lg leading-relaxed">
+                            Trusted by warriors, collectors, and adventurers worldwide — hear their real experiences with our blades, tools, and timeless craftsmanship.
+                        </p>
+                    </div>
+                    <button className="inline-flex h-12 lg:h-14 items-center justify-center gap-2 px-6 lg:px-8 py-3 bg-[#F27F0C] text-white rounded-xl font-outfit text-lg btn-primary self-start hover:bg-orange-500 transition-all duration-300">
+                        Join Now
+                    </button>
+                </div>
+
+                <div ref={scrollerRef} className="w-full lg:w-3/5 space-y-4 testimonial-scroller">
+                    <div className="testimonial-scroller-inner">
+                        {extendedTestimonials.map((testimonial, index) => (
+                            <div key={index} className="testimonial-item-wrapper" data-index={index}>
+                                <TestimonialCard
+                                    testimonial={testimonial}
+                                    isFeatured={featuredIndex === (index % testimonialsData.length)}
+                                />
+                            </div>
                         ))}
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+            <style jsx global>{`
+                .testimonial-scroller {
+                    height: 500px; /* Adjust to fit approx 3 cards */
+                    overflow: hidden;
+                    -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+                    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+                }
+                .testimonial-scroller-inner {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem; /* space-y-4 */
+                    animation: scroll-up 15s linear infinite;
+                }
+                @keyframes scroll-up {
+                    from {
+                        transform: translateY(0);
+                    }
+                    to {
+                        transform: translateY(-50%);
+                    }
+                }
+                .hover-lift {
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                }
+                .hover-lift:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                }
+                .btn-primary:hover {
+                    background-color: rgba(242, 127, 12, 0.9);
+                    transform: translateY(-2px);
+                    transition: all 0.3s ease;
+                }
+            `}</style>
+        </>
     );
 };
 

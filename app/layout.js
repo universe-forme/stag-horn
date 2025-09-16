@@ -2,7 +2,7 @@ import {Open_Sans, Outfit, Cabin} from "next/font/google";
 import "./globals.css";
 import SupabaseClientProvider from "../components/SupabaseClientProvider";
 import ClerkProviderWrapper from "../components/ClerkProviderWrapper";
-import { CartProvider } from "../contexts/CartContext";
+import { CartProvider } from "@/contexts/CartContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -25,8 +25,14 @@ const openSans = Open_Sans({
 });
 
 export const metadata = {
-  title: "Wazir Cutlery",
+  title: {
+    default: "Wazir Cutlery",
+    template: "%s | Wazir Cutlery",
+  },
   description: "Developed by Datadaur",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({ children }) {

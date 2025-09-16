@@ -1,74 +1,46 @@
-'use client';
-import { useParams } from "next/navigation";
-import { useProductBySku, useActiveProducts, useProductsByCategory, useCategoriesWithProductCounts } from "../../../lib/hooks";
-import ProductDetails from "../../../components/ProductDetails";
-import ConditionalLayout from "../../../components/ConditionalLayout";
-import RelatedProducts from "../../../components/RelatedProducts";
+import ProductDetailClient from "@/components/ProductDetailClient";
+import { createClient } from '@supabase/supabase-js';
 
-export default function ProductPage() {
-    const params = useParams();
-    const sku = Array.isArray(params?.slug) ? params.slug[0] : params?.slug;
-    
-    const { data: product } = useProductBySku(sku);
-    const { data: categories } = useCategoriesWithProductCounts();
-    const { data: relatedProducts } = useProductsByCategory(product?.category_id);
-    const { data: allProducts } = useActiveProducts();
+// This is a server component, so we can fetch data directly.
+// We create a new Supabase client here. In a larger app, this might be in a shared file.
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
-    // Add category info to product
-    const productWithCategory = product && categories 
-        ? { ...product, category: categories.find(c => c.id === product.category_id) }
-        : product;
+export async function generateMetadata({ params }) {
+  const { slug } = params;
+  if (!slug) {
+    return {
+        title: 'Product',
+        description: "Explore high-quality, handcrafted knives " +
+            "and swords from Wazir Cutlery."
+    };
+  }
 
-    let displayProducts = [];
+  const { data: product } = await supabase
+    .from('products')
+    .select('name')
+    .eq('sku', slug)
+    .single();
 
-    const isLoadingRecommendations = product && relatedProducts === undefined && allProducts === undefined;
+  if (product) {
+    return {
+      title: product.name,
+      description: `Discover the ${product.name}, a masterfully handcrafted blade 
+      from Wazir Cutlery. Forged in Wazirabad from premium materials for 
+      exceptional performance and durability.`,
+    };
+  }
 
-    if (product && relatedProducts) {
-        const filteredRelated = relatedProducts.filter(r => r.id !== product.id);
-        if (filteredRelated.length > 0) {
-            displayProducts = filteredRelated.slice(0, 5);
-        } else if (allProducts) {
-            const otherCategoryProducts = allProducts.filter(p => p.category_id !== product.category_id).slice(0, 5);
-            if (otherCategoryProducts.length > 0) {
-                displayProducts = otherCategoryProducts;
-            }
-        }
-    }
+  return {
+    title: "Product Not Found",
+    description: "The product you are looking for is not available. " +
+        "Explore other handcrafted blades from Wazir Cutlery.",
+  };
+}
 
-    const showWaitForUpdate = product && !isLoadingRecommendations && displayProducts.length === 0;
-
-    return (
-        <ConditionalLayout>
-            {!sku && <div className="container mx-auto px-8 py-16 mt-24">Invalid product.</div>}
-            {sku && product === null && <div className="container mx-auto text-center px-8 py-16 mt-24">Loading...</div>}
-            {sku && product === undefined && <div className="container mx-auto text-center px-8 py-16 mt-24">Product not found.</div>}
-            
-            {sku && productWithCategory && (
-                <>
-                    <ProductDetails product={productWithCategory} />
-                    
-                    <div className="container mx-auto px-4 md:px-8 lg:px-24 py-8">
-                        {isLoadingRecommendations && (
-                             <div className="text-center my-16">
-                                <h2 className="font-outfit font-medium text-black text-xl md:text-[28px]">Loading Recommendations...</h2>
-                            </div>
-                        )}
-
-                        {!isLoadingRecommendations && displayProducts.length > 0 && (
-                            <RelatedProducts products={displayProducts} />
-                        )}
-
-                        {showWaitForUpdate && (
-                            <div className="my-16">
-                                <div className="text-center">
-                                    <h2 className="font-outfit font-medium text-black text-xl md:text-[28px] mb-4">More products coming soon!</h2>
-                                    <p>Please check back later.</p>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </>
-            )}
-        </ConditionalLayout>
-    );
+export default function ProductPage({ params }) {
+  const { slug } = params;
+  return <ProductDetailClient sku={slug} />;
 }

@@ -21,6 +21,7 @@ const navigation = [
   { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
   { name: 'Categories', href: '/admin/categories', icon: FolderOpen },
   { name: 'Products', href: '/admin/products', icon: Package },
+  { name: 'Newsletter', href: '/admin/newsletter', icon: FileText },
   // { name: 'Customers', href: '/admin/customers', icon: Users },
   { name: 'Login History', href: '/admin/login-history', icon: History },
   { name: 'Settings', href: '/admin/settings', icon: Settings },

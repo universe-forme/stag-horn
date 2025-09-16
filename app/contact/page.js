@@ -1,30 +1,12 @@
-'use client';
-import Image from 'next/image';
-import React from "react";
-import ConditionalLayout from "../../components/ConditionalLayout";
-import ContactForm from "../../components/ContactForm";
+import ContactClient from "@/components/ContactClient";
 
-const ContactPage = () => {
-    return (
-        <ConditionalLayout>
-            <ContactContent />
-        </ConditionalLayout>
-    );
+export const metadata = {
+  title: "Contact Us",
+  description: "Have questions about Wazir Cutlery's handmade knives, " +
+      "swords, or chef cutlery? Get in touch with our customer support" +
+      " team for inquiries, assistance, or feedback. We're here to help you.",
 };
 
-const ContactContent = () => {
-    return (
-        <div className="min-h-screen relative overflow-hidden">
-
-            <div className="container mx-auto relative z-10 py-16 px-4">
-                <div className="text-center mt-24 mb-12">
-                    <h1 className="mb-8">Contact Us</h1>
-                </div>
-                <ContactForm />
-            </div>
-        </div>
-    );
-};
-
-export default ContactPage;
-//hello
+export default function ContactPage() {
+  return <ContactClient />;
+}

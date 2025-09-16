@@ -3,7 +3,7 @@ import AdminSidebar from "../../components/admin/AdminSidebar";
 import AdminHeader from "../../components/admin/AdminHeader";
 import AdminRouteProtection from "../../components/AdminRouteProtection";
 import SupabaseClientProvider from "../../components/SupabaseClientProvider";
-import { AdminAuthProvider } from "../../components/AdminAuthProvider";
+import { AdminAuthProvider } from "@/components/AdminAuthProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,8 +14,14 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: "Admin Dashboard - Wazir Cutlery",
+  title: {
+    default: "Admin Dashboard - Wazir Cutlery",
+    template: "%s | Wazir Cutlery Admin",
+  },
   description: "Admin panel for Wazir Cutlery",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function AdminLayout({ children }) {
