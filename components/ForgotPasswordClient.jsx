@@ -61,7 +61,7 @@ export default function ForgotPasswordClient() {
                         <div className="space-y-3">
                             <Link 
                                 href="/login"
-                                className="w-full bg-[#D6AF66] text-white py-3 px-4 rounded-lg font-medium text-lg hover:bg-[#C49F5A] transition-all duration-200 transform hover:translate-y-[-1px] hover:shadow-lg inline-block"
+                                className="w-full bg-[#F27F0C] text-white py-3 px-4 rounded-lg font-medium text-lg hover:bg-[#C49F5A] transition-all duration-200 transform hover:translate-y-[-1px] hover:shadow-lg inline-block"
                             >
                                 Back to Login
                             </Link>
@@ -86,7 +86,7 @@ export default function ForgotPasswordClient() {
                                     setIsSubmitted(false);
                                     setEmail('');
                                 }}
-                                className="text-[#D6AF66] hover:underline"
+                                className="text-[#F27F0C] hover:underline"
                             >
                                 try again
                             </button>
@@ -135,7 +135,7 @@ export default function ForgotPasswordClient() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400"
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400"
                                     placeholder="Enter your email address"
                                 />
                                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -150,7 +150,7 @@ export default function ForgotPasswordClient() {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full bg-[#D6AF66] text-white py-3 px-4 rounded-lg font-medium text-lg hover:bg-[#C49F5A] focus:ring-2 focus:ring-[#D6AF66] focus:ring-offset-2 transition-all duration-200 transform hover:translate-y-[-1px] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                            className="w-full bg-[#F27F0C] text-white py-3 px-4 rounded-lg font-medium text-lg hover:bg-[#C49F5A] focus:ring-2 focus:ring-[#F27F0C] focus:ring-offset-2 transition-all duration-200 transform hover:translate-y-[-1px] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                         >
                             {isLoading ? (
                                 <div className="flex items-center justify-center">
@@ -169,7 +169,7 @@ export default function ForgotPasswordClient() {
                         <div className="text-center">
                             <Link 
                                 href="/login" 
-                                className="text-[#D6AF66] hover:text-[#C49F5A] transition-colors duration-200 font-medium"
+                                className="text-[#F27F0C] hover:text-[#C49F5A] transition-colors duration-200 font-medium"
                             >
                                 ← Back to login
                             </Link>
@@ -181,7 +181,7 @@ export default function ForgotPasswordClient() {
                 <div className="text-center mt-8">
                     <p className="text-sm text-[#2C2C2C] opacity-75">
                         Remember your password?{' '}
-                        <Link href="/login" className="text-[#D6AF66] hover:underline">
+                        <Link href="/login" className="text-[#F27F0C] hover:underline">
                             Sign in here
                         </Link>
                     </p>

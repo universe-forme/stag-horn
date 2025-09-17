@@ -13,7 +13,8 @@ import {
   Home,
   History,
   FolderOpen,
-  Upload
+  Upload,
+  Mail
 } from "lucide-react";
 
 const navigation = [
@@ -22,6 +23,7 @@ const navigation = [
   { name: 'Categories', href: '/admin/categories', icon: FolderOpen },
   { name: 'Products', href: '/admin/products', icon: Package },
   { name: 'Newsletter', href: '/admin/newsletter', icon: FileText },
+  { name: 'Contact Submissions', href: '/admin/contact-submissions', icon: Mail },
   // { name: 'Customers', href: '/admin/customers', icon: Users },
   { name: 'Login History', href: '/admin/login-history', icon: History },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
@@ -54,7 +56,7 @@ export default function AdminSidebar() {
                   href={item.href}
                   className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors ${
                     isActive
-                      ? 'bg-[#D6AF66] text-white'
+                      ? 'bg-[#F27F0C] text-white'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                   }`}
                 >

@@ -1,8 +1,6 @@
 import ProductDetailClient from "@/components/ProductDetailClient";
 import { createClient } from '@supabase/supabase-js';
 
-// This is a server component, so we can fetch data directly.
-// We create a new Supabase client here. In a larger app, this might be in a shared file.
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -40,7 +38,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function ProductPage({ params }) {
+export default async function ProductPage({ params }) {
   const { slug } = params;
   return <ProductDetailClient sku={slug} />;
 }

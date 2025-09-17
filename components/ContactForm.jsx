@@ -1,22 +1,22 @@
 'use client';
 import { useState } from 'react';
 import { useSubmitContactForm } from '../lib/hooks';
-import { sendContactNotification } from '../lib/email-service';
+import { sendContactNotification } from '@/lib/email-service';
 
 export default function ContactForm() {
     const [formData, setFormData] = useState({
-        fullName: '',
+        full_name: '',
         email: '',
-        phoneNumber: '',
-        whatsappNumber: '',
-        companyName: '',
-        companyEmail: '',
+        phone_number: '',
+        whatsapp_number: '',
+        company_name: '',
+        company_email: '',
         country: '',
         location: '',
         city: '',
-        productQuantity: '',
-        shipmentAddress: '',
-        emergencyContact: '',
+        product_quantity: '',
+        shipment_address: '',
+        emergency_contact: '',
         message: ''
     });
 
@@ -39,10 +39,10 @@ export default function ContactForm() {
         setSubmitStatus(null);
 
         try {
-            // Convert productQuantity to number if provided
+            // Convert product_quantity to number if provided
             const submissionData = {
                 ...formData,
-                productQuantity: formData.productQuantity ? parseInt(formData.productQuantity) : undefined
+                product_quantity: formData.product_quantity ? parseInt(formData.product_quantity) : undefined
             };
 
             const result = await submitContactForm(submissionData);
@@ -52,18 +52,18 @@ export default function ContactForm() {
             
             setSubmitStatus('success');
             setFormData({
-                fullName: '',
+                full_name: '',
                 email: '',
-                phoneNumber: '',
-                whatsappNumber: '',
-                companyName: '',
-                companyEmail: '',
+                phone_number: '',
+                whatsapp_number: '',
+                company_name: '',
+                company_email: '',
                 country: '',
                 location: '',
                 city: '',
-                productQuantity: '',
-                shipmentAddress: '',
-                emergencyContact: '',
+                product_quantity: '',
+                shipment_address: '',
+                emergency_contact: '',
                 message: ''
             });
         } catch (error) {
@@ -117,14 +117,14 @@ export default function ContactForm() {
                     <form onSubmit={handleSubmit}>
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="fullName" className="form-label">Full Name</label>
+                                <label htmlFor="full_name" className="form-label">Full Name</label>
                                 <input 
                                     type="text" 
-                                    id="fullName" 
-                                    name="fullName" 
+                                    id="full_name"
+                                    name="full_name"
                                     className="form-input" 
                                     placeholder="Full Name" 
-                                    value={formData.fullName}
+                                    value={formData.full_name}
                                     onChange={handleInputChange}
                                     required
                                 />
@@ -146,26 +146,26 @@ export default function ContactForm() {
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="phoneNumber" className="form-label">Phone Number</label>
+                                <label htmlFor="phone_number" className="form-label">Phone Number</label>
                                 <input 
                                     type="tel" 
-                                    id="phoneNumber" 
-                                    name="phoneNumber" 
+                                    id="phone_number"
+                                    name="phone_number"
                                     className="form-input" 
                                     placeholder="+92 Phone Number" 
-                                    value={formData.phoneNumber}
+                                    value={formData.phone_number}
                                     onChange={handleInputChange}
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="whatsappNumber" className="form-label">Whatsapp Number</label>
+                                <label htmlFor="whatsapp_number" className="form-label">Whatsapp Number</label>
                                 <input 
                                     type="tel" 
-                                    id="whatsappNumber" 
-                                    name="whatsappNumber" 
+                                    id="whatsapp_number"
+                                    name="whatsapp_number"
                                     className="form-input" 
                                     placeholder="+92 Phone Number" 
-                                    value={formData.whatsappNumber}
+                                    value={formData.whatsapp_number}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -173,26 +173,26 @@ export default function ContactForm() {
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="companyName" className="form-label">Company Name (Optional)</label>
+                                <label htmlFor="company_name" className="form-label">Company Name (Optional)</label>
                                 <input 
                                     type="text" 
-                                    id="companyName" 
-                                    name="companyName" 
+                                    id="company_name" 
+                                    name="company_name" 
                                     className="form-input" 
                                     placeholder="Company Name (Optional)" 
-                                    value={formData.companyName}
+                                    value={formData.company_name}
                                     onChange={handleInputChange}
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="companyEmail" className="form-label">Company Email (Optional)</label>
+                                <label htmlFor="company_email" className="form-label">Company Email (Optional)</label>
                                 <input 
                                     type="email" 
-                                    id="companyEmail" 
-                                    name="companyEmail" 
+                                    id="company_email" 
+                                    name="company_email" 
                                     className="form-input" 
                                     placeholder="Company Email (Optional)" 
-                                    value={formData.companyEmail}
+                                    value={formData.company_email}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -239,14 +239,14 @@ export default function ContactForm() {
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="productQuantity" className="form-label">Product Quantity</label>
+                                <label htmlFor="product_quantity" className="form-label">Product Quantity</label>
                                 <input 
                                     type="number" 
-                                    id="productQuantity" 
-                                    name="productQuantity" 
+                                    id="product_quantity"
+                                    name="product_quantity"
                                     className="form-input" 
                                     placeholder="Product Quantity" 
-                                    value={formData.productQuantity}
+                                    value={formData.product_quantity}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -254,26 +254,26 @@ export default function ContactForm() {
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="shipmentAddress" className="form-label">Shipment Address</label>
+                                <label htmlFor="shipment_address" className="form-label">Shipment Address</label>
                                 <input 
                                     type="text" 
-                                    id="shipmentAddress" 
-                                    name="shipmentAddress" 
+                                    id="shipment_address"
+                                    name="shipment_address"
                                     className="form-input" 
                                     placeholder="Enter full shipment address..." 
-                                    value={formData.shipmentAddress}
+                                    value={formData.shipment_address}
                                     onChange={handleInputChange}
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="emergencyContact" className="form-label">Emergency Contact Number</label>
+                                <label htmlFor="emergency_contact" className="form-label">Emergency Contact Number</label>
                                 <input 
                                     type="tel" 
-                                    id="emergencyContact" 
-                                    name="emergencyContact" 
+                                    id="emergency_contact"
+                                    name="emergency_contact"
                                     className="form-input" 
                                     placeholder="Enter emergency contact number" 
-                                    value={formData.emergencyContact}
+                                    value={formData.emergency_contact}
                                     onChange={handleInputChange}
                                 />
                             </div>

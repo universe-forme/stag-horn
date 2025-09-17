@@ -106,7 +106,7 @@ export default function OrderForm({ product, onOrderSuccess }) {
                 </p>
                 <button
                     onClick={() => setSubmitStatus(null)}
-                    className="bg-[#D6AF66] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#C49F5A] transition-colors duration-200"
+                    className="bg-[#F27F0C] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#C49F5A] transition-colors duration-200"
                 >
                     Place Another Order
                 </button>
@@ -143,7 +143,7 @@ export default function OrderForm({ product, onOrderSuccess }) {
                         min="1"
                         value={formData.quantity}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent"
                         required
                     />
                 </div>
@@ -160,7 +160,7 @@ export default function OrderForm({ product, onOrderSuccess }) {
                             name="fullName"
                             value={formData.fullName}
                             onChange={handleInputChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent"
                             required
                         />
                     </div>
@@ -174,7 +174,7 @@ export default function OrderForm({ product, onOrderSuccess }) {
                             name="email"
                             value={formData.email}
                             onChange={handleInputChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent"
                             required
                         />
                     </div>
@@ -190,7 +190,7 @@ export default function OrderForm({ product, onOrderSuccess }) {
                         name="phone"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent"
                         required
                     />
                 </div>
@@ -206,7 +206,7 @@ export default function OrderForm({ product, onOrderSuccess }) {
                         rows="3"
                         value={formData.address}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent"
                         required
                     />
                 </div>
@@ -222,7 +222,7 @@ export default function OrderForm({ product, onOrderSuccess }) {
                             name="city"
                             value={formData.city}
                             onChange={handleInputChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent"
                             required
                         />
                     </div>
@@ -236,7 +236,7 @@ export default function OrderForm({ product, onOrderSuccess }) {
                             name="country"
                             value={formData.country}
                             onChange={handleInputChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent"
                             required
                         />
                     </div>
@@ -250,7 +250,7 @@ export default function OrderForm({ product, onOrderSuccess }) {
                             name="postalCode"
                             value={formData.postalCode}
                             onChange={handleInputChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent"
                         />
                     </div>
                 </div>
@@ -265,7 +265,7 @@ export default function OrderForm({ product, onOrderSuccess }) {
                         rows="3"
                         value={formData.notes}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent"
                         placeholder="Any special instructions or notes..."
                     />
                 </div>
@@ -296,7 +296,7 @@ export default function OrderForm({ product, onOrderSuccess }) {
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-[#D6AF66] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#C49F5A] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-[#F27F0C] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#C49F5A] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     {isSubmitting ? 'Placing Order...' : 'Place Order'}
                 </button>

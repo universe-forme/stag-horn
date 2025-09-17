@@ -406,7 +406,7 @@ export default function ProductModal({ isOpen, onClose, product }) {
                 id="categoryId"
                 value={formData.categoryId}
                 onChange={(e) => handleInputChange("categoryId", e.target.value)}
-                className={`mt-1 w-full px-3 py-2 border border-[#C0C0C0] rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-[#D6AF66] bg-white text-[#2C2C2C] ${errors.categoryId ? 'border-red-500' : ''}`}
+                className={`mt-1 w-full px-3 py-2 border border-[#C0C0C0] rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-[#F27F0C] bg-white text-[#2C2C2C] ${errors.categoryId ? 'border-red-500' : ''}`}
               >
                 <option value="">Select a category</option>
                 {categories?.map(category => (
@@ -553,7 +553,7 @@ export default function ProductModal({ isOpen, onClose, product }) {
                 </div>
               ) : (
                 <div
-                  className="border-2 border-dashed border-[#C0C0C0] rounded-lg p-6 text-center hover:border-[#D6AF66] transition-colors cursor-pointer"
+                  className="border-2 border-dashed border-[#C0C0C0] rounded-lg p-6 text-center hover:border-[#F27F0C] transition-colors cursor-pointer"
                   onClick={() => mainImageInputRef.current?.click()}
                   onDragOver={handleMainImageDragOver}
                   onDragLeave={handleMainImageDragLeave}
@@ -610,7 +610,7 @@ export default function ProductModal({ isOpen, onClose, product }) {
                 ))}
                 {additionalImages.length < 8 && (
                   <div
-                    className="border-2 border-dashed border-[#C0C0C0] rounded-lg p-4 text-center hover:border-[#D6AF66] transition-colors cursor-pointer flex items-center justify-center"
+                    className="border-2 border-dashed border-[#C0C0C0] rounded-lg p-4 text-center hover:border-[#F27F0C] transition-colors cursor-pointer flex items-center justify-center"
                     onClick={() => additionalImagesInputRef.current?.click()}
                     onDragOver={handleAdditionalImagesDragOver}
                     onDragLeave={handleAdditionalImagesDragLeave}
@@ -797,7 +797,7 @@ export default function ProductModal({ isOpen, onClose, product }) {
                 <Button
                 type="submit"
                 form="product-form"
-                className="bg-[#D6AF66] hover:bg-[#C49F5A] text-white border border-[#D6AF66]"
+                className="bg-[#F27F0C] hover:bg-[#C49F5A] text-white border border-[#F27F0C]"
                 disabled={isLoading}
                 >
                 {isLoading ? (

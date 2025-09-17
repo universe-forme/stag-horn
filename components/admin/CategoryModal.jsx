@@ -310,7 +310,7 @@ export default function CategoryModal({ isOpen, onClose, category }) {
                 </div>
               ) : (
                 <div
-                  className="border-2 border-dashed border-[#C0C0C0] rounded-lg p-6 text-center hover:border-[#D6AF66] transition-colors cursor-pointer"
+                  className="border-2 border-dashed border-[#C0C0C0] rounded-lg p-6 text-center hover:border-[#F27F0C] transition-colors cursor-pointer"
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
@@ -399,7 +399,7 @@ export default function CategoryModal({ isOpen, onClose, category }) {
                 <Button
                 type="submit"
                 form="category-form"
-                className="bg-[#D6AF66] hover:bg-[#C49F5A] text-white border border-[#D6AF66]"
+                className="bg-[#F27F0C] hover:bg-[#C49F5A] text-white border border-[#F27F0C]"
                 disabled={isLoading}
                 >
                 {isLoading ? (

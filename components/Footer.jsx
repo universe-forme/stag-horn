@@ -56,11 +56,11 @@ const Footer = () => {
                 <h3 className="footer-heading font-medium text-lg mb-6">Contact</h3>
                 <div className="space-y-4">
                   <div>
-                    <p className="footer-link text-base">Hassan Mughal:</p>
+                    <p className="footer-link text-base mb-2">Hassan Mughal:</p>
                     <Link href="https://wa.me/+923080601995" target="_blank" className="footer-link text-base">+923080601995</Link>
                   </div>
                   <div>
-                    <p className="footer-link text-base">Qamar Shahzad:</p>
+                    <p className="footer-link text-base mb-2">Qamar Shahzad:</p>
                     <Link href="https://wa.me/+923126209302" target="_blank" className="footer-link text-base">+923126209302</Link>
                   </div>
                 </div>
@@ -77,29 +77,24 @@ const Footer = () => {
               <div>
                   <ul className="flex flex-col gap-4">
                       <li>
-                          <Link href="#" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]">
+                          <a href="https://www.facebook.com/share/16z6hKB6KL/" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]" target="_blank">
                               <Image src="/facebook-gray.svg" alt="Facebook" width={24} height={24} />
-                          </Link>
+                          </a>
                       </li>
                       <li>
-                          <Link href="#" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]">
+                          <a href="https://www.instagram.com/wazircutlery?utm_source=qr&igsh=am4yc3Z2ZDV1bTM4" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]" target="_blank">
                               <Image src="/instagram-gray.svg" alt="Instagram" width={24} height={24} />
-                          </Link>
+                          </a>
                       </li>
                       <li>
-                          <Link href="#" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]">
-                              <Image src="/linkedin-gray.svg" alt="LinkedIn" width={24} height={24} />
-                          </Link>
+                          <a href="https://youtube.com/@wazircutleryltd?si=1_jqdKkNlecHfcFz" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]" target="_blank">
+                              <Image src="/youtube-gray.svg" alt="YouTube" width={24} height={24} />
+                          </a>
                       </li>
                       <li>
-                          <Link href="#" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]">
-                              <Image src="/whatsapp-gray.svg" alt="WhatsApp" width={24} height={24} />
-                          </Link>
-                      </li>
-                      <li>
-                          <Link href="#" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]">
-                              <Image src="/x-gray.svg" alt="X" width={24} height={24} />
-                          </Link>
+                          <a href="https://www.tiktok.com/@wazircutlery?_t=ZP-8zmHjcDQuLe&_r=1" className="flex items-center justify-center w-10 h-10 rounded-md transition-colors hover:bg-[#F27F0C]" target="_blank">
+                              <Image src="/tiktok-gray.svg" alt="Tik Tok" width={24} height={24} />
+                          </a>
                       </li>
                   </ul>
               </div>

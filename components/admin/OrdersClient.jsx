@@ -1,30 +1,31 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { Eye, Package, Truck, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { useAllOrders, useUpdateOrderStatus } from '../../lib/supabase-hooks';
 
 const OrdersClient = () => {
-    const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { data: orders, isLoading: loading, error } = useAllOrders();
+    const [localOrders, setLocalOrders] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const { updateOrderStatus, isLoading: isUpdating } = useUpdateOrderStatus();
 
     useEffect(() => {
-        loadOrders();
-    }, []);
+        if (orders) {
+            // Sort by date, newest first
+            const sortedOrders = [...orders].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            setLocalOrders(sortedOrders);
+        }
+    }, [orders]);
 
-    const loadOrders = () => {
-        try {
-            const storedOrders = localStorage.getItem('stag-horn-orders');
-            if (storedOrders) {
-                const parsedOrders = JSON.parse(storedOrders);
-                // Sort by date, newest first
-                parsedOrders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-                setOrders(parsedOrders);
-            }
-        } catch (error) {
-            console.error('Error loading orders:', error);
-        } finally {
-            setLoading(false);
+    const handleUpdateStatus = async (orderId, newStatus) => {
+        const updatedOrder = await updateOrderStatus(orderId, newStatus);
+        if (updatedOrder) {
+            setLocalOrders(prevOrders => 
+                prevOrders.map(order => 
+                    order.id === orderId ? { ...order, status: newStatus } : order
+                )
+            );
         }
     };
 
@@ -66,14 +67,6 @@ const OrdersClient = () => {
         }
     };
 
-    const updateOrderStatus = (orderId, newStatus) => {
-        const updatedOrders = orders.map(order => 
-            order.id === orderId ? { ...order, status: newStatus } : order
-        );
-        setOrders(updatedOrders);
-        localStorage.setItem('stag-horn-orders', JSON.stringify(updatedOrders));
-    };
-
     const viewOrderDetails = (order) => {
         setSelectedOrder(order);
         setShowModal(true);
@@ -87,16 +80,24 @@ const OrdersClient = () => {
         );
     }
 
+    if (error) {
+        return (
+            <div className="text-center py-12 text-red-500">
+                <p>Error loading orders. Please try again later.</p>
+            </div>
+        )
+    }
+
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <h1 className="text-2xl font-bold text-gray-900">Orders</h1>
                 <div className="text-sm text-gray-500">
-                    Total Orders: {orders.length}
+                    Total Orders: {localOrders.length}
                 </div>
             </div>
 
-            {orders.length === 0 ? (
+            {localOrders.length === 0 ? (
                 <div className="text-center py-12">
                     <Package className="mx-auto h-12 w-12 text-gray-400" />
                     <h3 className="mt-2 text-sm font-medium text-gray-900">No orders yet</h3>
@@ -107,7 +108,7 @@ const OrdersClient = () => {
             ) : (
                 <div className="bg-white shadow overflow-hidden sm:rounded-md">
                     <ul className="divide-y divide-gray-200">
-                        {orders.map((order) => (
+                        {localOrders.map((order) => (
                             <li key={order.id} className="px-6 py-4 hover:bg-gray-50">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center space-x-4">
@@ -133,7 +134,8 @@ const OrdersClient = () => {
                                     <div className="flex items-center space-x-2">
                                         <select
                                             value={order.status}
-                                            onChange={(e) => updateOrderStatus(order.id, e.target.value)}
+                                            onChange={(e) => handleUpdateStatus(order.id, e.target.value)}
+                                            disabled={isUpdating}
                                             className="text-sm border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#D6AF66]"
                                         >
                                             <option value="pending">Pending</option>

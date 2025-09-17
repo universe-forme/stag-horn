@@ -57,20 +57,19 @@ export default function AdminHeader() {
 
                 <div className="flex items-center space-x-4">
                     {/* Uncomment these sections if you want to add search and notifications */}
-                    {/*
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              placeholder="Search..."
-              className="pl-10 w-64"
-            />
-          </div>
+                    {/*  <div className="relative">*/}
+                    {/*    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />*/}
+                    {/*    <Input*/}
+                    {/*      placeholder="Search..."*/}
+                    {/*      className="pl-10 w-64"*/}
+                    {/*    />*/}
+                    {/*  </div>*/}
 
-          <Button variant="ghost" size="sm" className="relative">
-            <Bell className="h-5 w-5" />
-            <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
-          </Button>
-          */}
+                      <Button variant="ghost" size="sm" className="relative">
+                        <Bell className="h-5 w-5" />
+                        <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
+                      </Button>
+
 
                     <div className="flex items-center space-x-3">
                         <div className="text-right">
@@ -132,6 +131,11 @@ export default function AdminHeader() {
                             <li>
                                 <Link href="/admin/newsletter" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
                                     Newsletter
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/admin/contact-submissions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+                                    Contact Submissions
                                 </Link>
                             </li>
                             <li>

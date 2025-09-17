@@ -17,7 +17,7 @@
   --sub-texts: rgba(97, 97, 97, 1);
   --sub-texts-mute-lable: rgba(158, 158, 158, 1);
   --variable-collection-background: rgba(249, 249, 246, 1);
-  --variable-collection-ctas-buttons-highlights: rgba(214, 175, 102, 1);
+  --variable-collection-ctas-buttons-highlights: rgba(242, 127, 12, 1);
   --variable-collection-error-alerts: rgba(139, 46, 61, 1);
   --variable-collection-hover-links: rgba(242, 211, 152, 1);
   --variable-collection-icons-borbers: rgba(192, 192, 192, 1);
@@ -58,7 +58,7 @@ body {
 }
 
 .cta-button {
-    background-color: var(--ct-as-buttons-highlights, #D6AF66);
+    background-color: var(--ct-as-buttons-highlights, #F27F0C);
     color: white;
     font-family: Outfit, sans-serif;
     font-size: 18px;
@@ -151,7 +151,7 @@ p, span, li, a, div, input, textarea, button {
   color: var(--primary-text-products-name, #2C2C2C);
 }
 .bg-highlight {
-  background-color: var(--ct-as-buttons-highlights, #D6AF66);
+  background-color: var(--ct-as-buttons-highlights, #F27F0C);
 }
 .hero-gradient {
   background: linear-gradient(135deg, rgba(249, 249, 246, 0.95) 0%, rgba(249, 249, 246, 0.8) 100%);
@@ -192,7 +192,7 @@ p, span, li, a, div, input, textarea, button {
 }
 
 .footer-link:hover {
-  color: var(--ct-as-buttons-highlights, #D6AF66);
+  color: var(--ct-as-buttons-highlights, #F27F0C);
 }
 
 /* New Product Slider Styles */
@@ -519,7 +519,7 @@ p, span, li, a, div, input, textarea, button {
     margin-bottom: 24px;
 }
 .submit-button {
-    background-color: var(--ct-as-buttons-highlights, #D6AF66);
+    background-color: var(--ct-as-buttons-highlights, #F27F0C);
     color: #F9F9F6;
     font-family: Poppins, sans-serif;
     font-weight: 500;
@@ -660,7 +660,7 @@ p, span, li, a, div, input, textarea, button {
 }
 
 .filter-button:hover {
-    border-color: var(--ct-as-buttons-highlights, #D6AF66);
+    border-color: var(--ct-as-buttons-highlights, #F27F0C);
     box-shadow: 0 2px 8px rgba(214, 175, 102, 0.2);
 }
 
@@ -699,11 +699,11 @@ p, span, li, a, div, input, textarea, button {
 
 .filter-dropdown-item:hover {
     background-color: #F9F9F6;
-    color: var(--ct-as-buttons-highlights, #D6AF66);
+    color: var(--ct-as-buttons-highlights, #F27F0C);
 }
 
 .filter-dropdown-item.active {
-    color: var(--ct-as-buttons-highlights, #D6AF66);
+    color: var(--ct-as-buttons-highlights, #F27F0C);
     font-weight: 500;
 }
 

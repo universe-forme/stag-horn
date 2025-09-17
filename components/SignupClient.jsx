@@ -66,7 +66,7 @@ export default function SignupClient() {
     return (
         <div className="min-h-screen flex">
             {/* Left Side - Logo and Welcome */}
-            <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#D6AF66] to-[#C49F5A] items-center justify-center">
+            <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#F27F0C] to-[#C49F5A] items-center justify-center">
                 <div className="text-center text-white px-8">
                     <div className="mb-8">
                         <Image
@@ -122,7 +122,7 @@ export default function SignupClient() {
                                         value={formData.firstName}
                                         onChange={handleInputChange}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400"
                                         placeholder="First name"
                                     />
                                 </div>
@@ -137,7 +137,7 @@ export default function SignupClient() {
                                         value={formData.lastName}
                                         onChange={handleInputChange}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400"
                                         placeholder="Last name"
                                     />
                                 </div>
@@ -156,7 +156,7 @@ export default function SignupClient() {
                                         value={formData.email}
                                         onChange={handleInputChange}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400"
                                         placeholder="Enter your email"
                                     />
                                     <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -180,13 +180,13 @@ export default function SignupClient() {
                                         value={formData.password}
                                         onChange={handleInputChange}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400 pr-12"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400 pr-12"
                                         placeholder="Create a password"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-[#D6AF66] transition-colors duration-200"
+                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-[#F27F0C] transition-colors duration-200"
                                     >
                                         {showPassword ? (
                                             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -215,13 +215,13 @@ export default function SignupClient() {
                                         value={formData.confirmPassword}
                                         onChange={handleInputChange}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400 pr-12"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400 pr-12"
                                         placeholder="Confirm your password"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-[#D6AF66] transition-colors duration-200"
+                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-[#F27F0C] transition-colors duration-200"
                                     >
                                         {showConfirmPassword ? (
                                             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -246,17 +246,17 @@ export default function SignupClient() {
                                         type="checkbox"
                                         checked={acceptTerms}
                                         onChange={(e) => setAcceptTerms(e.target.checked)}
-                                        className="h-4 w-4 text-[#D6AF66] focus:ring-[#D6AF66] border-gray-300 rounded"
+                                        className="h-4 w-4 text-[#F27F0C] focus:ring-[#F27F0C] border-gray-300 rounded"
                                     />
                                 </div>
                                 <div className="ml-3 text-sm">
                                     <label htmlFor="accept-terms" className="text-[#2C2C2C]">
                                         I agree to the{' '}
-                                        <Link href="/terms" className="text-[#D6AF66] hover:underline">
+                                        <Link href="/terms" className="text-[#F27F0C] hover:underline">
                                             Terms of Service
                                         </Link>{' '}
                                         and{' '}
-                                        <Link href="/privacy" className="text-[#D6AF66] hover:underline">
+                                        <Link href="/privacy" className="text-[#F27F0C] hover:underline">
                                             Privacy Policy
                                         </Link>
                                     </label>
@@ -267,7 +267,7 @@ export default function SignupClient() {
                             <button
                                 type="submit"
                                 disabled={isLoading || !acceptTerms}
-                                className="w-full bg-[#D6AF66] text-white py-3 px-4 rounded-lg font-medium text-lg hover:bg-[#C49F5A] focus:ring-2 focus:ring-[#D6AF66] focus:ring-offset-2 transition-all duration-200 transform hover:translate-y-[-1px] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                                className="w-full bg-[#F27F0C] text-white py-3 px-4 rounded-lg font-medium text-lg hover:bg-[#C49F5A] focus:ring-2 focus:ring-[#F27F0C] focus:ring-offset-2 transition-all duration-200 transform hover:translate-y-[-1px] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                             >
                                 {isLoading ? (
                                     <div className="flex items-center justify-center">
@@ -288,7 +288,7 @@ export default function SignupClient() {
                                     Already have an account?{' '}
                                     <Link 
                                         href="/login" 
-                                        className="font-medium text-[#D6AF66] hover:text-[#C49F5A] transition-colors duration-200"
+                                        className="font-medium text-[#F27F0C] hover:text-[#C49F5A] transition-colors duration-200"
                                     >
                                         Sign in
                                     </Link>
@@ -301,11 +301,11 @@ export default function SignupClient() {
                     <div className="text-center mt-8">
                         <p className="text-sm text-[#2C2C2C] opacity-75">
                             By creating an account, you agree to our{' '}
-                            <Link href="/terms" className="text-[#D6AF66] hover:underline">
+                            <Link href="/terms" className="text-[#F27F0C] hover:underline">
                                 Terms of Service
                             </Link>{' '}
                             and{' '}
-                            <Link href="/privacy" className="text-[#D6AF66] hover:underline">
+                            <Link href="/privacy" className="text-[#F27F0C] hover:underline">
                                 Privacy Policy
                             </Link>
                         </p>

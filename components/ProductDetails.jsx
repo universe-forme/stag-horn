@@ -27,6 +27,21 @@ const ProductDetails = ({ product }) => {
         });
     };
 
+    const socialLinks = {
+        tiktok: 'https://www.tiktok.com/@wazircutlery?_t=ZP-8zmHjcDQuLe&_r=1',
+        youtube: 'https://youtube.com/@wazircutleryltd?si=1_jqdKkNlecHfcFz',
+        facebook: 'https://www.facebook.com/share/16z6hKB6KL/',
+        instagram: 'https://www.instagram.com/wazircutlery?utm_source=qr&igsh=am4yc3Z2ZDV1bTM4'
+    };
+
+    const handleShare = (platform) => {
+        const url = socialLinks[platform];
+        if (url) {
+            window.open(url, '_blank');
+        }
+    };
+
+
     return (
 <>
         <main className="container mx-auto px-4 md:px-8 lg:px-24 py-8">
@@ -102,7 +117,7 @@ const ProductDetails = ({ product }) => {
                     <div className="flex items-center gap-4">
                         <span className="font-outfit text-black text-lg">Share this product:</span>
                         <div className="flex gap-4">
-                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
+                            <button onClick={() => handleShare('facebook')} className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
                                 <Image
                                     src="/facebook-logo.svg"
                                     width={18}
@@ -111,7 +126,7 @@ const ProductDetails = ({ product }) => {
                                     alt="Facebook Logo"
                                 />
                             </button>
-                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
+                            <button onClick={() => handleShare('instagram')} className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
                                 <Image
                                     src="/instagram-logo.svg"
                                     width={18}
@@ -120,31 +135,22 @@ const ProductDetails = ({ product }) => {
                                     alt="Instagram Logo"
                                 />
                             </button>
-                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
+                            <button onClick={() => handleShare('youtube')} className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
                                 <Image
-                                    src="/linkedin-logo.svg"
+                                    src="/youtube.svg"
                                     width={18}
                                     height={18}
                                     className="w-full h-full object-contain"
-                                    alt="LinkedIn Logo"
+                                    alt="YouTube Logo"
                                 />
                             </button>
-                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
+                            <button onClick={() => handleShare('tiktok')} className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
                                 <Image
-                                    src="/whatsapp-logo.svg"
+                                    src="/tiktok.svg"
                                     width={18}
                                     height={18}
                                     className="w-full h-full object-contain"
-                                    alt="WhatsApp Logo"
-                                />
-                            </button>
-                            <button className="w-8 h-8 rounded flex items-center justify-center transition-transform duration-200 hover:-translate-y-1 cursor-pointer">
-                                <Image
-                                    src="/x-logo.svg"
-                                    width={18}
-                                    height={18}
-                                    className="w-full h-full object-contain"
-                                    alt="X Logo"
+                                    alt="Tik Tok Logo"
                                 />
                             </button>
                         </div>

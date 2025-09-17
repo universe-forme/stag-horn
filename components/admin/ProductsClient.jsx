@@ -91,7 +91,7 @@ export default function ProductsClient() {
           </p>
         </div>
         <Button 
-          className="bg-[#D6AF66] hover:bg-[#C49F5A] text-white"
+          className="bg-[#F27F0C] hover:bg-[#C49F5A] text-white"
           onClick={handleAddProduct}
         >
           <Plus className="mr-2 h-4 w-4" />
@@ -120,7 +120,7 @@ export default function ProductsClient() {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-3 py-2 border border-[#C0C0C0] rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-[#D6AF66] bg-white text-[#2C2C2C]"
+              className="px-3 py-2 border border-[#C0C0C0] rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-[#F27F0C] bg-white text-[#2C2C2C]"
             >
               <option value="all">All Status</option>
               <option value="active">Active</option>
@@ -129,7 +129,7 @@ export default function ProductsClient() {
             <select
               value={filterCategory}
               onChange={(e) => setFilterCategory(e.target.value)}
-              className="px-3 py-2 border border-[#C0C0C0] rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-[#D6AF66] bg-white text-[#2C2C2C]"
+              className="px-3 py-2 border border-[#C0C0C0] rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-[#F27F0C] bg-white text-[#2C2C2C]"
             >
               <option value="all">All Categories</option>
               {categories?.map(category => (

@@ -127,7 +127,7 @@ function LoginContent() {
                                         value={formData.email}
                                         onChange={handleInputChange}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400"
                                         placeholder="Enter Email"
                                     />
                                     <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -151,13 +151,13 @@ function LoginContent() {
                                         value={formData.password}
                                         onChange={handleInputChange}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D6AF66] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400 pr-12"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F27F0C] focus:border-transparent transition-all duration-200 bg-white/80 backdrop-blur-sm text-[#2C2C2C] placeholder-gray-400 pr-12"
                                         placeholder="Enter your password"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-[#D6AF66] transition-colors duration-200"
+                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-[#F27F0C] transition-colors duration-200"
                                     >
                                         {showPassword ? (
                                             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -177,7 +177,7 @@ function LoginContent() {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full bg-[#D6AF66] text-white py-3 px-4 rounded-lg font-medium text-lg hover:bg-[#C49F5A] focus:ring-2 focus:ring-[#D6AF66] focus:ring-offset-2 transition-all duration-200 transform hover:translate-y-[-1px] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                                className="w-full bg-[#F27F0C] text-white py-3 px-4 rounded-lg font-medium text-lg hover:bg-[#C49F5A] focus:ring-2 focus:ring-[#F27F0C] focus:ring-offset-2 transition-all duration-200 transform hover:translate-y-[-1px] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                             >
                                 {isLoading ? 'Signing in...' : 'Sign In'}
                             </button>
@@ -195,11 +195,11 @@ function LoginContent() {
                     <div className="text-center mt-8">
                         <p className="text-sm text-[#2C2C2C] opacity-75">
                             By signing in, you agree to our{' '}
-                            <Link href="/terms" className="text-[#D6AF66] hover:underline">
+                            <Link href="/terms" className="text-[#F27F0C] hover:underline">
                                 Terms of Service
                             </Link>{' '}
                             and{' '}
-                            <Link href="/privacy" className="text-[#D6AF66] hover:underline">
+                            <Link href="/privacy" className="text-[#F27F0C] hover:underline">
                                 Privacy Policy
                             </Link>
                         </p>
