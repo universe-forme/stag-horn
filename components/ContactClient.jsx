@@ -1,5 +1,5 @@
 'use client';
-import Image from 'next/image';
+
 import React from "react";
 import ConditionalLayout from "@/components/ConditionalLayout";
 import ContactForm from "@/components/ContactForm";

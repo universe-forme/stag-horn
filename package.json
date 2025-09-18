@@ -19,6 +19,8 @@
     "next": "15.4.7",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-google-recaptcha": "^3.1.0",
+    "react-google-recaptcha-v3": "^1.11.0",
     "react-toastify": "^11.0.5",
     "recharts": "^2.12.7",
     "resend": "^6.0.2",

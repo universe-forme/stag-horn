@@ -67,7 +67,7 @@ export default function CategoriesClient() {
           </p>
         </div>
         <Button 
-          className="bg-[#D6AF66] hover:bg-[#C49F5A] text-white"
+          className="bg-[#F27F0C] hover:bg-[#C49F5A] text-white"
           onClick={handleAddCategory}
         >
           <Plus className="mr-2 h-4 w-4" />

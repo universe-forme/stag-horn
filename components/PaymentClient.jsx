@@ -46,7 +46,7 @@ const PaymentContent = () => {
         );
     }
 
-    const handlePaymentSuccess = async (paymentMethod, cardData) => {
+    const handlePaymentSuccess = async () => {
         try {
             // Generate unique order ID and UUID for database
             const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
@@ -80,11 +80,8 @@ const PaymentContent = () => {
                     postal_code: checkoutData.customerInfo.postalCode
                 },
                 payment_status: 'pending',
-                payment_method: paymentMethod,
-                payment_details: paymentMethod === 'card' ? {
-                    card_last_four: cardData.cardNumber.slice(-4),
-                    card_type: 'Visa' // Simplified for demo
-                } : null,
+                payment_method: 'cod',
+                payment_details: null,
                 created_at: new Date().toISOString()
             };
 

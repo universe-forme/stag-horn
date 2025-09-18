@@ -5,6 +5,8 @@ import ClerkProviderWrapper from "../components/ClerkProviderWrapper";
 import { CartProvider } from "@/contexts/CartContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import GoogleReCaptchaV3Provider from "../components/GoogleReCaptchaV3Provider";
+import ConditionalWhatsAppIcon from "../components/ConditionalWhatsAppIcon";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -40,12 +42,15 @@ export default function RootLayout({ children }) {
     <ClerkProviderWrapper>
       <html lang="en">
         <body className={`${outfit.variable} ${cabin.variable} ${openSans.variable} antialiased`}>
-          <SupabaseClientProvider>
-            <CartProvider>
-              {children}
-              <ToastContainer position="top-right" />
-            </CartProvider>
-          </SupabaseClientProvider>
+          <GoogleReCaptchaV3Provider>
+            <SupabaseClientProvider>
+              <CartProvider>
+                {children}
+                <ToastContainer position="top-right" />
+                <ConditionalWhatsAppIcon />
+              </CartProvider>
+            </SupabaseClientProvider>
+          </GoogleReCaptchaV3Provider>
         </body>
       </html>
     </ClerkProviderWrapper>

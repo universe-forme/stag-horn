@@ -69,8 +69,8 @@ const Footer = () => {
             <div>
                 <h3 className="footer-heading font-medium text-lg mb-6">Special</h3>
                 <ul className="space-y-4">
-                    <li><Link href="#" className="footer-link text-base">B2B Contract</Link></li>
-                    <li><Link href="#" className="footer-link text-base">Customize Order</Link></li>
+                    <li><Link href="/contact" className="footer-link text-base">B2B Contract</Link></li>
+                    <li><Link href="/contact" className="footer-link text-base">Customize Order</Link></li>
                 </ul>
             </div>
             {/* Social Links */}

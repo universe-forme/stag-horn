@@ -1213,3 +1213,74 @@ select option:hover {
   background: #F27F0C;
   color: white;
 }
+
+/* WhatsApp Icon Styles */
+.whatsapp-icon-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.whatsapp-icon {
+  background-color: #25D366;
+  border-radius: 30px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  order: 2; /* Ensures icon is on the right */
+}
+
+.whatsapp-text {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: #F27F0C;
+  color: #F9F9F6;
+  padding: 0;
+  border-radius: 12px;
+  margin-right: 0;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: max-width 0.4s ease, padding 0.4s ease, margin-right 0.4s ease;
+  order: 1; /* Ensures text is on the left */
+}
+
+.whatsapp-icon-container:hover .whatsapp-icon {
+  border-radius: 12px;
+}
+
+.whatsapp-icon-container:hover .whatsapp-text {
+  max-width: 250px;
+  padding: 12px 20px;
+  margin-right: 12px;
+}
+
+/* Adjusting for the reCAPTCHA badge */
+.grecaptcha-badge {
+  z-index: 1001 !important; /* Ensure reCAPTCHA is on top */
+}
+
+.whatsapp-icon-container {
+  bottom: 100px;
+  right: 10px; /* Adjust to not overlap with reCAPTCHA */
+}
+
+@media (max-width: 768px) {
+  .whatsapp-icon {
+    width: 48px;
+    height: 48px;
+  }
+  .whatsapp-icon-container {
+    right: 20px;
+    bottom: 80px; /* Stack on top of reCAPTCHA on mobile */
+  }
+}

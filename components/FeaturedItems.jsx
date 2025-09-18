@@ -56,7 +56,7 @@ const FeaturedItems = () => {
                 <h2 className="cabin-font text-4xl font-normal text-black text-center mb-12">Featured Items</h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-16">
-                    {products.slice(0, 5).map((product) => (
+                    {[...products].sort(() => 0.5 - Math.random()).slice(0, 5).map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
                 </div>

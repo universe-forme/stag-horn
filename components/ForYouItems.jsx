@@ -5,7 +5,7 @@ import { useRandomProducts } from '../lib/supabase-hooks';
 import ProductCard from './ProductCard';
 
 const ForYouItems = () => {
-    const { data: products, isLoading, error } = useRandomProducts(6);
+    const { data: products, isLoading, error } = useRandomProducts(5);
 
     if (isLoading) {
         return (

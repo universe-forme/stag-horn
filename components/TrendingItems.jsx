@@ -5,7 +5,7 @@ import { useTrendingProducts } from '../lib/supabase-hooks';
 import ProductCard from './ProductCard';
 
 const TrendingItems = () => {
-    const { data: products, isLoading, error } = useTrendingProducts(6);
+    const { data: products, isLoading, error } = useTrendingProducts(5);
 
     if (isLoading) {
         return (
@@ -39,13 +39,24 @@ const TrendingItems = () => {
         );
     }
 
+    if (!products || products.length === 0) {
+        return (
+            <div className="p-6 lg:p-12">
+                <div className="container mx-auto">
+                    <h2 className="cabin-font text-4xl font-normal text-black text-center mb-12">Trending Items</h2>
+                    <div className="text-center text-gray-500">No trending products available at the moment.</div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="p-6 lg:p-12">
             <div className="container mx-auto">
                 <h2 className="cabin-font text-4xl font-normal text-black text-center mb-12">Trending Items</h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-16">
-                    {products.slice(0, 5).map((product) => (
+                    {[...products].sort(() => 0.5 - Math.random()).slice(0, 5).map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
                 </div>

@@ -1,7 +1,6 @@
 'use client';
-import { useState } from 'react';
-import { useSubmitContactForm } from '../lib/hooks';
-import { sendContactNotification } from '@/lib/email-service';
+import { useState, useRef } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 export default function ContactForm() {
     const [formData, setFormData] = useState({
@@ -22,8 +21,8 @@ export default function ContactForm() {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null);
-    
-    const { submitContactForm, isLoading: isSubmittingHook } = useSubmitContactForm();
+    const [recaptchaToken, setRecaptchaToken] = useState(null);
+    const recaptchaRef = useRef();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -38,17 +37,26 @@ export default function ContactForm() {
         setIsSubmitting(true);
         setSubmitStatus(null);
 
-        try {
-            // Convert product_quantity to number if provided
-            const submissionData = {
-                ...formData,
-                product_quantity: formData.product_quantity ? parseInt(formData.product_quantity) : undefined
-            };
+        if (!recaptchaToken) {
+            setSubmitStatus('error');
+            setIsSubmitting(false);
+            return;
+        }
 
-            const result = await submitContactForm(submissionData);
-            
-            // Send email notification
-            await sendContactNotification(result);
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ...formData, recaptchaToken }),
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                console.error('Error submitting form:', errorData);
+                throw new Error(errorData.message || 'Failed to submit form');
+            }
             
             setSubmitStatus('success');
             setFormData({
@@ -66,6 +74,10 @@ export default function ContactForm() {
                 emergency_contact: '',
                 message: ''
             });
+            if (recaptchaRef.current) {
+                recaptchaRef.current.reset();
+            }
+            setRecaptchaToken(null);
         } catch (error) {
             console.error('Error submitting form:', error);
             setSubmitStatus('error');
@@ -91,7 +103,7 @@ export default function ContactForm() {
                             </p>
                             <button
                                 onClick={() => setSubmitStatus(null)}
-                                className="bg-[#D6AF66] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#C49F5A] transition-colors duration-200"
+                                className="bg-[#F27F0C] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#C49F5A] transition-colors duration-200"
                             >
                                 Submit Another Request
                             </button>
@@ -110,7 +122,7 @@ export default function ContactForm() {
 
                     {submitStatus === 'error' && (
                         <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                            There was an error submitting your form. Please try again.
+                            There was an error submitting your form. Please complete the reCAPTCHA and try again.
                         </div>
                     )}
 
@@ -289,6 +301,15 @@ export default function ContactForm() {
                                 value={formData.message}
                                 onChange={handleInputChange}
                             ></textarea>
+                        </div>
+
+                        <div className="mb-6">
+                            <ReCAPTCHA
+                                ref={recaptchaRef}
+                                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                                onChange={(token) => setRecaptchaToken(token)}
+                                onExpired={() => setRecaptchaToken(null)}
+                            />
                         </div>
 
                         <div className="form-actions">
