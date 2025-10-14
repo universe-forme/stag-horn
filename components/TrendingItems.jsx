@@ -1,7 +1,5 @@
-
-import Image from 'next/image';
 import Link from 'next/link';
-import { useTrendingProducts } from '../lib/supabase-hooks';
+import { useTrendingProducts } from '@/lib/supabase-hooks';
 import ProductCard from './ProductCard';
 
 const TrendingItems = () => {

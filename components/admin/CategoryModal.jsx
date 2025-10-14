@@ -93,17 +93,42 @@ export default function CategoryModal({ isOpen, onClose, category }) {
   };
 
   const handleImageValidation = (file) => {
-    if (!file.type.startsWith('image/')) {
-      setErrors(prev => ({ ...prev, image: "Please select a valid image file" }));
+    try {
+      if (!file.type.startsWith('image/')) {
+        setErrors(prev => ({ ...prev, image: "Please select a valid image file" }));
+        return false;
+      }
+      if (file.size > 1024 * 1024) {
+        setErrors(prev => ({ ...prev, image: "Image size must be less than 1MB" }));
+        return false;
+      }
+      return new Promise((resolve) => {
+        const img = new window.Image();
+        img.onload = function () {
+          const { width, height } = img;
+          const isAllowed = (
+            (width === 1000 && height === 100) ||
+            (width === 800 && height === 800) ||
+            (width === height && width < 2000)
+          );
+          if (!isAllowed) {
+            setErrors(prev => ({ ...prev, image: "Image dimensions must be 800x800px, 1000x100px, or any square less than 2000px." }));
+            resolve(false);
+          } else {
+            setErrors(prev => ({ ...prev, image: "" }));
+            resolve(true);
+          }
+        };
+        img.onerror = function () {
+          setErrors(prev => ({ ...prev, image: "Could not read image dimensions." }));
+          resolve(false);
+        };
+        img.src = URL.createObjectURL(file);
+      });
+    } catch (err) {
+      setErrors(prev => ({ ...prev, image: "Image validation failed. Please try another image." }));
       return false;
     }
-
-    if (file.size > 5 * 1024 * 1024) {
-      setErrors(prev => ({ ...prev, image: "Image size must be less than 5MB" }));
-      return false;
-    }
-
-    return true;
   };
 
   const handleDrop = (e) => {
@@ -213,7 +238,6 @@ export default function CategoryModal({ isOpen, onClose, category }) {
   return (
     <div 
       className="fixed inset-0 bg-gray-100 bg-opacity-80 backdrop-blur-md flex items-center justify-center z-50 p-4"
-      onClick={onClose}
     >
       <div 
         className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] flex flex-col"
@@ -337,6 +361,9 @@ export default function CategoryModal({ isOpen, onClose, category }) {
               {errors.image && (
                 <p className="mt-1 text-sm text-red-600">{errors.image}</p>
               )}
+              <p className="mt-1 text-xs text-gray-500">
+                Allowed: 1000x100px, 800x800px, or any square &lt; 2000px. Max size: 1MB.
+              </p>
             </div>
           </div>
 

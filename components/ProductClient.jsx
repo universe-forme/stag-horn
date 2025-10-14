@@ -41,6 +41,18 @@ const ProductContent = () => {
     const isLoading = categoryId ? isLoadingCategory : isLoadingAll;
     const error = categoryId ? errorCategory : errorAll;
 
+    // Find the selected category name
+    const selectedCategory = categories && categoryId ? categories.find(cat => cat.id === categoryId) : null;
+    const pageTitle = selectedCategory ? selectedCategory.name : 'Categories';
+
+    React.useEffect(() => {
+        if (selectedCategory) {
+            document.title = selectedCategory.name + ' | Wazir Cutlery';
+        } else {
+            document.title = 'Categories | Wazir Cutlery';
+        }
+    }, [selectedCategory]);
+
     React.useEffect(() => {
         const handleClickOutside = (event) => {
             if (menuRef.current && buttonRef.current &&

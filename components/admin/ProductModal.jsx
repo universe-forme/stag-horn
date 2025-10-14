@@ -125,18 +125,44 @@ export default function ProductModal({ isOpen, onClose, product }) {
     }
   };
 
+  // Replace the old handleImageValidation with robust validation for both main and additional images
   const handleImageValidation = (file, type) => {
-    if (!file.type.startsWith('image/')) {
-      setErrors(prev => ({ ...prev, [type]: "Please select a valid image file" }));
+    try {
+      if (!file.type.startsWith('image/')) {
+        setErrors(prev => ({ ...prev, [type]: "Please select a valid image file" }));
+        return false;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        setErrors(prev => ({ ...prev, [type]: "Image size must be less than 1MB" }));
+        return false;
+      }
+      return new Promise((resolve) => {
+        const img = new window.Image();
+        img.onload = function () {
+          const { width, height } = img;
+          const isAllowed = (
+            (width === 1000 && height === 100) ||
+            (width === 800 && height === 800) ||
+            (width === height && width < 2000)
+          );
+          if (!isAllowed) {
+            setErrors(prev => ({ ...prev, [type]: "Image dimensions must be 800x800px, 1000x100px, or any square less than 2000px." }));
+            resolve(false);
+          } else {
+            setErrors(prev => ({ ...prev, [type]: "" }));
+            resolve(true);
+          }
+        };
+        img.onerror = function () {
+          setErrors(prev => ({ ...prev, [type]: "Could not read image dimensions." }));
+          resolve(false);
+        };
+        img.src = URL.createObjectURL(file);
+      });
+    } catch (err) {
+      setErrors(prev => ({ ...prev, [type]: "Image validation failed. Please try another image." }));
       return false;
     }
-
-    if (file.size > 5 * 1024 * 1024) {
-      setErrors(prev => ({ ...prev, [type]: "Image size must be less than 5MB" }));
-      return false;
-    }
-
-    return true;
   };
 
   const handleMainImageDrop = (e) => {
@@ -580,6 +606,9 @@ export default function ProductModal({ isOpen, onClose, product }) {
               {errors.mainImage && (
                 <p className="mt-1 text-sm text-red-600">{errors.mainImage}</p>
               )}
+              <p className="mt-1 text-xs text-gray-500">
+                Allowed: 800x800px, 1000x100px, or any square &lt; 2000px. Max size: 1MB.
+              </p>
             </div>
           </div>
 
