@@ -63,7 +63,7 @@ const ProductCard = ({ product, showAddToCart = true }) => {
                 </div>
 
                 <p className="outfit-font delivery-text mb-4 flex-grow">
-                    {product.estimated_delivery || 'Estimate delivery in 2-3 working days'}
+                    {product.delivery_date || 'Estimate delivery in 2-3 working days'}
                 </p>
             </Link>
 

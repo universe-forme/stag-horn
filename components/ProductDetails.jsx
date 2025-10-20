@@ -6,7 +6,7 @@ import { useCart } from '../contexts/CartContext';
 import { toast } from 'react-toastify';
 
 const ProductDetails = ({ product }) => {
-    const { name, short_description, description, price, main_image, images, category, tags, estimated_delivery, rating } = product;
+    const { name, short_description, description, price, main_image, images, category, tags, delivery_date, rating } = product;
     const { addToCart } = useCart();
 
     const [activeImage, setActiveImage] = useState(main_image);
@@ -75,7 +75,7 @@ const ProductDetails = ({ product }) => {
                     </p>
 
                     <p className="font-outfit text-sub-texts-mute-lable text-sm">
-                        {estimated_delivery || 'Estimate delivery in 2-3 working days'}
+                        {delivery_date || 'Estimate delivery in 2-3 working days'}
                     </p>
 
                     <hr className="border-t border-sub-texts-mute-lable" />

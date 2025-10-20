@@ -22,6 +22,7 @@ export default function ProductModal({ isOpen, onClose, product }) {
     stockQuantity: 0,
     weight: "",
     productSize: "",
+    delivery_date: "",
     isActive: true,
     isFeatured: false,
     isTrending: false,
@@ -55,6 +56,7 @@ export default function ProductModal({ isOpen, onClose, product }) {
         stockQuantity: product.stock_quantity || 0,
         weight: product.weight || "",
         productSize: product.product_size || "",
+        delivery_date: product.delivery_date || "",
         isActive: Boolean(product.is_active),
         isFeatured: Boolean(product.is_featured),
         isTrending: Boolean(product.is_trending || product.is_top_rated),
@@ -75,6 +77,7 @@ export default function ProductModal({ isOpen, onClose, product }) {
         stockQuantity: 0,
         weight: "",
         productSize: "",
+        delivery_date: "",
         isActive: true,
         isFeatured: false,
         isTrending: false,
@@ -337,6 +340,7 @@ export default function ProductModal({ isOpen, onClose, product }) {
           stock_quantity: formData.stockQuantity,
           weight: formData.weight,
           product_size: formData.productSize,
+          delivery_date: formData.delivery_date,
           is_active: formData.isActive,
           is_featured: formData.isFeatured,
           is_trending: formData.isTrending,
@@ -359,6 +363,7 @@ export default function ProductModal({ isOpen, onClose, product }) {
           stock_quantity: formData.stockQuantity,
           weight: formData.weight,
           product_size: formData.productSize,
+          delivery_date: formData.delivery_date,
           is_active: formData.isActive,
           is_featured: formData.isFeatured,
           is_trending: formData.isTrending,
@@ -728,6 +733,20 @@ export default function ProductModal({ isOpen, onClose, product }) {
                 value={formData.productSize}
                 onChange={(e) => handleInputChange("productSize", e.target.value)}
                 placeholder="e.g., 18.5 inches Overall length"
+                className="mt-1"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="delivery_date" className="text-sm font-medium text-[#2C2C2C]">
+                Delivery Date
+              </Label>
+              <Input
+                id="delivery_date"
+                type="text"
+                value={formData.delivery_date}
+                onChange={(e) => handleInputChange("delivery_date", e.target.value)}
+                placeholder="e.g., 2-3 business days"
                 className="mt-1"
               />
             </div>
