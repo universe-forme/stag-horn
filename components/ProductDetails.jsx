@@ -75,7 +75,7 @@ const ProductDetails = ({ product }) => {
                     </p>
 
                     <p className="font-outfit text-sub-texts-mute-lable text-sm">
-                        {delivery_date || 'Estimate delivery in 2-3 working days'}
+                        {product.delivery_date || 'Estimate delivery in 2-3 working days'}
                     </p>
 
                     <hr className="border-t border-sub-texts-mute-lable" />

@@ -214,7 +214,7 @@ const ProductContent = () => {
                                             <div className="flex-1 flex flex-col justify-between">
                                                 <p className="product-name-new mb-3 h-10 line-clamp-2 font-semibold text-lg">{p.name}</p>
                                                 <span className="text-xl font-bold product-price-new mb-2">${p.price}</span>
-                                                <p className="text-sm text-[#0E0E0E] mb-2">{p.estimatedDelivery || "Estimate delivery in 2-3 working days"}</p>
+                                                <p className="text-sm text-[#0E0E0E] mb-2">{p.delivery_date || "Estimate delivery in 2-3 working days"}</p>
                                                 <button className="cta-button-new w-full py-2 rounded-md font-medium mt-2"
                                                         onClick={(e) => handleAddToCart(p, e)}
                                                 >
